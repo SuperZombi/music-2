@@ -26,8 +26,7 @@ LANG = {
 	"report": "Report abuse",
 	"post": "Post my track",
 	"donate": "Donate",
-	"subject_report": "Zombi Music - Complaint",
-	"subject_post": "Zombi Music - Cooperation",
+	"subject_report": "Zombi Music - Report",
 	"watch_r": "View Requirements",
 	
 	"site_desc_title": "About Us",
@@ -42,8 +41,6 @@ LANG = {
 	"image": "Image file",
 	"audio": "Audio file",
 	"create_json": "Create JSON",
-
-	"config_example": "Example of <i>config.json</i>",
 
 	"easter_egg": "Click a few more times"
 }
