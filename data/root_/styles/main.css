@@ -484,8 +484,6 @@ div.ripple {
 	margin-top: 50px;
 	font-size: 14pt;
 	transition: 0.3s;
-	opacity: 0;
-	display: none;
 	text-align: center;
 	font-family: sans-serif;
 }
