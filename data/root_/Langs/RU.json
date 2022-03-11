@@ -27,7 +27,6 @@ LANG = {
 	"post": "Опубликовать мой трек",
 	"donate": "Задонатить",
 	"subject_report": "Zombi Music - Жалоба",
-	"subject_post": "Zombi Music - Сотрудничество",
 	"watch_r": "Посмотреть требования",
 
 	"site_desc_title": "О нас",
@@ -42,8 +41,6 @@ LANG = {
 	"image": "Изображение",
 	"audio": "Аудио файл",
 	"create_json": "Создать JSON",
-
-	"config_example": "Пример <i>config.json</i>",
 
 	"easter_egg": "Нажмите ещё несколько раз"
 }
