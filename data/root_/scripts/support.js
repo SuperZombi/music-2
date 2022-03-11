@@ -14,19 +14,6 @@ window.onload = function() {
 	})()
 }
 
-function show_email(){
-	setTimeout(function(){
-		document.getElementById("email").style.display = "block"
-		setTimeout(function(){
-			document.getElementById("email").style.opacity = 1
-			setTimeout(function(){
-				document.getElementById("email").className = "anim_email"
-				document.getElementById("email").style.opacity = ""
-			}, 1000)
-		}, 10)
-	}, 3000)
-}
-
 function try_dark(e){
 	if (darkThemeMq){
 		e.src = e.src.split('.').slice(0, -1).join('.') + "_dark.svg"
