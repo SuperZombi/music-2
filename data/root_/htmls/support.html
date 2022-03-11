@@ -1,0 +1,54 @@
+(function load_lang(){
+if (typeof LANG !== 'undefined'){
+body = `
+<div id="support">
+	<h1>${LANG.site_desc_title}</h1>
+	<h3 style="padding-left: 10px;padding-right: 10px;">${LANG.site_desc}</h3>
+	<hr style="width: 100%;">
+	<a href="https://www.donationalerts.com/r/super_zombi" target="_blank"><img src="root_/images/dollar.svg">${LANG.donate}</a>
+	<a href="mailto:super.zombi.yt@gmail.com?subject=${LANG.subject_report}" target="_blank" onmousedown="show_email()"><img src="root_/images/flag.svg">${LANG.report}</a>
+	<a href="account/new-release" target="_blank" onmousedown="show_email()"><img src="root_/images/publish.svg">${LANG.post}</a>
+	
+</div>
+
+<div style="text-align:center;">
+<details>
+	<summary class="config_link" style="margin-top:0;font-size:unset;cursor:pointer;">${LANG.watch_r}</summary>
+
+	<div id="main_page">
+		<h1>${LANG.requirements_title}:</h1>
+		<table>
+			<tr>
+				<th>${LANG.limitation}</th>
+				<th>${LANG.resolution}</th>
+				<th>${LANG.f_type}</th>
+				<th>${LANG.f_size}</th>
+			</tr>
+			<tr>
+				<td>${LANG.image}</td>
+				<td>⩽1080×1080</td>
+				<td>png/jpg</td>
+				<td>⩽1Mb</td>
+			</tr>
+			<tr>
+				<td>${LANG.audio}</td>
+				<td>⩽192kbps</td>
+				<td>mp3</td>
+				<td>⩽10Mb</td>
+			</tr>
+		</table>
+
+		<div class="link_buttons" style="margin-top: 15px;">
+			<a class="link_button" href="account/new-release">${LANG.create_json}</a>
+		</div>
+	</div>
+</details>
+</div>
+
+<div id="email">super.zombi.yt@gmail.com</div>
+`
+}
+else{
+	setTimeout(function(){load_lang()}, 500)
+}
+})()

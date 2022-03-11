@@ -1,0 +1,91 @@
+(function load_lang(){
+if (typeof LANG !== 'undefined'){
+body = `
+<div id="notifications"></div>
+
+<form>
+	<div class="radio">
+		<input label="Log In" type="radio" name="form_action" value="login" checked>
+		<input label="Sign Up" type="radio" name="form_action" value="signup">
+	</div>
+</form>
+
+<div class="flip-card">
+	<div class="flip-card-front">
+		
+		<form name="login" onsubmit="action_();return false">
+			<div class="center-wrap">
+				<div class="group">
+					<input type="text" name="name" placeholder=" " required/>
+					<span class="bar"></span>
+					<label>Name</label>
+				</div>
+
+				<div class="group">
+					<input type="password" minlength="4" name="password" placeholder=" " required>
+					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+					<span class="bar"></span>
+					<label>Password</label>
+				</div>
+
+			</div>
+			<button type="submit" class="button">Login</button>
+		</form>
+
+	</div>
+	<div class="flip-card-back">
+
+		<form name="signup" onsubmit="action_();return false">
+			<div class="center-wrap">
+				<div class="group">
+						<input type="text" name="name" placeholder=" " required/>
+						<span class="bar"></span>
+						<label>Name</label>
+				</div>
+
+				<div class="group">
+						<input type="email" name="email" placeholder=" "/>
+						<span class="bar"></span>
+						<label>Email</label>
+				</div>
+
+				<div class="group">
+						<input type="tel" name="phone" placeholder=" "/>
+						<span class="bar"></span>
+						<label>Phone</label>
+				</div>
+
+				<div class="group">
+						<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
+						  <option value="" selected></option>
+						  <option value="man">Man</option>
+						  <option value="woman">Woman</option>
+						</select>
+						<label>Gender</label>
+				</div>
+
+				<div class="group">
+					<input type="password" minlength="4" name="password" placeholder=" " required/>
+					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+					<span class="bar"></span>
+					<label>Password</label>
+				</div>
+
+				<div class="group">
+					<input type="password" minlength="4" name="confirm_password" placeholder=" " required/>
+					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+					<span class="bar"></span>
+					<label>Repeat Password</label>
+				</div>
+			</div>
+			<button type="submit" class="button">Sign Up</button>
+		</form>
+		
+	</div>
+</div>
+`
+}
+else{
+	setTimeout(function(){load_lang()}, 500)
+}
+})()
