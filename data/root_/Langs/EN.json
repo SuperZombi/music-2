@@ -1,0 +1,49 @@
+LANG = {
+	"main": "Zombi Music",
+	"nothing": "There is nothing here yet",
+	"dark": "Dark theme",
+	"light": "Light theme",
+	"up": "Go Up",
+	"all": "All tracks",
+	"last_upd": "Last Updates",
+
+	"main_link": "Home",
+	"track": "Track",
+	"author": "Author",
+	"play": "Play",
+	"watch": "Watch",
+	"contact": "Contact us",
+	"download": "Download",
+	"player_play": "Play",
+	"player_stop": "Pause",
+	"share": "Share",
+	"close": "Close",
+	"copy": "Copy",
+	"copied": "Copied!",
+
+	//Support
+	"support_title": "Support",
+	"report": "Report abuse",
+	"post": "Post my track",
+	"donate": "Donate",
+	"subject_report": "Zombi Music - Complaint",
+	"subject_post": "Zombi Music - Cooperation",
+	"watch_r": "View Requirements",
+	
+	"site_desc_title": "About Us",
+	"site_desc": "This site allows musicians to collect all links to their tracks in one place.",
+
+	//Requirements
+	"requirements_title": "Requirements",
+	"limitation": "Limitation",
+	"resolution": "Resolution",
+	"f_type": "File type",
+	"f_size": "File size",
+	"image": "Image file",
+	"audio": "Audio file",
+	"create_json": "Create JSON",
+
+	"config_example": "Example of <i>config.json</i>",
+
+	"easter_egg": "Click a few more times"
+}

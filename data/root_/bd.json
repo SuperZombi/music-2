@@ -1,0 +1,54 @@
+bd = {
+	"Super Zombi":{
+		"path":"my",
+		"tracks":{
+			"Alien":{
+				"path":"alien",
+				"image":"img.jpg",
+				"genre": "Dubstep",
+				"date":"17.07.2020"
+			},
+			"Dragon":{
+				"path":"dragon",
+				"image":"img.jpg",
+				"genre": "Dubstep",
+				"date":"15.05.2021"
+			},
+			"Marionette Life":{
+				"path":"marionette-life",
+				"image":"img.jpg",
+				"genre": "Dubstep",
+				"date":"30.10.2021"
+			},
+			"Sadness Rain":{
+				"path":"sadness-rain",
+				"image":"image.png",
+				"genre": "Lo-Fi",
+				"date":"01.12.2021"
+			},
+		}
+	},
+	"JrSi": {
+		"path":"jrsi",
+		"tracks":{
+			"Chill Out":{
+				"path":"chill-out",
+				"image":"MyLogo.jpg",
+				"genre": "Trap",
+				"date":"30.06.2020"
+			},
+			"Dystopia 2015":{
+				"path":"dystopia",
+				"image":"MyLogo.jpg",
+				"genre": "Trap",
+				"date":"04.11.2020"
+			},
+			"Merry Christmas":{
+				"path":"merry-christmas",
+				"image":"MyLogo.png",
+				"genre": "Trap",
+				"date":"09.12.2020"
+			}
+		}
+	}
+}
