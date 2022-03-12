@@ -51,5 +51,9 @@ LANG = {
 	"artist": "Artist",
 	"genre": "Genre",
 	"image": "Image",
-	"audio": "Audio"
+	"audio": "Audio",
+	"release_date": "Release Date",
+	"allow_download": "Allow Download",
+	"links": "Links",
+	"optional": "Optional"
 }
