@@ -5,7 +5,7 @@ from dateutil import parser as dataparse
 from flask import Flask, request, jsonify, send_from_directory, abort, redirect
 from flask_cors import CORS
 import json
-import re
+# import re
 from enum import Enum
 app = Flask(__name__)
 CORS(app)
@@ -124,10 +124,10 @@ def load_tracks():
 			string = file.read()
 			string = string.split('=', 1)[1]
 			
-			regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
-			result = re.sub(regex, "", string, 0)
+			# regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
+			# string = re.sub(regex, "", string, 0)
 			
-			tracks = json.loads(result)
+			tracks = json.loads(string)
 	except FileNotFoundError:
 		None
 load_tracks()
