@@ -38,8 +38,18 @@ LANG = {
 	"resolution": "Resolution",
 	"f_type": "File type",
 	"f_size": "File size",
-	"image": "Image file",
-	"audio": "Audio file",
+	"image_file": "Image file",
+	"audio_file": "Audio file",
 
-	"easter_egg": "Click a few more times"
+	"easter_egg": "Click a few more times",
+
+	// new-release
+	"new_release": "New Release",
+	"beta": "Beta",
+	"track": "Track",
+	"track_name": "Track name",
+	"artist": "Artist",
+	"genre": "Genre",
+	"image": "Image",
+	"audio": "Audio"
 }
