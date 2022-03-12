@@ -1,7 +1,36 @@
 (function load_lang(){
 if (typeof LANG !== 'undefined'){
 body = `
-<div id="notifications"></div>
+<div style="text-align:center;margin-top:15px;margin-bottom:20px;">
+<details>
+	<summary class="link_button" style="display:inline-block;cursor:pointer;">
+		${LANG.watch_r}
+	</summary>
+
+	<div id="main_page" style="margin-top:15px;margin-bottom:25px;">
+		<table>
+			<tr>
+				<th>${LANG.limitation}</th>
+				<th>${LANG.resolution}</th>
+				<th>${LANG.f_type}</th>
+				<th>${LANG.f_size}</th>
+			</tr>
+			<tr>
+				<td>${LANG.image}</td>
+				<td>⩽1080×1080</td>
+				<td>png/jpg</td>
+				<td>⩽1Mb</td>
+			</tr>
+			<tr>
+				<td>${LANG.audio}</td>
+				<td>⩽192kbps</td>
+				<td>mp3</td>
+				<td>⩽10Mb</td>
+			</tr>
+		</table>
+	</div>
+</details>
+</div>
 
 <form onsubmit="sendForm(this);return false;" id="mainForm">
 <table>
