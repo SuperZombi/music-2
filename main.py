@@ -36,6 +36,85 @@ class Errors(Enum):
 		'ru': "Неверные параметры!"
 	}
 
+class BrootForceProtection():
+	database = {}
+	@classmethod
+	def data(cls):
+		return cls.database
+
+	def __init__(self, username, password, ip, func, max_attempts=5, sleep_time=30):
+		self.username = username
+		self.password = password
+		self.ip = ip
+		self.func = func
+		self.max_attempts = max_attempts
+		self.sleep_time = sleep_time
+
+	def __call__(self):
+		db = self.data()
+		username = self.username
+		password = self.password
+		ip = self.ip
+		func = self.func
+		max_attempts = self.max_attempts
+		sleep_time = self.sleep_time
+		final = {}
+		final['successfully'] = False
+		final['wait'] = False
+
+		if username in db.keys():
+			if ip in db[username].keys():
+				if db[username][ip]["amount"] >= max_attempts:
+					diff = int( time.time() - db[username][ip]['time'] )
+					if diff > sleep_time:
+						if func(username, password):
+							final['successfully'] = True
+
+							del db[username][ip]
+							if len(db[username]) == 0:
+								del db[username]
+
+							return final
+						db[username][ip]["amount"] = 0
+					else:
+						final['wait'] = True
+						final['sleep'] = sleep_time - diff
+						return final
+				if func(username, password):
+					final['successfully'] = True
+
+					del db[username][ip]
+					if len(db[username]) == 0:
+						del db[username]
+
+					return final
+				db[username][ip]['time'] = int(time.time())
+				db[username][ip]["amount"] += 1
+			else:
+				if func(username, password):
+					final['successfully'] = True
+					if len(db[username]) == 0:
+						del db[username]
+					return final
+				db[username][ip] = {"time": int(time.time()), "amount": 1}
+
+		else:
+			if func(username, password):
+				final['successfully'] = True
+
+
+				if ip in db[username].keys():
+					del db[username][ip]
+					if len(db[username]) == 0:
+						del db[username]
+
+				return final
+			
+			db[username] = {}
+			db[username][ip] = {"time": int(time.time()), "amount": 1}
+
+		return final
+
 @app.route("/status")
 def status():
 	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
@@ -227,15 +306,20 @@ def name_available():
 		return jsonify({'available': False, 'reason': Errors.creating_folder_error.name})
 	return jsonify({'available': True})
 
+def fast_login(user, password):
+	if user in users.keys():
+		if users[user]['password'] == password:
+			return True
+	return False
+
 @app.route("/api/login", methods=["POST"])
 def login():
-	if request.json['name'] in users.keys():
-		if users[request.json['name']]['password'] == request.json['password']:
-			return jsonify({'successfully': True})
-		else:
-			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
-		
-	return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	x = BrootForceProtection(request.json['name'], request.json['password'], ip, fast_login)()
+	if not x['successfully']:
+		x['reason'] = Errors.incorrect_name_or_password.name
+
+	return jsonify(x)
 
 @app.route("/api/register", methods=["POST"])
 def register():
@@ -289,16 +373,12 @@ def make_config(data, files):
 	return config
 
 
-def fast_login(user, password):
-	if user in users.keys():
-		if users[user]['password'] == password:
-			return True
-	return False
-
 @app.route('/api/uploader', methods=['POST'])
 def upload_file():
 	if request.method == 'POST':
-		if fast_login(request.form['artist'], request.form['password']):
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.form['artist'], request.form['password'], ip, fast_login)()
+		if x['successfully']:
 			user_folder = os.path.join("data", request.form['artist'].lower().replace(" ", "-"))
 			track_folder = os.path.join(user_folder, request.form['track_name'].lower().replace(" ", "-"))
 
