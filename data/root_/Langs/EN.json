@@ -55,5 +55,9 @@ LANG = {
 	"release_date": "Release Date",
 	"allow_download": "Allow Download",
 	"links": "Links",
-	"optional": "Optional"
+	"optional": "Optional",
+
+	"max_res": "Max Resolution is",
+	"max_img_s": "Max Image Size is",
+	"max_audio_s": "Max Audio Size is",
 }
