@@ -6,7 +6,7 @@ function checkPhoto(target) {
     var objectUrl = _URL.createObjectURL(file);
     img.onload = function () {
         if (this.width > 1080 || this.height > 1080){
-            document.getElementById("photoLabel").innerHTML += "Max Resolution is <i style='color:red'>1080x1080</i>! <br>";
+            document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1080x1080</i>! <br>`;
             target.value = '';
         }
         _URL.revokeObjectURL(objectUrl);
@@ -14,7 +14,7 @@ function checkPhoto(target) {
     img.src = objectUrl;
 
     if(target.files[0].size > 1048576) {
-        document.getElementById("photoLabel").innerHTML += "Max Image Size is <i style='color:red'>1Mb</i>! <br>";
+        document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>1Mb</i>! <br>`;
         target.value = '';
     }
 }
@@ -22,7 +22,7 @@ function checkPhoto(target) {
 function checkAudio(target) {
     document.getElementById("audioLabel").innerHTML = "";
     if(target.files[0].size > 10485760) {
-        document.getElementById("audioLabel").innerHTML += "Max Audio Size is <i style='color:red'>10Mb</i>! <br>";
+        document.getElementById("audioLabel").innerHTML += `${LANG.max_audio_s} <i style='color:red'>10Mb</i>! <br>`;
         target.value = '';
     }
 }
