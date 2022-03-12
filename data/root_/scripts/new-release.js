@@ -122,6 +122,7 @@ function sendForm(form){
 window.onload = function(){
     (function load_page(){
         if (typeof header !== 'undefined' && typeof body !== 'undefined'){
+            document.title = `${LANG.new_release} - Zombi Music`
             document.body.innerHTML += header
             document.body.innerHTML += body
         }
