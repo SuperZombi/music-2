@@ -38,7 +38,9 @@ class Errors(Enum):
 
 @app.route("/status")
 def status():
-	return jsonify({'online': True, 'time': time.time()})
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	return jsonify({'online': True, 'time': time.time(),
+					'ip': ip})
 
 @app.route("/")
 def index():
