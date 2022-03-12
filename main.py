@@ -44,6 +44,10 @@ class Errors(Enum):
 def status():
 	return jsonify({'online': True, 'time': time.time()})
 
+@app.route("/")
+def index():
+	return send_from_directory('data', 'index.html')
+
 @app.route('/<path:filepath>')
 def data(filepath):
 	p = os.path.join("data", filepath)
