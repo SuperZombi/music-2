@@ -32,14 +32,24 @@ LANG = {
 	"site_desc_title": "О нас",
 	"site_desc": "Этот сайт позволяет музыкантам собрать все ссылки на их треки в одном месте.",
 
-	//Requirements
+	// Requirements
 	"requirements_title": "Требования",
 	"limitation": "Ограничение",
 	"resolution": "Разрешение",
 	"f_type": "Тип файла",
 	"f_size": "Размер файла",
-	"image": "Изображение",
-	"audio": "Аудио файл",
+	"image_file": "Изображение",
+	"audio_file": "Аудио файл",
 
-	"easter_egg": "Нажмите ещё несколько раз"
+	"easter_egg": "Нажмите ещё несколько раз",
+
+	// new-release
+	"new_release": "Новый Релиз",
+	"beta": "Бета",
+	"track": "Трек",
+	"track_name": "Название трека",
+	"artist": "Исполнитель",
+	"genre": "Жанр",
+	"image": "Изображение",
+	"audio": "Аудио"
 }
