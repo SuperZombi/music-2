@@ -27,10 +27,6 @@ class Errors(Enum):
 		'en': "Track already exists!",
 		'ru': "Трек уже существует!"
 	}
-	forbidden_character = {
-		'en': "Forbidden character in nickname!",
-		'ru': "Запрещённый символ в нике!"
-	}
 	creating_folder_error = {
 		'en': "Error creating folder on server! A similar name with a different case is already taken.",
 		'ru': "Ошибка создания папки на сервере! Аналогичное имя с другим регистром уже занято."
@@ -222,8 +218,6 @@ def user_exists_post():
 
 @app.route("/api/name_available", methods=["POST"])
 def name_available():
-	if '"' in request.json['name']:
-		return jsonify({'available': False, 'reason': Errors.forbidden_character.name})
 	if request.json['name'] in users.keys():
 		return jsonify({'available': False, 'reason': Errors.name_already_taken.name})
 	user_folder = os.path.join("data", request.json['name'].lower().replace(" ", "-"))
@@ -245,9 +239,6 @@ def login():
 def register():
 	if request.json['name'] in users.keys():
 		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
-	
-	if '"' in request.json['name']:
-		return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
 
 	try:
 		user_folder = os.path.join("data", request.json['name'].lower().replace(" ", "-"))
