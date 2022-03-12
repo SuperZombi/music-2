@@ -78,7 +78,7 @@ def get_tracks():
 	unswer = []
 	for user, array in tracks.items():
 		for track in array:
-			unswer.append( os.path.join('data', user.lower().replace(" ", "-"), track.lower().replace(" ", "-"))  )
+			unswer.append( os.path.join(user.lower().replace(" ", "-"), track.lower().replace(" ", "-"))  )
 	return jsonify(unswer)
 
 users = {}
