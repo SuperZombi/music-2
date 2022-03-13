@@ -304,7 +304,7 @@ hr{
 	bottom: 0;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 35%;
+	width: 40%;
 	z-index: 10;
 	display: flex;
 	align-items: center;
