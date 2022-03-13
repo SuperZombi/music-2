@@ -60,4 +60,20 @@ LANG = {
 	"max_res": "Max Resolution is",
 	"max_img_s": "Max Image Size is",
 	"max_audio_s": "Max Audio Size is",
+
+	// login
+	"login_radio": "Log In",
+	"signup_radio": "Sign Up",
+	"login_button": "Login",
+	"signup_button": "Sign Up",
+	"name": "Name",
+	"password": "Password",
+	"repeat_pwd": "Repeat Password",
+	"show": "Show",
+	"hide": "Hide",
+	"email": "Email",
+	"phone": "Phone",
+	"gender": "Gender",
+	"man": "Man",
+	"woman": "Woman"
 }
