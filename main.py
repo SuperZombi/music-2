@@ -118,7 +118,7 @@ class BrootForceProtection():
 @app.route("/status")
 def status():
 	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
-	return jsonify({'online': True, 'time': time.time(),
+	return jsonify({'online': True, 'time': int(time.time()),
 					'ip': ip})
 
 @app.route("/")
@@ -179,7 +179,7 @@ def register_user(data):
 	temp = {}
 	temp[data['name']] = {}
 	temp[data['name']]['password'] = data['password']
-	temp[data['name']]['registration_time'] = time.time()
+	temp[data['name']]['registration_time'] = int(time.time())
 
 	if 'email' in data.keys():
 		temp[data['name']]['email'] = data['email']
