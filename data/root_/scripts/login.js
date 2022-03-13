@@ -3,12 +3,12 @@ function passwordToggle(what){
 	if (input.type === "password") {
 		input.type = "text";
 		what.classList.add("fa-eye-slash");
-		what.title = "Hide";
+		what.title = LANG.hide;
 	}
 	else {
 		input.type = "password";
 		what.classList.remove("fa-eye-slash");
-		what.title = "Show";
+		what.title = LANG.show;
 	}
 }
 
