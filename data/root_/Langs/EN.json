@@ -74,6 +74,6 @@ LANG = {
 	"email": "Email",
 	"phone": "Phone",
 	"gender": "Gender",
-	"man": "Man",
-	"woman": "Woman"
+	"man": "Male",
+	"woman": "Female"
 }
