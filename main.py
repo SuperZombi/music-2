@@ -101,13 +101,6 @@ class BrootForceProtection():
 		else:
 			if func(username, password):
 				final['successfully'] = True
-
-
-				if ip in db[username].keys():
-					del db[username][ip]
-					if len(db[username]) == 0:
-						del db[username]
-
 				return final
 			
 			db[username] = {}
