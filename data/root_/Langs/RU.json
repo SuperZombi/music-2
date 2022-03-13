@@ -62,6 +62,7 @@ LANG = {
 	"max_audio_s": "Максимальный размер аудио:",
 
 	// login
+	"login_title": "Вход",
 	"login_radio": "Вход",
 	"signup_radio": "Регистрация",
 	"login_button": "Войти",
