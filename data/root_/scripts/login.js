@@ -12,6 +12,37 @@ function passwordToggle(what){
 	}
 }
 
+function get_decode_error(code){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", '../api/decode_error', false)
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({'code': code, 'lang': language}))
+	if (xhr.status != 200){ return code }
+	else{
+		answer = JSON.parse(xhr.response)
+		if (!answer.successfully){ return code }
+		else{ return answer.value }			
+	}
+}
+
+function validName(input){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", '../api/name_available', false)
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({'name': input.value}))
+	if (xhr.status != 200){ return false }
+	else{
+		answer = JSON.parse(xhr.response)
+		if (!answer.available){
+			input.setCustomValidity(get_decode_error(answer.reason));
+			input.reportValidity();
+			input.onkeydown = _=> input.setCustomValidity('');
+			return false;
+		}
+		else{ return true }
+	}
+}
+
 function confirmPassword(main, child){
 	if(main.value != child.value) {
 		child.setCustomValidity("Passwords Don't Match");
@@ -57,6 +88,24 @@ function parseForm(type, form){
 	})
 	console.log(type);
 	console.log(final);
+
+	if (type == "signup"){
+		if ( validName(form.querySelector('input[name="name"]')) ){
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", '../api/register', false)
+			xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+			xhr.send(JSON.stringify(final))
+			if (xhr.status == 200){
+				answer = JSON.parse(xhr.response)
+				if (!answer.successfully){
+					console.log(get_decode_error(answer.reason))
+				}
+				else{
+					console.log("OK")
+				}
+			}
+		}
+	}
 }
 
 window.onload = function(){
