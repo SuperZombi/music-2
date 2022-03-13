@@ -5,8 +5,8 @@ body = `
 
 <form>
 	<div class="radio">
-		<input label="Log In" type="radio" name="form_action" value="login" checked>
-		<input label="Sign Up" type="radio" name="form_action" value="signup">
+		<input label="${LANG.login_radio}" type="radio" name="form_action" value="login" checked>
+		<input label="${LANG.signup_radio}" type="radio" name="form_action" value="signup">
 	</div>
 </form>
 
@@ -18,18 +18,18 @@ body = `
 				<div class="group">
 					<input type="text" name="name" placeholder=" " required/>
 					<span class="bar"></span>
-					<label>Name</label>
+					<label>${LANG.name}</label>
 				</div>
 
 				<div class="group">
 					<input type="password" minlength="4" name="password" placeholder=" " required>
 					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
 					<span class="bar"></span>
-					<label>Password</label>
+					<label>${LANG.password}</label>
 				</div>
 
 			</div>
-			<button type="submit" class="button">Login</button>
+			<button type="submit" class="button">${LANG.login_button}</button>
 		</form>
 
 	</div>
@@ -40,45 +40,45 @@ body = `
 				<div class="group">
 						<input type="text" name="name" placeholder=" " required/>
 						<span class="bar"></span>
-						<label>Name</label>
+						<label>${LANG.name}</label>
 				</div>
 
 				<div class="group">
 						<input type="email" name="email" placeholder=" "/>
 						<span class="bar"></span>
-						<label>Email</label>
+						<label>${LANG.email}</label>
 				</div>
 
 				<div class="group">
 						<input type="tel" name="phone" placeholder=" "/>
 						<span class="bar"></span>
-						<label>Phone</label>
+						<label>${LANG.phone}</label>
 				</div>
 
 				<div class="group">
 						<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
 						  <option value="" selected></option>
-						  <option value="man">Man</option>
-						  <option value="woman">Woman</option>
+						  <option value="man">${LANG.man}</option>
+						  <option value="woman">${LANG.woman}</option>
 						</select>
-						<label>Gender</label>
+						<label>${LANG.gender}</label>
 				</div>
 
 				<div class="group">
 					<input type="password" minlength="4" name="password" placeholder=" " required/>
-					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+					<i class="fa fa-eye toggle" title="${LANG.show}" onclick="passwordToggle(this)"></i>
 					<span class="bar"></span>
-					<label>Password</label>
+					<label>${LANG.password}</label>
 				</div>
 
 				<div class="group">
 					<input type="password" minlength="4" name="confirm_password" placeholder=" " required/>
-					<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+					<i class="fa fa-eye toggle" title="${LANG.show}" onclick="passwordToggle(this)"></i>
 					<span class="bar"></span>
-					<label>Repeat Password</label>
+					<label>${LANG.repeat_pwd}</label>
 				</div>
 			</div>
-			<button type="submit" class="button">Sign Up</button>
+			<button type="submit" class="button">${LANG.signup_button}</button>
 		</form>
 		
 	</div>
