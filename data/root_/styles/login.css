@@ -6,6 +6,11 @@ form{
 	padding: 15px;
 }
 
+#notifications{
+	top: 0;
+	bottom: unset;
+}
+
 /* INPUTS */
 .group *{
 	box-sizing: border-box;
