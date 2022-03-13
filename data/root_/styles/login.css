@@ -6,9 +6,9 @@ form{
 	padding: 15px;
 }
 
-#notifications{
+.notifications_top{
 	top: 0;
-	bottom: unset;
+	bottom: unset !important;
 }
 
 /* INPUTS */
