@@ -314,7 +314,7 @@ hr{
 	background: var(--notifications-back);
 	backdrop-filter: blur(2px);
 	width: unset;
-	min-width: 50%;
+	min-width: 55%;
 	margin: 8px auto 8px;
 }
 #notifications > * > .Message-body{
@@ -788,15 +788,18 @@ div.ripple {
 	#notifications{
 		width: 95%;
 	}
+	#notifications > * {
+		min-width: 75%;
+	}
+	#notifications > * > .Message-body{
+		font-size: 14pt;
+	}
 	#share_menu{
 		height: 80%;
 		width: 98%;
 	}
 	.share-element{
 		width: 93%;
-	}
-	#notifications > * > .Message-body{
-		font-size: 14pt;
 	}
 	.share-element .social_network{
 		width: 50px;
