@@ -76,5 +76,7 @@ LANG = {
 	"phone": "Phone",
 	"gender": "Gender",
 	"man": "Male",
-	"woman": "Female"
+	"woman": "Female",
+
+	"too_many_tries": "Too many tries! Please wait % sec."
 }
