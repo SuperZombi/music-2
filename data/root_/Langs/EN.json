@@ -62,6 +62,7 @@ LANG = {
 	"max_audio_s": "Max Audio Size is",
 
 	// login
+	"login_title": "Login",
 	"login_radio": "Log In",
 	"signup_radio": "Sign Up",
 	"login_button": "Login",
