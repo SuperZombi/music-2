@@ -45,8 +45,9 @@ form{
 }
 .group input:-webkit-autofill {
   -webkit-text-fill-color: var(--contrast-color);
-  -webkit-box-shadow: none;
+  /*-webkit-box-shadow: none;*/
   transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0 30px var(--login_back) inset !important;
 }
 .group select option {
 	background: var(--notifications-back);
