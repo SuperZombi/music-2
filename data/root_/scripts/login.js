@@ -106,6 +106,26 @@ function parseForm(type, form){
 			}
 		}
 	}
+	if (type == "login"){
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", '../api/login', false)
+		xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+		xhr.send(JSON.stringify(final))
+		if (xhr.status == 200){
+			answer = JSON.parse(xhr.response)
+			if (!answer.successfully){
+				if (answer.wait){
+					notice.Warning(LANG.too_many_tries.replace("%", answer.sleep))
+				}
+				else{
+					notice.Error(get_decode_error(answer.reason))
+				}			
+			}
+			else{
+				console.log("OK")
+			}
+		}
+	}	
 }
 
 window.onload = function(){
@@ -132,12 +152,14 @@ function main(){
 				document.querySelector(".flip-card").style.transform = "rotateY(180deg)"
 				document.querySelector(".flip-card-front").style.display = "none"
 				document.querySelector(".flip-card-back").style.display = "block"
+				document.querySelector("#notifications").classList.add("notifications_top")
 				location.hash = "signup"
 			}
 			else if(this.value == "login"){
 				document.querySelector(".flip-card").style.transform = "rotateY(0deg)"
 				document.querySelector(".flip-card-front").style.display = "block"
 				document.querySelector(".flip-card-back").style.display = "none"
+				document.querySelector("#notifications").classList.remove("notifications_top")
 				location.hash = ""
 				history.replaceState("", "", location.pathname)
 			}
