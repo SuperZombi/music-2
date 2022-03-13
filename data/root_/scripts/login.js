@@ -98,7 +98,7 @@ function parseForm(type, form){
 			if (xhr.status == 200){
 				answer = JSON.parse(xhr.response)
 				if (!answer.successfully){
-					console.log(get_decode_error(answer.reason))
+					notice.Error(get_decode_error(answer.reason))
 				}
 				else{
 					console.log("OK")
@@ -123,6 +123,8 @@ window.onload = function(){
 }
 
 function main(){
+	notice = Notification('#notifications');
+
 	var rad = document.querySelectorAll('input[name="form_action"]');
 	for (var i = 0; i < rad.length; i++) {
 		rad[i].addEventListener('change', function() {
