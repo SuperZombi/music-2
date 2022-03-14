@@ -77,3 +77,18 @@ table table i{
 table table input[type="text"] {
 	font-size: 14pt;
 }
+
+
+.logout{
+	display: flex;
+	align-items: center;
+}
+.logout svg{
+	margin-left: 6px;
+	height: 28px;
+	cursor: pointer;
+	transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.logout svg:hover{
+	fill: red;
+}
