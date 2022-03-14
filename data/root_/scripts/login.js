@@ -86,8 +86,8 @@ function parseForm(type, form){
 			final[e.name] = e.value;
 		}
 	})
-	console.log(type);
-	console.log(final);
+	// console.log(type);
+	// console.log(final);
 
 	if (type == "signup"){
 		if ( validName(form.querySelector('input[name="name"]')) ){
@@ -101,7 +101,10 @@ function parseForm(type, form){
 					notice.Error(get_decode_error(answer.reason))
 				}
 				else{
-					console.log("OK")
+					notice.Success("OK")
+					window.localStorage.setItem("userName", final.name)
+					window.localStorage.setItem("userPassword", final.password)
+					afterLogin()
 				}
 			}
 		}
@@ -122,10 +125,21 @@ function parseForm(type, form){
 				}			
 			}
 			else{
-				console.log("OK")
+				notice.Success("OK")
+				window.localStorage.setItem("userName", final.name)
+				window.localStorage.setItem("userPassword", final.password)
+				afterLogin()
 			}
 		}
 	}	
+}
+
+function afterLogin(){
+	setTimeout(function(){
+		if (searchParams.redirect){
+			window.location = searchParams.redirect;
+		}
+	}, 1000)
 }
 
 window.onload = function(){
@@ -144,6 +158,9 @@ window.onload = function(){
 
 function main(){
 	notice = Notification('#notifications');
+
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	searchParams = Object.fromEntries(urlSearchParams.entries());
 
 	var rad = document.querySelectorAll('input[name="form_action"]');
 	for (var i = 0; i < rad.length; i++) {
