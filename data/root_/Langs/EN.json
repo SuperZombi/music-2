@@ -61,12 +61,16 @@ LANG = {
 	"max_img_s": "Max Image Size is",
 	"max_audio_s": "Max Audio Size is",
 
+	"files_uploaded": "Files uploaded successfully!",
+	"error": "Error!",
+
 	// login
 	"login_title": "Login",
 	"login_radio": "Log In",
 	"signup_radio": "Sign Up",
 	"login_button": "Login",
 	"signup_button": "Sign Up",
+	"log_out": "Log Out",
 	"name": "Name",
 	"password": "Password",
 	"repeat_pwd": "Repeat Password",
