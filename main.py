@@ -401,8 +401,9 @@ def upload_file():
 								date=request.form['release_date'])
 
 						save_tracks()
-
-						return jsonify({'successfully': True})
+						
+						url = os.path.join( request.form['artist'].lower().replace(" ", "-"), request.form['track_name'].lower().replace(" ", "-") )
+						return jsonify({'successfully': True, 'url': url})
 
 					except Exception as e:
 						print(e)
