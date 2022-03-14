@@ -108,7 +108,7 @@ function sendForm(form){
             if (!answer.successfully){console.log("Ошибка!", answer.reason)}
             else{
                 console.log("Файлы успешно загружены!")
-            }           
+            }
         }
     }
     req.ontimeout = async function() {console.log("Ошибка")};
@@ -136,7 +136,6 @@ function main(){
     local_storage = { ...localStorage };
     if (local_storage.userName && local_storage.userPassword){
         document.getElementById("form_artist").value = local_storage.userName
-        console.log(local_storage.userName, local_storage.userPassword)
     }
     else{
         let url = window.location.pathname;
