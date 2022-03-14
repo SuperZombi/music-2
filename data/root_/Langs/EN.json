@@ -63,6 +63,7 @@ LANG = {
 
 	"files_uploaded": "Files uploaded successfully!",
 	"error": "Error!",
+	"go_to": "View on Site",
 
 	// login
 	"login_title": "Login",
