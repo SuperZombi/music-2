@@ -134,7 +134,7 @@ def data(filepath):
 		if os.path.isfile(p):
 			return send_from_directory('data', filepath)
 		if filepath[-1] != "/":
-			return redirect("/" + p + "/")
+			return redirect("/" + filepath + "/")
 		if os.path.isfile(os.path.join(p, 'index.html')):
 			return send_from_directory('data', os.path.join(filepath, 'index.html'))
 	if os.path.isfile(p + '.html'):
