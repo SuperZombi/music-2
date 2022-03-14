@@ -311,7 +311,7 @@ hr{
 	flex-direction: column;
 }
 .notifications_top {
-	top: 0;
+	top: 10px;
 	bottom: unset !important;
 }
 #notifications > * {
@@ -328,6 +328,9 @@ hr{
 #notifications > * > .Message-body > p{
 	text-align: center;
 	float: unset;
+}
+#notifications > * > .Message-body > button{
+	font-size: 15pt;
 }
 #share{
 	height: 60px;
@@ -796,7 +799,10 @@ div.ripple {
 		min-width: 75%;
 	}
 	#notifications > * > .Message-body{
-		font-size: 14pt;
+		font-size: 16pt;
+	}
+	#notifications > * > .Message-body > button{
+		font-size: 16pt;
 	}
 	#share_menu{
 		height: 80%;
