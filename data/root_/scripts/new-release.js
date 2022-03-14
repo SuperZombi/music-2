@@ -130,6 +130,7 @@ window.onload = function(){
 }
 
 function main(){
+    notice = Notification('#notifications');
     local_storage = { ...localStorage };
     if (local_storage.userName && local_storage.userPassword){
         document.getElementById("form_artist").value = local_storage.userName
