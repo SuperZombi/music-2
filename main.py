@@ -8,6 +8,7 @@ import json
 # import re
 from enum import Enum
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 CORS(app)
 
 class Errors(Enum):
@@ -159,8 +160,8 @@ def get_error_value():
 def get_tracks():
 	unswer = []
 	for user, array in tracks.items():
-		for track in array:
-			unswer.append( os.path.join(user.lower().replace(" ", "-"), track.lower().replace(" ", "-"))  )
+		for track in array['tracks']:
+			unswer.append( user.lower().replace(" ", "-") + "/" + track.lower().replace(" ", "-")  )
 	return jsonify(unswer)
 
 users = {}
@@ -417,7 +418,7 @@ def upload_file():
 
 						save_tracks()
 						
-						url = os.path.join( request.form['artist'].lower().replace(" ", "-"), request.form['track_name'].lower().replace(" ", "-") )
+						url = request.form['artist'].lower().replace(" ", "-") + "/" + request.form['track_name'].lower().replace(" ", "-")
 						return jsonify({'successfully': True, 'url': url})
 
 					except Exception as e:
