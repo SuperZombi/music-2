@@ -61,12 +61,16 @@ LANG = {
 	"max_img_s": "Максимальный размер изображения:",
 	"max_audio_s": "Максимальный размер аудио:",
 
+	"files_uploaded": "Файлы успешно загружены!",
+	"error": "Ошибка!",
+
 	// login
 	"login_title": "Вход",
 	"login_radio": "Вход",
 	"signup_radio": "Регистрация",
 	"login_button": "Войти",
 	"signup_button": "Зарегистрироваться",
+	"log_out": "Выйти",
 	"name": "Имя Пользователя",
 	"password": "Пароль",
 	"repeat_pwd": "Повторите Пароль",
