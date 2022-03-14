@@ -13,8 +13,8 @@ function checkPhoto(target) {
     };
     img.src = objectUrl;
 
-    if(target.files[0].size > 1048576) {
-        document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>1Mb</i>! <br>`;
+    if(target.files[0].size > 2097152) {
+        document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>2Mb</i>! <br>`;
         target.value = '';
     }
 }
