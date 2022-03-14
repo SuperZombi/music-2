@@ -300,6 +300,8 @@ def user_exists_post():
 
 @app.route("/api/name_available", methods=["POST"])
 def name_available():
+	if "/" in request.json['name'] or "\\" in request.json['name']:
+		return jsonify({'available': False, 'reason': Errors.forbidden_character.name})
 	if request.json['name'] in users.keys():
 		return jsonify({'available': False, 'reason': Errors.name_already_taken.name})
 	user_folder = os.path.join("data", request.json['name'].lower().replace(" ", "-"))
