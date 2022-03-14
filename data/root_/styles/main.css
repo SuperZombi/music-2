@@ -798,12 +798,6 @@ div.ripple {
 	#notifications > * {
 		min-width: 75%;
 	}
-	#notifications > * > .Message-body{
-		font-size: 16pt;
-	}
-	#notifications > * > .Message-body > button{
-		font-size: 16pt;
-	}
 	#share_menu{
 		height: 80%;
 		width: 98%;
