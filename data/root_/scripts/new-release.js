@@ -67,6 +67,19 @@ async function checkLink(target){
     }
 }
 
+function get_decode_error(code){
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", '../api/decode_error', false)
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(JSON.stringify({'code': code, 'lang': language}))
+    if (xhr.status != 200){ return code }
+    else{
+        let answer = JSON.parse(xhr.response)
+        if (!answer.successfully){ return code }
+        else{ return answer.value }         
+    }
+}
+
 function sendForm(form){
     var arr = form.querySelectorAll("input");
     var formData = new FormData();
@@ -98,21 +111,33 @@ function sendForm(form){
     formData.append('password', local_storage.userPassword)
 
     let req = new XMLHttpRequest();                          
-    req.open("POST", '../api/uploader');
+    req.open("POST", '../api/uploader', false);
     req.send(formData);
-
-    req.onload = async function() {
-        if (req.status != 200){console.log("Ошибка")}
-        else{
-            answer = JSON.parse(req.response)
-            if (!answer.successfully){console.log("Ошибка!", answer.reason)}
+    if (req.status != 200){notice.Error(LANG.error)}
+    else{
+        answer = JSON.parse(req.response)
+        if (!answer.successfully){
+            if (answer.reason == "incorrect_name_or_password"){
+                notice.clearAll()
+                notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
+            }
             else{
-                console.log("Файлы успешно загружены!")
+                notice.Error(get_decode_error(answer.reason))
             }
         }
+        else{
+            notice.Success(LANG.files_uploaded)
+            setTimeout(function(){
+                window.location.href = "../" + answer.url
+            }, 2000)
+        }
     }
-    req.ontimeout = async function() {console.log("Ошибка")};
-    req.onerror = async function() {console.log("Ошибка")};
+}
+
+function logout(){
+    window.localStorage.removeItem("userName")
+    window.localStorage.removeItem("userPassword")
+    goToLogin()
 }
 
 window.onload = function(){
@@ -129,6 +154,16 @@ window.onload = function(){
     })()
 }
 
+function goToLogin(){
+    let url = window.location.pathname;
+    let filename = url.substring(url.lastIndexOf('/')+1);
+
+    let login = new URL("login", window.location.href);
+    login.searchParams.append('redirect', filename);
+
+    window.location.href = login.href
+}
+
 function main(){
     notice = Notification('#notifications');
     local_storage = { ...localStorage };
@@ -136,12 +171,6 @@ function main(){
         document.getElementById("form_artist").value = local_storage.userName
     }
     else{
-        let url = window.location.pathname;
-        let filename = url.substring(url.lastIndexOf('/')+1);
-
-        let login = new URL("login", window.location.href);
-        login.searchParams.append('redirect', filename);
-
-        window.location.href = login.href
+        goToLogin()
     }
 }
