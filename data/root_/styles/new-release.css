@@ -34,6 +34,8 @@ form{
 }
 table td{
 	padding: 12px 10px;
+}
+#mainForm table > td{
 	max-width: 50vw;
 }
 table hr{
@@ -45,6 +47,8 @@ table input[type="text"]{
 	font-size: 16pt;
 	text-align: center;
 	border-radius: 50px;
+}
+#mainForm table > input[type="text"]{
 	width: 99%;
 }
 table input[type="submit"]{
@@ -69,6 +73,7 @@ table table img{
 	background: rgb(175, 175, 175, 0.5);
 	border-radius: 25px;
 	padding: 0 20px;
+	vertical-align: middle;
 }
 table table i{
 	cursor: pointer;
