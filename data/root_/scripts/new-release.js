@@ -173,4 +173,6 @@ function main(){
     else{
         goToLogin()
     }
+    
+    document.querySelector(".logout > svg").onclick = logout
 }
