@@ -336,7 +336,7 @@ def register():
 		user_folder = os.path.join("data", request.json['name'].lower().replace(" ", "-"))
 		if not os.path.exists(user_folder):
 			os.makedirs(user_folder)
-			with open(os.path.join(user_folder, 'config.json'), 'w', encoding='utf8') as file:
+			with open(os.path.join(user_folder, 'artist.json'), 'w', encoding='utf8') as file:
 				file.write(atrist_config(request.json['name']))
 			with open(os.path.join(user_folder, 'index.html'), 'w', encoding='utf8') as file:
 				file.write(artist_index(request.json['name']))
