@@ -15,6 +15,14 @@ class Errors(Enum):
 		'en': "The username or password you entered is incorrect!",
 		'ru': "Неверное имя пользователя или пароль!"
 	}
+	forbidden_character = {
+		'en': "Forbidden character in nickname!",
+		'ru': "Запрещённый символ в нике!"
+	}
+	track_forbidden_character = {
+		'en': "Forbidden character in track name!",
+		'ru': "Запрещённый символ в названии трека!"
+	}
 	user_dont_exist = {
 		'en': "This user does not exist!",
 		'ru': "Такого пользователя не существует!"
@@ -316,6 +324,9 @@ def login():
 
 @app.route("/api/register", methods=["POST"])
 def register():
+	if "/" in request.json['name'] or "\\" in request.json['name']:
+		return jsonify({'successfully': False, 'reason': Errors.forbidden_character})
+
 	if request.json['name'] in users.keys():
 		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
 
@@ -376,6 +387,8 @@ def upload_file():
 			track_folder = os.path.join(user_folder, request.form['track_name'].lower().replace(" ", "-"))
 
 			if os.path.exists(user_folder):
+				if "/" in request.form['track_name'] or "\\" in request.form['track_name']:
+					return jsonify({'successfully': False, 'reason': Errors.track_forbidden_character})
 				if track_exists(request.form['artist'], request.form['track_name']):
 					return jsonify({'successfully': False, 'reason': Errors.track_already_exists.name})
 
