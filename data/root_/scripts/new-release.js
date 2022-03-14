@@ -113,9 +113,6 @@ function sendForm(form){
     }
     req.ontimeout = async function() {console.log("Ошибка")};
     req.onerror = async function() {console.log("Ошибка")};
-
-
-    console.log(string)
 }
 
 window.onload = function(){
