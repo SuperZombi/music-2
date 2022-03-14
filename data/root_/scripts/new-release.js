@@ -109,6 +109,7 @@ function sendForm(form){
     });
 
     formData.append('password', local_storage.userPassword)
+    document.getElementById('loading_waveform').parentNode.style.display = "block"
 
     let req = new XMLHttpRequest();                          
     req.open("POST", '../api/uploader', false);
@@ -132,6 +133,7 @@ function sendForm(form){
             }]])
         }
     }
+    document.getElementById('loading_waveform').parentNode.style.display = "none"
 }
 
 function logout(){
