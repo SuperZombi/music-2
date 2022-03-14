@@ -127,3 +127,7 @@ div.ripple {
 	border-color: #555555 !important;
 	background-color: #101010 !important;
 }
+
+.logout svg{
+	fill: white;
+}
