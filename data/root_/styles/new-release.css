@@ -29,9 +29,12 @@ form{
 	padding: 0;
 	border-radius: 0;
 	box-shadow: none;
+	display: flex;
+	justify-content: center;
 }
 table td{
-	padding: 12px 20px;
+	padding: 12px 10px;
+	max-width: 50vw;
 }
 table hr{
 	border-color: #f69a73 !important;
@@ -42,6 +45,7 @@ table input[type="text"]{
 	font-size: 16pt;
 	text-align: center;
 	border-radius: 50px;
+	width: 99%;
 }
 table input[type="submit"]{
 	font-size: 16pt;
