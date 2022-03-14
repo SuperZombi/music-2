@@ -5,8 +5,8 @@ function checkPhoto(target) {
     img = new Image();
     var objectUrl = _URL.createObjectURL(file);
     img.onload = function () {
-        if (this.width > 1080 || this.height > 1080){
-            document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1080x1080</i>! <br>`;
+        if (this.width > 1280 || this.height > 1280){
+            document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1280x1280</i>! <br>`;
             target.value = '';
         }
         _URL.revokeObjectURL(objectUrl);
@@ -81,6 +81,8 @@ function get_decode_error(code){
 }
 
 function sendForm(form){
+    document.getElementById('loading_waveform').parentNode.style.display = "table-cell";
+
     var arr = form.querySelectorAll("input");
     var formData = new FormData();
 
@@ -109,31 +111,33 @@ function sendForm(form){
     });
 
     formData.append('password', local_storage.userPassword)
-    document.getElementById('loading_waveform').parentNode.style.display = "block"
 
     let req = new XMLHttpRequest();                          
-    req.open("POST", '../api/uploader', false);
-    req.send(formData);
-    if (req.status != 200){notice.Error(LANG.error)}
-    else{
-        answer = JSON.parse(req.response)
-        if (!answer.successfully){
-            if (answer.reason == "incorrect_name_or_password"){
-                notice.clearAll()
-                notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
+    req.open("POST", '../api/uploader');
+    req.onload = function() {
+        if (req.status != 200){notice.Error(LANG.error)}
+        else{
+            answer = JSON.parse(req.response)
+            if (!answer.successfully){
+                if (answer.reason == "incorrect_name_or_password"){
+                    notice.clearAll()
+                    notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
+                }
+                else{
+                    notice.Error(get_decode_error(answer.reason))
+                }
             }
             else{
-                notice.Error(get_decode_error(answer.reason))
+                notice.clearAll()
+                notice.Success(LANG.files_uploaded, false, [[LANG.go_to, _=>{
+                    window.location.href = "../" + answer.url
+                }]])
             }
         }
-        else{
-            notice.clearAll()
-            notice.Success(LANG.files_uploaded, false, [[LANG.go_to, _=>{
-                window.location.href = "../" + answer.url
-            }]])
-        }
+        document.getElementById('loading_waveform').parentNode.style.display = "none"
     }
-    document.getElementById('loading_waveform').parentNode.style.display = "none"
+    xhr.onerror = _=> notice.Error(LANG.error);
+    req.send(formData);
 }
 
 function logout(){
