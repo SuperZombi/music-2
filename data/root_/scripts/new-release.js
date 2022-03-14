@@ -136,7 +136,7 @@ function sendForm(form){
         }
         document.getElementById('loading_waveform').parentNode.style.display = "none"
     }
-    xhr.onerror = _=> notice.Error(LANG.error);
+    req.onerror = _=> notice.Error(LANG.error);
     req.send(formData);
 }
 
