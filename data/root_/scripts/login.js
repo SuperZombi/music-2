@@ -19,7 +19,7 @@ function get_decode_error(code){
 	xhr.send(JSON.stringify({'code': code, 'lang': language}))
 	if (xhr.status != 200){ return code }
 	else{
-		answer = JSON.parse(xhr.response)
+		let answer = JSON.parse(xhr.response)
 		if (!answer.successfully){ return code }
 		else{ return answer.value }			
 	}
