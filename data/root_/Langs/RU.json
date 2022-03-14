@@ -63,6 +63,7 @@ LANG = {
 
 	"files_uploaded": "Файлы успешно загружены!",
 	"error": "Ошибка!",
+	"go_to": "Перейти",
 
 	// login
 	"login_title": "Вход",
