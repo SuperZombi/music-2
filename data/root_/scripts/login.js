@@ -86,8 +86,6 @@ function parseForm(type, form){
 			final[e.name] = e.value;
 		}
 	})
-	// console.log(type);
-	// console.log(final);
 
 	if (type == "signup"){
 		if ( validName(form.querySelector('input[name="name"]')) ){
