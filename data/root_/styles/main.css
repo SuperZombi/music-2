@@ -310,6 +310,10 @@ hr{
 	align-items: center;
 	flex-direction: column;
 }
+.notifications_top {
+	top: 0;
+	bottom: unset !important;
+}
 #notifications > * {
 	background: var(--notifications-back);
 	backdrop-filter: blur(2px);
