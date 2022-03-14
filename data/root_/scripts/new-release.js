@@ -95,11 +95,10 @@ function sendForm(form){
         }
     });
 
-    // TODO
-    formData.append('password', 'password')
+    formData.append('password', local_storage.userPassword)
 
     let req = new XMLHttpRequest();                          
-    req.open("POST", 'https://zombi-music-server.superzombi.repl.co/uploader');
+    req.open("POST", '../api/uploader');
     req.send(formData);
 
     req.onload = async function() {
@@ -125,9 +124,27 @@ window.onload = function(){
             document.title = `${LANG.new_release} - Zombi Music`
             document.body.innerHTML += header
             document.body.innerHTML += body
+            main()
         }
         else{
             setTimeout(function(){load_page()}, 100)
         }
     })()
+}
+
+function main(){
+    local_storage = { ...localStorage };
+    if (local_storage.userName && local_storage.userPassword){
+        document.getElementById("form_artist").value = local_storage.userName
+        console.log(local_storage.userName, local_storage.userPassword)
+    }
+    else{
+        let url = window.location.pathname;
+        let filename = url.substring(url.lastIndexOf('/')+1);
+
+        let login = new URL("login", window.location.href);
+        login.searchParams.append('redirect', filename);
+
+        window.location.href = login.href
+    }
 }
