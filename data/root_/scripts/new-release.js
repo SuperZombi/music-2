@@ -126,10 +126,10 @@ function sendForm(form){
             }
         }
         else{
-            notice.Success(LANG.files_uploaded)
-            setTimeout(function(){
+            notice.clearAll()
+            notice.Success(LANG.files_uploaded, false, [[LANG.go_to, _=>{
                 window.location.href = "../" + answer.url
-            }, 2000)
+            }]])
         }
     }
 }
