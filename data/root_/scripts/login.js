@@ -91,6 +91,8 @@ function parseForm(type, form){
 
 	if (type == "signup"){
 		if ( validName(form.querySelector('input[name="name"]')) ){
+			final.password = CryptoJS.MD5(final.password).toString();
+
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", '../api/register', false)
 			xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -110,6 +112,8 @@ function parseForm(type, form){
 		}
 	}
 	if (type == "login"){
+		final.password = CryptoJS.MD5(final.password).toString();
+
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", '../api/login', false)
 		xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -122,7 +126,7 @@ function parseForm(type, form){
 				}
 				else{
 					notice.Error(get_decode_error(answer.reason))
-				}			
+				}
 			}
 			else{
 				notice.Success("OK")
