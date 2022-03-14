@@ -325,7 +325,7 @@ def login():
 @app.route("/api/register", methods=["POST"])
 def register():
 	if "/" in request.json['name'] or "\\" in request.json['name']:
-		return jsonify({'successfully': False, 'reason': Errors.forbidden_character})
+		return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
 
 	if request.json['name'] in users.keys():
 		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
@@ -388,7 +388,7 @@ def upload_file():
 
 			if os.path.exists(user_folder):
 				if "/" in request.form['track_name'] or "\\" in request.form['track_name']:
-					return jsonify({'successfully': False, 'reason': Errors.track_forbidden_character})
+					return jsonify({'successfully': False, 'reason': Errors.track_forbidden_character.name})
 				if track_exists(request.form['artist'], request.form['track_name']):
 					return jsonify({'successfully': False, 'reason': Errors.track_already_exists.name})
 
