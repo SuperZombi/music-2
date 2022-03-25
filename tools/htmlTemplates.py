@@ -22,6 +22,22 @@ def track_index(artist, track, image):
 	<script src="../../root_/scripts/main.js"></script>
 	</head><body></body></html>'''
 
+def track_embed():
+	return f'''<!DOCTYPE html><html><head>
+	<title>Zombi Music</title>
+	<meta name="viewport" content="width=device-width">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../../root_/styles/main.css">
+	<script src="../../root_/scripts/parse_params.js"></script>
+	<link rel="stylesheet" href="../../root_/styles/embed.css">
+	<link rel="stylesheet" href="../../root_/styles/fontawesome/css/all.min.css">
+	<script src="config.json"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.4/wavesurfer.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.4/plugin/wavesurfer.regions.min.js"></script>
+	<script src="../../root_/htmls/embed.html"></script>
+	<script src="../../root_/scripts/embed.js"></script>
+	</head><body></body></html>'''
+
 def atrist_config(name, image="../root_/images/people.svg"):
 	return "ARTIST = {" + f'''"name": "{name}", "image": "{image}"''' + "}"
 
