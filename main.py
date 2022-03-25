@@ -349,7 +349,7 @@ def delete_track():
 					save_tracks()
 				return jsonify({'successfully': True})
 			else:
-				return jsonify({'successfully': False, 'reason': Errors.track_dont_exists})
+				return jsonify({'successfully': False, 'reason': Errors.track_dont_exists.name})
 		else:
 			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
