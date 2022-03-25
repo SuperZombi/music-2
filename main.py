@@ -8,7 +8,7 @@ import json
 # import re
 from tools.serverErrors import Errors
 from tools.BrootForceProtection import BrootForceProtection
-import tools.htmlTemplates
+import tools.htmlTemplates as htmlTemplates
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app)
