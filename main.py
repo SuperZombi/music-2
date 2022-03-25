@@ -262,6 +262,8 @@ def upload_file():
 
 						with open(os.path.join(track_folder, 'index.html'), 'w', encoding='utf8') as file:
 							file.write(track_index(request.form['artist'], request.form['track_name'], request.files['image'].filename))
+						with open(os.path.join(track_folder, 'embed.html'), 'w', encoding='utf8') as file:
+							file.write(track_embed())
 					
 						add_track(artist=request.form['artist'],
 								track_name=request.form['track_name'],
