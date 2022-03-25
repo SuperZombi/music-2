@@ -8,7 +8,7 @@ import json
 # import re
 from tools.serverErrors import Errors
 from tools.BrootForceProtection import BrootForceProtection
-from tools.htmlTemplates import *
+import tools.htmlTemplates
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app)
@@ -191,9 +191,9 @@ def register():
 		if not os.path.exists(user_folder):
 			os.makedirs(user_folder)
 			with open(os.path.join(user_folder, 'artist.json'), 'w', encoding='utf8') as file:
-				file.write(atrist_config(request.json['name']))
+				file.write(htmlTemplates.atrist_config(request.json['name']))
 			with open(os.path.join(user_folder, 'index.html'), 'w', encoding='utf8') as file:
-				file.write(artist_index(request.json['name']))
+				file.write(htmlTemplates.artist_index(request.json['name']))
 		else:
 			return jsonify({'successfully': False, 'reason': Errors.creating_folder_error.name})
 	except:
@@ -261,9 +261,9 @@ def upload_file():
 							file.write('config = ' + json.dumps(config, indent=4, ensure_ascii=False))
 
 						with open(os.path.join(track_folder, 'index.html'), 'w', encoding='utf8') as file:
-							file.write(track_index(request.form['artist'], request.form['track_name'], request.files['image'].filename))
+							file.write(htmlTemplates.track_index(request.form['artist'], request.form['track_name'], request.files['image'].filename))
 						with open(os.path.join(track_folder, 'embed.html'), 'w', encoding='utf8') as file:
-							file.write(track_embed())
+							file.write(htmlTemplates.track_embed())
 					
 						add_track(artist=request.form['artist'],
 								track_name=request.form['track_name'],
