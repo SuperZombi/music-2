@@ -6,116 +6,11 @@ from flask import Flask, request, jsonify, send_from_directory, abort, redirect
 from flask_cors import CORS
 import json
 # import re
-from enum import Enum
+from serverErrors import Errors
+from BrootForceProtection import BrootForceProtection
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app)
-
-class Errors(Enum):
-	incorrect_name_or_password = {
-		'en': "The username or password you entered is incorrect!",
-		'ru': "Неверное имя пользователя или пароль!"
-	}
-	forbidden_character = {
-		'en': "Forbidden character in nickname!",
-		'ru': "Запрещённый символ в нике!"
-	}
-	track_forbidden_character = {
-		'en': "Forbidden character in track name!",
-		'ru': "Запрещённый символ в названии трека!"
-	}
-	user_dont_exist = {
-		'en': "This user does not exist!",
-		'ru': "Такого пользователя не существует!"
-	}
-	name_already_taken = {
-		'en': "This nickname is already taken!",
-		'ru': "Этот ник уже занят!"
-	}
-	track_already_exists = {
-		'en': "Track already exists!",
-		'ru': "Трек уже существует!"
-	}
-	creating_folder_error = {
-		'en': "Error creating folder on server! A similar name with a different case is already taken.",
-		'ru': "Ошибка создания папки на сервере! Аналогичное имя с другим регистром уже занято."
-	}
-	invalid_parameters = {
-		'en': "Invalid parameters!",
-		'ru': "Неверные параметры!"
-	}
-
-class BrootForceProtection():
-	database = {}
-	@classmethod
-	def data(cls):
-		return cls.database
-
-	def __init__(self, username, password, ip, func, max_attempts=5, sleep_time=30):
-		self.username = username
-		self.password = password
-		self.ip = ip
-		self.func = func
-		self.max_attempts = max_attempts
-		self.sleep_time = sleep_time
-
-	def __call__(self):
-		db = self.data()
-		username = self.username
-		password = self.password
-		ip = self.ip
-		func = self.func
-		max_attempts = self.max_attempts
-		sleep_time = self.sleep_time
-		final = {}
-		final['successfully'] = False
-		final['wait'] = False
-
-		if username in db.keys():
-			if ip in db[username].keys():
-				if db[username][ip]["amount"] >= max_attempts:
-					diff = int( time.time() - db[username][ip]['time'] )
-					if diff > sleep_time:
-						if func(username, password):
-							final['successfully'] = True
-
-							del db[username][ip]
-							if len(db[username]) == 0:
-								del db[username]
-
-							return final
-						db[username][ip]["amount"] = 0
-					else:
-						final['wait'] = True
-						final['sleep'] = sleep_time - diff
-						return final
-				if func(username, password):
-					final['successfully'] = True
-
-					del db[username][ip]
-					if len(db[username]) == 0:
-						del db[username]
-
-					return final
-				db[username][ip]['time'] = int(time.time())
-				db[username][ip]["amount"] += 1
-			else:
-				if func(username, password):
-					final['successfully'] = True
-					if len(db[username]) == 0:
-						del db[username]
-					return final
-				db[username][ip] = {"time": int(time.time()), "amount": 1}
-
-		else:
-			if func(username, password):
-				final['successfully'] = True
-				return final
-			
-			db[username] = {}
-			db[username][ip] = {"time": int(time.time()), "amount": 1}
-
-		return final
 
 @app.route("/status")
 def status():
@@ -243,6 +138,12 @@ def add_track(artist, track_name, genre, image, date):
 
 	tracks[artist]['tracks'][track_name]["date"] = d_str
 
+def remove_track(artist, track_name):
+	global tracks
+	if track_exists(artist, track_name):
+		del tracks[artist]['tracks'][track_name]
+		return True
+
 
 def track_index(artist, track, image):
 	return f'''<!DOCTYPE html><html><head>
@@ -293,11 +194,12 @@ def artist_index(name, image="../root_/images/people.svg"):
 	</head><body></body></html>'''
 
 
-@app.route("/api/user_exists", methods=["POST"])
-def user_exists_post():
-	if request.json['name'] in users.keys():
-		return jsonify({'exist': True})
-	return jsonify({'exist': False})
+# Method deprecated
+# @app.route("/api/user_exists", methods=["POST"])
+# def user_exists_post():
+	# if request.json['name'] in users.keys():
+	# 	return jsonify({'exist': True})
+	# return jsonify({'exist': False})
 
 @app.route("/api/name_available", methods=["POST"])
 def name_available():
@@ -431,9 +333,27 @@ def upload_file():
 		else:
 			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
-		
+
+
+@app.route('/api/delete_track', methods=['POST'])
+def delete_track():
+	if request.method == 'POST':
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.json['artist'], request.json['password'], ip, fast_login)()
+		if x['successfully']:
+			user_folder = os.path.join("data", request.json['artist'].lower().replace(" ", "-"))
+			track_folder = os.path.join(user_folder, request.json['track_name'].lower().replace(" ", "-"))
+			if os.path.exists(track_folder):
+				shutil.rmtree(track_folder)
+				if remove_track(request.json['artist'], request.json['track_name']):
+					save_tracks()
+				return jsonify({'successfully': True})
+			else:
+				return jsonify({'successfully': False, 'reason': Errors.track_dont_exists})
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
 
 if __name__ == '__main__':
-	#app.run(host='0.0.0.0', port='80', debug=True)
+	# app.run(debug=True)
 	app.run(host='0.0.0.0', port='80')
