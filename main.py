@@ -52,13 +52,20 @@ def get_error_value():
 	except:
 		return {'successfully': False}
 
-@app.route('/api/get_tracks')
-def get_tracks():
+@app.route('/api/get_all_tracks')
+def get_all_tracks():
 	unswer = []
 	for user, array in tracks.items():
 		for track in array['tracks']:
 			unswer.append( user.lower().replace(" ", "-") + "/" + track.lower().replace(" ", "-")  )
 	return jsonify(unswer)
+
+@app.route('/api/get_tracks', methods=["POST"])
+def get_tracks():
+	if request.json['user'] in tracks.keys():
+		return jsonify({'successfully': True, 'tracks': tracks[request.json['user']]})
+
+	return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
 
 users = {}
 def load_users():
