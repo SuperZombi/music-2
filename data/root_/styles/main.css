@@ -21,6 +21,8 @@
 
 	--login_back: aliceblue;
 	--shadow_lite: rgba(0, 0, 0, 0.5);
+
+	--account_menu: aliceblue;
 }
 ::-webkit-scrollbar
 {
@@ -329,6 +331,7 @@ hr{
 	text-align: center;
 	float: unset;
 }
+
 #notifications > * > .Message-body > button{
 	font-size: 15pt;
 }
@@ -486,6 +489,32 @@ div.ripple {
 	height: 25px;
 	vertical-align: top;
 	margin-right: 15px;
+}
+
+.myAccountElement{
+	background: var(--login_back);
+}
+#myAccount{
+	height: 50px;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	font-family: 'Ubuntu Mono', monospace;
+	font-size: 24pt;
+	color: var(--contrast-color);
+	margin-left: 15px;
+	transition: 0.4s;
+}
+#myAccount:hover{
+	color: #0077FF;
+}
+#myAccount:hover > img{
+	filter: drop-shadow(0 0 4px #0077FF);
+}
+#myAccount > img{
+	height: 80%;
+	margin-right: 15px;
+	transition: 0.4s;
 }
 #email{
 	margin-top: 50px;
