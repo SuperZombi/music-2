@@ -60,6 +60,8 @@ function main(){
 	document.querySelector("#notifications").classList.add("notifications_top")
 	document.querySelector(".logout > svg").onclick = logout
 
+	document.body.onclick = event => checkHideMenu(event)
+
 	local_storage = { ...localStorage };
 	if (local_storage.userName && local_storage.userPassword){
 		document.getElementById("user-name").innerHTML = local_storage.userName
@@ -199,6 +201,27 @@ function hide(){
 		pr.display = "none"
 		pr_name.style.display = "none"
 	}, 400)
+}
+
+function checkHideMenu(e){
+	for (let i=0; i<e.path.length;i++){
+		if (e.path[i] == document.getElementById("card_previewer")){
+			return
+		}
+		if (e.path[i] == document.getElementById("card_previewer_name")){
+			return
+		}
+		if (e.path[i].className == "about_box"){
+			return
+		}
+		if (e.path[i] == document.getElementById("header")){
+			return
+		}
+		if (e.path[i] == document.getElementById("notifications")){
+			return
+		}
+	}
+	hide()
 }
 
 
