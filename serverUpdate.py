@@ -1,7 +1,7 @@
 import os
 import shutil
-server_current = "C:\\Users\\Ростислав\\Downloads\\zombi-music-server"
-server_updates = "C:\\Users\\Ростислав\\Downloads\\music-2-main"
+server_current = ""
+server_updates = "music-2"
 
 for dname, dirs, files in os.walk(server_updates):
 	for fname in files:
