@@ -21,6 +21,15 @@ LANG = {
 	"copy": "Копировать",
 	"copied": "Скопировано!",
 
+	// Profile
+	"profile_title": "Аккаунт",
+	"edit": "Редактировать",
+	"delete": "Удалить",
+	"open": "Открыть",
+	"yes": "Да",
+	"no": "Нет",
+	"nothing_here": "Здесь ничего нет",
+
 	//Support
 	"support_title": "Поддержка",
 	"report": "Сообщить о нарушении",
