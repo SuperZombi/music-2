@@ -1,6 +1,13 @@
 (function load_lang(){
 if (typeof LANG !== 'undefined'){
 body = `
+<div class="myAccountElement">
+	<a id="myAccount" href="account/">
+		<img src="root_/images/people.svg">
+		<span>${LANG.profile_title}</span>
+	</a>
+</div>
+
 <div id="support">
 	<h1>${LANG.site_desc_title}</h1>
 	<h3 style="padding-left: 10px;padding-right: 10px;">${LANG.site_desc}</h3>
