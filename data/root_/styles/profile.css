@@ -1,0 +1,105 @@
+#card_previewer{
+	display: none;
+	height: 80px;
+	justify-content: center;
+    align-items: center;
+	transform: translateY(100%);
+	width: 100%;
+	left: 0;
+	background-color: var(--account_menu);
+	position: fixed;
+	z-index: 4;
+	bottom: 0;
+	transition: 0.4s;
+}
+#card_previewer > * {
+	height: 50px;
+	display: inline-block;
+	margin: 15px;
+	filter: drop-shadow(0 0 1px var(--contrast-mini));
+	cursor: pointer;
+	transition: 0.3s;
+	user-select: none;
+}
+#card_previewer > *:hover {
+	filter: drop-shadow(0 0 3px var(--contrast-mini));
+}
+#card_previewer > .close{
+	height: 40px;
+	fill: red;
+}
+#card_previewer> .close:hover{
+	filter: drop-shadow(0 0 10px red);
+}
+
+#card_previewer_name{
+	font-family: 'Balsamiq Sans';
+	max-height: 100px;
+	font-size: 30pt;
+	color: var(--contrast-color);
+	display: none;
+	text-align: center;
+	transform: translateY(350%);
+	width: 100%;
+	left: 0;
+	background-color: var(--account_menu);
+	position: fixed;
+	z-index: 3;
+	bottom: 80px;
+	transition: 0.75s;
+	filter: drop-shadow(0 -1px 5px var(--contrast-color));
+}
+#card_previewer_name div{
+	margin: 0 5px;
+}
+
+#notifications > * > .Message-body > p{
+	width: 100%;
+}
+
+#empty{
+	font-family: 'Balsamiq Sans';
+	color: var(--contrast-color);
+	text-align: center;
+	display: none;
+}
+#empty a{
+	text-decoration: none;
+	font-size: 1.4em;
+	display: inline-block;
+	margin: 15px;
+	color: var(--contrast-color);
+	border: 2px solid var(--contrast-color);
+	border-radius: 25px;
+	padding: 5px 20px;
+	transition: 0.3s;
+	white-space: nowrap;
+}
+#empty a:hover{
+	padding: 5px 40px;
+}
+#empty a img{
+	height: 25px;
+	vertical-align: top;
+	margin-right: 15px;
+}
+
+#user-name{
+	font-family: 'Balsamiq Sans';
+	font-size: 30pt;
+}
+
+.logout{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.logout svg{
+	margin-left: 8px;
+	height: 28px;
+	cursor: pointer;
+	transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.logout svg:hover{
+	fill: red;
+}
