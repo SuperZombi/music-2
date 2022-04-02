@@ -136,12 +136,15 @@ function parseForm(type, form){
 	}	
 }
 
-function afterLogin(){
+function afterLogin(delay=1000){
 	setTimeout(function(){
 		if (searchParams.redirect){
 			window.location = searchParams.redirect;
 		}
-	}, 1000)
+		else {
+			window.location = "./"
+		}
+	}, delay)
 }
 
 window.onload = function(){
@@ -163,6 +166,11 @@ function main(){
 
 	const urlSearchParams = new URLSearchParams(window.location.search);
 	searchParams = Object.fromEntries(urlSearchParams.entries());
+
+	local_storage = { ...localStorage };
+	if (local_storage.userName && local_storage.userPassword){
+        afterLogin(0)
+    }
 
 	var rad = document.querySelectorAll('input[name="form_action"]');
 	for (var i = 0; i < rad.length; i++) {
