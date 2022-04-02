@@ -59,7 +59,6 @@ async function addNewCategory(category_title, tracks){
 				<a href="../${e.href}" class="about_box">
 					<img src="../${e.href}/${e.image}">
 					<div class="track_name"><span>${e.track}</span></div>
-					<div class="artist">${e.author}</div>
 				</a>
 			`
 		})
