@@ -21,6 +21,15 @@ LANG = {
 	"copy": "Copy",
 	"copied": "Copied!",
 
+	// Profile
+	"profile_title": "Account",
+	"edit": "Edit",
+	"delete": "Delete",
+	"open": "Open",
+	"yes": "Yes",
+	"no": "No",
+	"nothing_here": "There's nothing here",
+
 	//Support
 	"support_title": "Support",
 	"report": "Report abuse",
@@ -83,5 +92,5 @@ LANG = {
 	"man": "Male",
 	"woman": "Female",
 
-	"too_many_tries": "Too many tries! Please wait % sec."
+	"too_many_tries": "Too many tries! Please wait % sec.",
 }
