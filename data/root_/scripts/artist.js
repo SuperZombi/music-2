@@ -24,7 +24,7 @@ async function main(){
 	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
 		try_dark(document.getElementById('artist_image'))
 	}
-	await addNewCategory("", sortByDate(getAllAuthorTracks(ARTIST.name)))
+	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
 	overflowed()
 }
 
@@ -51,7 +51,7 @@ function overflowed() {
 		}
 	})
 }
-async function addNewCategory(category_title, tracks){
+async function addNewCategory(tracks){
 	await new Promise((resolve, reject) => {
 		var html = ""
 		tracks.forEach(function(e){
@@ -64,7 +64,6 @@ async function addNewCategory(category_title, tracks){
 		})
 		document.getElementById("main_page").innerHTML += `
 			<div class="category">
-				<div class="category_title">${category_title}</div>
 				<div class="category_body">
 					${html}
 				</div>
