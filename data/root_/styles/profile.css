@@ -63,7 +63,7 @@
 	text-align: center;
 	display: none;
 }
-#empty a{
+#new-release{
 	text-decoration: none;
 	font-size: 1.4em;
 	display: inline-block;
@@ -75,10 +75,10 @@
 	transition: 0.3s;
 	white-space: nowrap;
 }
-#empty a:hover{
+#enew-release:hover{
 	padding: 5px 40px;
 }
-#empty a img{
+#new-release img{
 	height: 25px;
 	vertical-align: top;
 	margin-right: 15px;
