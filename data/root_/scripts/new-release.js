@@ -170,6 +170,15 @@ function goToLogin(){
     window.location.href = login.href
 }
 
+function try_dark(e){
+    if (darkThemeMq){
+        e.src = e.src.split('.').slice(0, -1).join('.') + "_dark.svg"
+    }
+    else{
+        e.src = e.src.split('.').slice(0, -1).join('.').split("_dark")[0] + ".svg"
+    }
+}
+
 function main(){
     notice = Notification('#notifications');
     local_storage = { ...localStorage };
@@ -181,4 +190,8 @@ function main(){
     }
     
     document.querySelector(".logout > svg").onclick = logout
+
+    if (document.getElementById('myAccount').getElementsByTagName('img')[0].src.split('.').pop() == "svg"){
+        try_dark(document.getElementById('myAccount').getElementsByTagName('img')[0])
+    }
 }
