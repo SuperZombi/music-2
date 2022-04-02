@@ -1,6 +1,13 @@
 (function load_lang(){
 if (typeof LANG !== 'undefined'){
 body = `
+<div class="myAccountElement">
+	<a id="myAccount" href="./">
+		<img src="../root_/images/people.svg">
+		<span>${LANG.profile_title}</span>
+	</a>
+</div>
+
 <div id="notifications" class="notifications_top"></div>
 
 <div style="text-align:center;margin-top:15px;margin-bottom:20px;">
