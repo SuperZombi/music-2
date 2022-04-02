@@ -5,6 +5,7 @@ window.onload = function() {
 		document.body.innerHTML += header
 		document.body.innerHTML += body
 		darking_images()
+		main()
 
 		setTimeout(function(){document.body.style.transition = "1s"}, 500)
 	}
@@ -20,5 +21,11 @@ function try_dark(e){
 	}
 	else{
 		e.src = e.src.split('.').slice(0, -1).join('.').split("_dark")[0] + ".svg"
+	}
+}
+
+function main(){
+	if (document.getElementById('myAccount').getElementsByTagName('img')[0].src.split('.').pop() == "svg"){
+		try_dark(document.getElementById('myAccount').getElementsByTagName('img')[0])
 	}
 }
