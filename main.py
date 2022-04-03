@@ -334,14 +334,22 @@ def change_profile_photo():
 					os.remove(image_path)
 
 				if 'delete' in request.form.keys():
-					artist_settings['image'] = "../root_/images/people.svg" # default
+					artist_settings_image = "../root_/images/people.svg" # default
 				else:
 					f = request.files['image']
 					f.save(os.path.join(user_folder, f.filename))
-					artist_settings['image'] = f.filename
+					artist_settings_image = f.filename
 
-				with open(os.path.join(user_folder, "artist.json"), 'w', encoding='utf8') as file:
-					file.write('ARTIST = ' + json.dumps(artist_settings, indent=4, ensure_ascii=False))
+				with open(os.path.join(user_folder, 'artist.json'), 'w', encoding='utf8') as file:
+					file.write(htmlTemplates.atrist_config(
+						request.form['artist'],
+						artist_settings_image
+					))
+				with open(os.path.join(user_folder, 'index.html'), 'w', encoding='utf8') as file:
+					file.write(htmlTemplates.artist_index(
+						request.form['artist'],
+						artist_settings_image
+					))
 
 				return jsonify({'successfully': True})
 			
