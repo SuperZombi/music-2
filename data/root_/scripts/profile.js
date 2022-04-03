@@ -74,7 +74,7 @@ function main(){
 	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
 		try_dark(document.getElementById('artist_image'))
 	}
-	var tmp_ = document.getElementById("empty")
+	var tmp_ = document.getElementById("new-release")
 	if (tmp_){
 		tmp_2 = tmp_.getElementsByTagName("img")
 		Object.keys(tmp_2).forEach(function(e){
