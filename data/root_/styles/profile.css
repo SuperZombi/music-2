@@ -57,6 +57,33 @@
 	width: 100%;
 }
 
+
+.artist_image_wrapper{
+	position: relative;
+	display: inline-block;
+	border-radius: 50%;
+}
+#artist_image{
+	transition: 0.3s;
+}
+.artist_image_wrapper:hover .popup_image_camera{
+	top: 53%;
+	opacity: 1;
+}
+.artist_image_wrapper:hover #artist_image{
+	filter: blur(6px);
+}
+.popup_image_camera{
+	cursor: pointer;
+	position: absolute;
+	top: 85%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 35%;
+	transition: 0.3s ease-out;
+	opacity: 0;
+}
+
 #empty{
 	font-family: 'Balsamiq Sans';
 	color: var(--contrast-color);
@@ -90,6 +117,10 @@
 #user-name{
 	font-family: 'Balsamiq Sans';
 	font-size: 30pt;
+	margin: unset;
+}
+#user-name a{
+	cursor: alias;
 }
 
 .logout{
