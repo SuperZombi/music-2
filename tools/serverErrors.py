@@ -37,3 +37,7 @@ class Errors(Enum):
 		'en': "Invalid parameters!",
 		'ru': "Неверные параметры!"
 	}
+	error_working_files = {
+		'en': "Error while working with files. Please contact the administrator.",
+		'ru': "Ошибка при работе с файлами. Пожалуйста, обратитесь к администратору."
+	}
