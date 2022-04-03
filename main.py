@@ -63,12 +63,12 @@ def get_error_value():
 
 @app.route('/api/get_tracks', methods=["POST"])
 def get_tracks():
-	if user_exists(request.json['user']):
+	if request.json['user'] in users.keys():
 		if request.json['user'] in tracks.keys():
 			return jsonify({'successfully': True, 'tracks': tracks[request.json['user']]})
 		else:
 			temp = {}
-			temp['path'] = artist.lower().replace(" ", "-")
+			temp['path'] = request.json['user'].lower().replace(" ", "-")
 			temp['tracks'] = {}
 			return jsonify({'successfully': True, 'tracks': temp})
 	else:
