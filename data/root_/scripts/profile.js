@@ -114,8 +114,7 @@ async function submain() {
 	if (xhr.status != 200){ notice.Error(LANG.error) }
 	else{
 		let answer = JSON.parse(xhr.response);
-		if (!answer.successfully){ notice.Error(LANG.error) }
-		else {
+		if (answer.successfully){
 			global_tracks = answer.tracks
 			document.getElementById("user-name").getElementsByTagName('a')[0].href = "/" + global_tracks.path
 			await addNewCategory(sortByDate(getAllAuthorTracks(answer.tracks)))
