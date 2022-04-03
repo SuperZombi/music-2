@@ -52,13 +52,14 @@ def get_error_value():
 	except:
 		return {'successfully': False}
 
-@app.route('/api/get_all_tracks')
-def get_all_tracks():
-	unswer = []
-	for user, array in tracks.items():
-		for track in array['tracks']:
-			unswer.append( user.lower().replace(" ", "-") + "/" + track.lower().replace(" ", "-")  )
-	return jsonify(unswer)
+# Method deprecated
+# @app.route('/api/get_all_tracks')
+# def get_all_tracks():
+# 	unswer = []
+# 	for user, array in tracks.items():
+# 		for track in array['tracks']:
+# 			unswer.append( user.lower().replace(" ", "-") + "/" + track.lower().replace(" ", "-")  )
+# 	return jsonify(unswer)
 
 @app.route('/api/get_tracks', methods=["POST"])
 def get_tracks():
@@ -312,6 +313,45 @@ def delete_track():
 				return jsonify({'successfully': False, 'reason': Errors.track_dont_exists.name})
 		else:
 			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
+
+
+@app.route('/api/change_profile_photo', methods=['POST'])
+def change_profile_photo():
+	if request.method == 'POST':
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.form['artist'], request.form['password'], ip, fast_login)()
+		if x['successfully']:
+			user_folder = os.path.join("data", request.form['artist'].lower().replace(" ", "-"))
+			try:
+				with open(os.path.join(user_folder, "artist.json"), 'r', encoding='utf8') as file:
+					lines = file.readlines()
+					string = "".join(filter(lambda x: not "//" in x, lines)) # remove comments
+					string = string.split('=', 1)[1]
+					artist_settings = json.loads(string)
+
+				image_path = os.path.normpath(os.path.join(os.path.abspath(user_folder), artist_settings['image']))
+				if os.path.isfile(image_path):
+					os.remove(image_path)
+
+				if 'delete' in request.form.keys():
+					artist_settings['image'] = "../root_/images/people.svg" # default
+				else:
+					f = request.files['image']
+					f.save(os.path.join(user_folder, f.filename))
+					artist_settings['image'] = f.filename
+
+				with open(os.path.join(user_folder, "artist.json"), 'w', encoding='utf8') as file:
+					file.write('ARTIST = ' + json.dumps(artist_settings, indent=4, ensure_ascii=False))
+
+				return jsonify({'successfully': True})
+			
+			except:
+				return jsonify({'successfully': False, 'reason': Errors.error_working_files.name})
+			
+			return jsonify({'successfully': True})
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
+
 
 
 if __name__ == '__main__':
