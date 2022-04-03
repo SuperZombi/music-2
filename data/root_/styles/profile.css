@@ -46,7 +46,7 @@
 	position: fixed;
 	z-index: 3;
 	bottom: 80px;
-	transition: 0.75s;
+	transition: 0.5s;
 	filter: drop-shadow(0 -1px 5px var(--contrast-color));
 }
 #card_previewer_name div{
@@ -80,7 +80,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	height: 35%;
-	transition: 0.3s ease-out;
+	transition: 0.25s ease-out;
 	opacity: 0;
 }
 
@@ -91,7 +91,7 @@
 	display: none;
 }
 #extra_space{
-	transition: 1s ease;
+	transition: 0.75s ease;
 }
 #new-release{
 	text-decoration: none;
