@@ -299,6 +299,11 @@ function checkHideMenu(e){
 function open_(){
 	window.location.href = "/" + global_tracks.path + "/" + global_tracks.tracks[current_show].path
 }
+function edit(){
+	let url = new URL("new-release", window.location.href);
+	url.searchParams.append('edit', current_show);
+	window.location.href = url.href;
+}
 
 function copyToClipboard(text) {
 	const elem = document.createElement('textarea');
