@@ -237,9 +237,11 @@ function editInit(){
                 document.getElementById("form_release_date").value = convertDate(answer.config.date)
                 document.getElementById("form_allow_download").checked = answer.config.allow_download
 
-                Object.keys(answer.config.links).forEach(e=>{
-                    document.getElementById("form_" + e).value = answer.config.links[e];
-                })
+                if (answer.config.links){
+                    Object.keys(answer.config.links).forEach(e=>{
+                        document.getElementById("form_" + e).value = answer.config.links[e];
+                    })
+                }
 
                 document.getElementById("mainForm").onsubmit = ()=> sendEditedForm(document.getElementById("mainForm"));
             }
