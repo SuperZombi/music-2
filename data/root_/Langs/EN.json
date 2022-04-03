@@ -29,11 +29,13 @@ LANG = {
 	"yes": "Yes",
 	"no": "No",
 	"nothing_here": "There's nothing here",
+	"change_photo": "Change profile photo",
+	"open_profile": "Open profile",
 
 	//Support
 	"support_title": "Support",
 	"report": "Report abuse",
-	"post": "Post my track",
+	"post": "Upload track",
 	"donate": "Donate",
 	"subject_report": "Zombi Music - Report",
 	"watch_r": "View Requirements",
