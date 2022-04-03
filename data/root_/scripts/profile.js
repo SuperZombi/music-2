@@ -87,8 +87,26 @@ function main(){
 	}
 }
 
+function loadProfileImage(){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", '../api/get_profile_photo')
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.onload = function() {
+		if (xhr.status == 200){ 
+			let answer = JSON.parse(xhr.response);
+			if (answer.successfully){
+				var image_href = new URL("/" + answer.image, window.location.href).href
+				document.getElementById("artist_image").src = image_href
+			}
+		}
+	}
+	xhr.send(JSON.stringify({'artist': local_storage.userName}))
+}
+
 var global_tracks;
 async function submain() {
+	loadProfileImage();
+
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", '../api/get_tracks', false)
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
