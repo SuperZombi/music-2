@@ -183,6 +183,7 @@ function show(what, obj){
 	pr.display = "flex"
 	pr_name = document.getElementById("card_previewer_name")
 	pr_name.style.display = "block"
+	document.getElementById("extra_space").style.height = "100px"
 	timout_menu = setTimeout(function(){
 		pr.transform = "translateY(0)"
 		pr_name.style.transform = "translateY(0)"
@@ -196,6 +197,7 @@ function hide(){
 	pr_name = document.getElementById("card_previewer_name")
 	
 	pr_name.style.transform = ""
+	document.getElementById("extra_space").style.height = "0px"
 	setTimeout(function(){pr.transform = ""}, 100)
 	timout_menu = setTimeout(function(){
 		pr.display = "none"
