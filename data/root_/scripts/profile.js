@@ -217,6 +217,7 @@ function sendFile(file){
 			else{
 				notice.clearAll()
 				notice.Success(LANG.files_uploaded)
+				loadProfileImage()
 			}
 		}
 	}
