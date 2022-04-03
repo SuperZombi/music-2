@@ -56,6 +56,7 @@ LANG = {
 
 	// new-release
 	"new_release": "New Release",
+	"edit_track": "Edit track info",
 	"beta": "Beta",
 	"track": "Track",
 	"track_name": "Track name",
