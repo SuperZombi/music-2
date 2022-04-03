@@ -38,9 +38,9 @@ function ckeck_empty(){
 }
 
 function logout(){
-    window.localStorage.removeItem("userName")
-    window.localStorage.removeItem("userPassword")
-    goToLogin()
+	window.localStorage.removeItem("userName")
+	window.localStorage.removeItem("userPassword")
+	goToLogin()
 }
 function goToLogin(){
 	let url = window.location.pathname;
@@ -171,6 +171,52 @@ function sortByDate(what){
 		e.date = x
 	})
 	return what.sort((a, b) => b.date - a.date)
+}
+
+function isFileImage(file) {
+	return file && file['type'].split('/')[0] === 'image';
+}
+function sendFile(file){
+	var formData = new FormData();
+	formData.append('artist', local_storage.userName);
+	formData.append('password', local_storage.userPassword);
+	formData.append('image', file);
+
+	let req = new XMLHttpRequest();                          
+	req.open("POST", '../api/change_profile_photo');
+	req.onload = function() {
+		if (req.status != 200){notice.Error(LANG.error)}
+		else{
+			answer = JSON.parse(req.response)
+			if (!answer.successfully){
+				if (answer.reason == "incorrect_name_or_password"){
+					notice.clearAll()
+					notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
+				}
+				else{
+					notice.Error(get_decode_error(answer.reason))
+				}
+			}
+			else{
+				notice.clearAll()
+				notice.Success(LANG.files_uploaded)
+			}
+		}
+	}
+	req.onerror = _=> notice.Error(LANG.error);
+	req.send(formData);
+}
+function selectFile(){
+	var input = document.createElement('input');
+	input.type = 'file';
+	input.accept = "image/png, image/jpeg";
+	input.onchange = e => { 
+		var file = e.target.files[0];
+		if (isFileImage(file)){
+			sendFile(file)
+		}
+	}
+	input.click();
 }
 
 
