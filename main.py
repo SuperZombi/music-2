@@ -153,6 +153,16 @@ def add_track(artist, track_name, genre, image, date):
 
 	tracks[artist]['tracks'][track_name]["date"] = d_str
 
+def edit_track(artist, track_name, genre, date):
+	global tracks
+	if track_exists(artist, track_name):
+		tracks[artist]['tracks'][track_name]["genre"] = genre
+
+		d = dataparse.parse(date)
+		d_str = f'{str(d.day).zfill(2)}.{str(d.month).zfill(2)}.{d.year}'
+
+		tracks[artist]['tracks'][track_name]["date"] = d_str
+
 def remove_track(artist, track_name):
 	global tracks
 	if track_exists(artist, track_name):
@@ -245,6 +255,18 @@ def make_config(data, files):
 		config['links'] = links
 
 	return config
+
+def edit_config(data, old_data):
+	old_data["genre"] = data["genre"]
+	old_data["allow_download"] = data["allow_download"]
+	links = {}
+	hosts = ['spotify', 'youtube_music', 'youtube', 'apple_music', 'deezer', 'soundcloud', 'newgrounds']
+	for i in hosts:
+		if i in data.keys():
+			links[i] = data[i]
+	if links:
+		old_data['links'] = links
+	return old_data
 
 
 @app.route('/api/uploader', methods=['POST'])
@@ -388,6 +410,70 @@ def change_profile_photo():
 			return jsonify({'successfully': True})
 		else:
 			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
+
+
+def get_track_info_json(path, other_track_info):
+	with open(path, 'r', encoding='utf8') as file:
+		lines = file.readlines()
+		string = "".join(filter(lambda x: x.strip()[:2] != "//", lines)) # remove comments
+		string = string.split('=', 1)[1]
+		config = json.loads(string)
+		config['date'] = other_track_info['date']
+	return config
+
+@app.route('/api/get_track_info', methods=['POST'])
+def get_track_info():
+	try:
+		if track_exists(request.json['artist'], request.json['track']):
+			try:
+				user_folder = os.path.join("data", request.json['artist'].lower().replace(" ", "-"))
+				track_folder = os.path.join(user_folder, request.json['track'].lower().replace(" ", "-"))
+				track_inf = tracks[request.json['artist']]['tracks'][request.json['track']]
+				config = get_track_info_json(os.path.join(track_folder, 'config.json'), track_inf)
+				return jsonify({'successfully': True, 'config': config})
+			except:
+				return jsonify({'successfully': False, 'reason': Errors.error_working_files.name})
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.track_dont_exists.name})
+	except:
+		return jsonify({'successfully': False, 'reason': Errors.invalid_parameters.name})
+
+@app.route('/api/edit_track', methods=['POST'])
+def edit_track_api():
+	if request.method == 'POST':
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.form['artist'], request.form['password'], ip, fast_login)()
+		if x['successfully']:
+			user_folder = os.path.join("data", request.form['artist'].lower().replace(" ", "-"))
+			track_folder = os.path.join(user_folder, request.form['track_name'].lower().replace(" ", "-"))
+
+			if os.path.exists(track_folder):
+				try:
+					track_inf = tracks[request.form['artist']]['tracks'][request.form['track_name']]
+					old_config = get_track_info_json(os.path.join(track_folder, 'config.json'), track_inf)
+
+					config = edit_config(request.form.to_dict(), old_config)
+					with open(os.path.join(track_folder, 'config.json'), 'w', encoding='utf8') as file:
+						file.write('config = ' + json.dumps(config, indent=4, ensure_ascii=False))
+				
+					edit_track(artist=request.form['artist'],
+							track_name=request.form['track_name'],
+							genre=request.form['genre'],
+							date=request.form['release_date'])
+
+					save_tracks()
+					
+					url = request.form['artist'].lower().replace(" ", "-") + "/" + request.form['track_name'].lower().replace(" ", "-")
+					return jsonify({'successfully': True, 'url': url})
+
+				except Exception as e:
+					print(e)
+					return jsonify({'successfully': False, 'reason': Errors.invalid_parameters.name})
+			
+			return jsonify({'successfully': False, 'reason': Errors.error_working_files.name})
+
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})	
 
 
 
