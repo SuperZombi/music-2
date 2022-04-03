@@ -29,11 +29,13 @@ LANG = {
 	"yes": "Да",
 	"no": "Нет",
 	"nothing_here": "Здесь ничего нет",
+	"change_photo": "Изменить фото профиля",
+	"open_profile": "Открыть профиль",
 
 	//Support
 	"support_title": "Поддержка",
 	"report": "Сообщить о нарушении",
-	"post": "Опубликовать мой трек",
+	"post": "Загрузить трек",
 	"donate": "Задонатить",
 	"subject_report": "Zombi Music - Жалоба",
 	"watch_r": "Посмотреть требования",
