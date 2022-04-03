@@ -194,4 +194,111 @@ function main(){
     if (document.getElementById('myAccount').getElementsByTagName('img')[0].src.split('.').pop() == "svg"){
         try_dark(document.getElementById('myAccount').getElementsByTagName('img')[0])
     }
+
+    editInit()
+}
+
+function editInit(){
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    searchParams = Object.fromEntries(urlSearchParams.entries());
+    if (searchParams.edit){
+        document.getElementById("formTitle").innerHTML = LANG.edit_track
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", `../api/get_track_info`, false)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(JSON.stringify({
+            'artist': local_storage.userName,
+            'track': searchParams.edit
+        }))
+        if (xhr.status != 200){ notice.Error(LANG.error) }
+        else{
+            let answer = JSON.parse(xhr.response);
+            if (!answer.successfully){ notice.Error(get_decode_error(answer.reason)) }
+            else {
+                document.getElementById("form_track_name").setAttribute('readonly', true);
+                document.getElementById("form_track_name").value = answer.config.track_name;
+                document.getElementById("form_genre").value = answer.config.genre;
+                document.getElementById("form_image").parentNode.parentNode.style.display = "none"
+                document.getElementById("form_image").required = false;
+                document.getElementById("form_audio").parentNode.parentNode.style.display = "none"
+                document.getElementById("form_audio").required = false;
+                
+                function convertDate(date_str){
+                    var tmp = date_str.split(".")
+                    var now = new Date(tmp[2], tmp[1]-1, tmp[0])
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                    return today;
+                }
+
+                document.getElementById("form_release_date").value = convertDate(answer.config.date)
+                document.getElementById("form_allow_download").checked = answer.config.allow_download
+
+                Object.keys(answer.config.links).forEach(e=>{
+                    document.getElementById("form_" + e).value = answer.config.links[e];
+                })
+
+                document.getElementById("mainForm").onsubmit = ()=> sendEditedForm(document.getElementById("mainForm"));
+            }
+        }
+    }
+}
+
+function sendEditedForm(form){
+    document.getElementById('loading_waveform').parentNode.style.display = "table-cell";
+
+    var arr = form.querySelectorAll("input");
+    var formData = new FormData();
+
+    var final = {};
+    arr.forEach(function(e){
+        if (e.id && e.value){
+            if (e.type == "checkbox"){
+                formData.append(e.id.split("form_")[1], e.checked)
+                Object.assign(final, {
+                    [e.id.split("form_")[1]] : e.checked
+                });
+            }
+            else{
+                formData.append(e.id.split("form_")[1], e.value.trim())
+                Object.assign(final, {
+                    [e.id.split("form_")[1]] : e.value.trim()
+                });
+            }
+        }
+    });
+
+    formData.append('password', local_storage.userPassword)
+
+    let req = new XMLHttpRequest();                          
+    req.open("POST", '../api/edit_track');
+    req.onload = function() {
+        if (req.status != 200){notice.Error(LANG.error)}
+        else{
+            answer = JSON.parse(req.response)
+            if (!answer.successfully){
+                if (answer.reason == "incorrect_name_or_password"){
+                    notice.clearAll()
+                    notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
+                }
+                else{
+                    notice.Error(get_decode_error(answer.reason))
+                }
+            }
+            else{
+                notice.clearAll()
+                notice.Success("OK", false, [[LANG.go_to, _=>{
+                    window.location.href = "../" + answer.url
+                }]])
+            }
+        }
+        document.getElementById('loading_waveform').parentNode.style.display = "none"
+    }
+    req.onerror = _=> notice.Error(LANG.error);
+    req.send(formData);
+
+    return false;
 }
