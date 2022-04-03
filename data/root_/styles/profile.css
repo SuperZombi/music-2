@@ -2,7 +2,7 @@
 	display: none;
 	height: 80px;
 	justify-content: center;
-    align-items: center;
+	align-items: center;
 	transform: translateY(100%);
 	width: 100%;
 	left: 0;
@@ -62,6 +62,9 @@
 	color: var(--contrast-color);
 	text-align: center;
 	display: none;
+}
+#extra_space{
+	transition: 1s ease;
 }
 #new-release{
 	text-decoration: none;
