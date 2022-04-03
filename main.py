@@ -315,6 +315,29 @@ def delete_track():
 			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
 
+@app.route('/api/get_profile_photo', methods=['POST'])
+def get_profile_photo():
+	try:
+		user_folder_public = request.json['artist'].lower().replace(" ", "-")
+		user_folder = os.path.join("data", user_folder_public)
+
+		try:
+			with open(os.path.join(user_folder, "artist.json"), 'r', encoding='utf8') as file:
+				lines = file.readlines()
+				string = "".join(filter(lambda x: not "//" in x, lines)) # remove comments
+				string = string.split('=', 1)[1]
+				artist_settings = json.loads(string)
+			
+			return jsonify({'successfully': True, 'image': 
+				os.path.normpath(os.path.join(user_folder_public, artist_settings['image']))
+				})
+		except:
+			return jsonify({'successfully': True, 'image': 
+				os.path.normpath(os.path.join(user_folder_public, "../root_/images/people.svg"))
+				})
+	except:
+		return jsonify({'successfully': False, 'reason': Errors.invalid_parameters.name})
+
 @app.route('/api/change_profile_photo', methods=['POST'])
 def change_profile_photo():
 	if request.method == 'POST':
