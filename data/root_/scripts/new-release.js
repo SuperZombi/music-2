@@ -203,6 +203,7 @@ function editInit(){
     searchParams = Object.fromEntries(urlSearchParams.entries());
     if (searchParams.edit){
         document.getElementById("formTitle").innerHTML = LANG.edit_track
+        document.title = `${LANG.edit_track} - ${searchParams.edit}`
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST", `../api/get_track_info`, false)
