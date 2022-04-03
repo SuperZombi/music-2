@@ -233,13 +233,18 @@ def register():
 	return jsonify({'successfully': True})
 
 
+def parse_boolean(value):
+	if value == True or value == "true" or value == "True":
+		return True
+	return False
+
 def make_config(data, files):
 	config = {}
 	config["track_name"] = data["track_name"]
 	config["artist"] = data["artist"]
 	config["genre"] = data["genre"]
 	config["main_img"] = files["image"].filename
-	config["allow_download"] = data["allow_download"]
+	config["allow_download"] = parse_boolean(data["allow_download"])
 	config["download_file"] = files["audio"].filename
 	config["audio_preview"] = files["audio"].filename
 
@@ -258,7 +263,7 @@ def make_config(data, files):
 
 def edit_config(data, old_data):
 	old_data["genre"] = data["genre"]
-	old_data["allow_download"] = data["allow_download"]
+	old_data["allow_download"] = parse_boolean(data["allow_download"])
 	links = {}
 	hosts = ['spotify', 'youtube_music', 'youtube', 'apple_music', 'deezer', 'soundcloud', 'newgrounds']
 	for i in hosts:
