@@ -110,6 +110,7 @@ function loadProfileImage(){
 var global_tracks;
 async function submain() {
 	loadProfileImage();
+	loadSettings();
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", '../api/get_tracks', false)
@@ -348,4 +349,28 @@ function delete_(){
 			}
 		}
 	}
+}
+
+function loadSettings() {
+	if (local_storage.lang){
+		let inputs = document.querySelectorAll(".settings_element input[name=lang]")
+		let input = Array.from(inputs).filter(e=>e.value==local_storage.lang)[0]
+		try{input.checked = true;}catch{}
+	}
+	if (local_storage.theme){
+		let inputs = document.querySelectorAll(".settings_element input[name=theme]")
+		let input = Array.from(inputs).filter(e=>e.value==local_storage.theme)[0]
+		try{input.checked = true;}catch{}
+	}
+}
+function changeSettings(e){
+	if (e.value == "auto"){
+		localStorage.removeItem(e.name);
+	}
+	else{
+		localStorage.setItem(e.name, e.value);
+	}
+}
+function saveSattings(){
+	window.location.reload();
 }
