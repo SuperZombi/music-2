@@ -119,6 +119,24 @@ def register_user(data):
 
 	global users
 	users.update(temp)
+def edit_user(user, data):
+	global users
+	temp = dict(users[user])
+	if 'email' in data.keys():
+		if data['email'] == "" and 'email' in temp.keys():
+			del users[user]['email']
+		else:
+			users[user]['email'] = data['email']
+	if 'gender' in data.keys():
+		if data['gender'] == "" and 'gender' in temp.keys():
+			del users[user]['gender']
+		else:
+			users[user]['gender'] = data['gender']
+	if 'phone' in data.keys():
+		if data['phone'] == "" and 'phone' in temp.keys():
+			del users[user]['phone']
+		else:
+			users[user]['phone'] = data['phone']
 
 tracks = {}
 def load_tracks():
@@ -493,7 +511,37 @@ def edit_track_api():
 			return jsonify({'successfully': False, 'reason': Errors.error_working_files.name})
 
 		else:
-			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})	
+			return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
+
+
+@app.route('/api/get_user_profile', methods=['POST'])
+def get_user_profile():
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	x = BrootForceProtection(request.json['name'], request.json['password'], ip, fast_login)()
+	if x['successfully']:
+		if request.json['name'] in users.keys():
+			temp = dict(users[request.json['name']])
+			del temp['password']
+			del temp['registration_time']
+			return jsonify({'successfully': True, 'data': temp})
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
+	else:
+		return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
+
+@app.route('/api/edit_user_profile', methods=['POST'])
+def edit_user_profile():
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	x = BrootForceProtection(request.json['name'], request.json['password'], ip, fast_login)()
+	if x['successfully']:
+		if request.json['name'] in users.keys():
+			edit_user(request.json['name'], request.json)
+			save_users()
+			return jsonify({'successfully': True})
+		else:
+			return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
+	else:
+		return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
 
 
