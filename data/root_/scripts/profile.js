@@ -101,6 +101,9 @@ function loadProfileImage(){
 			if (answer.successfully){
 				var image_href = new URL("/" + answer.image, window.location.href).href
 				document.getElementById("artist_image").src = image_href
+				if (image_href.split('.').pop() == "svg"){
+					try_dark(document.getElementById('artist_image'))
+				}
 			}
 		}
 	}
@@ -111,6 +114,7 @@ var global_tracks;
 async function submain() {
 	loadProfileImage();
 	loadSettings();
+	settingsController();
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", '../api/get_tracks', false)
@@ -129,6 +133,23 @@ async function submain() {
 	}
 }
 
+
+function settingsController(){
+	function removeHash() { 
+		history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+	if (location.hash.substring(1) == "settings"){
+		document.getElementById("settings").open = true;
+	}
+	document.getElementById("settings").addEventListener("toggle", ()=>{
+		if (document.getElementById("settings").hasAttribute("open")){
+			location.hash = "settings"
+		}
+		else{
+			removeHash()
+		}
+	})
+}
 
 function showScrollTop(){
 	if (window.scrollY > 200){
@@ -210,15 +231,7 @@ function sendFile(file){
 		if (req.status != 200){notice.Error(LANG.error)}
 		else{
 			answer = JSON.parse(req.response)
-			if (!answer.successfully){
-				if (answer.reason == "incorrect_name_or_password"){
-					notice.clearAll()
-					notice.Error(get_decode_error(answer.reason), false, [[LANG.log_out, logout]])
-				}
-				else{
-					notice.Error(get_decode_error(answer.reason))
-				}
-			}
+			if (!answer.successfully){ notice.Error(get_decode_error(answer.reason)) }
 			else{
 				notice.clearAll()
 				notice.Success(LANG.files_uploaded)
@@ -325,6 +338,7 @@ function share(){
 }
 
 function confirm_delete(){
+	notice.clearAll()
 	notice.Error(`${LANG.delete} <a style="color:red">${current_show}</a>?`, false, [[LANG.yes, delete_], LANG.no])
 }
 function delete_(){
@@ -346,6 +360,31 @@ function delete_(){
 				current_show_obj.remove()
 				hide()
 				ckeck_empty()
+			}
+		}
+	}
+}
+function confrim_delete_avatar(){
+	notice.clearAll()
+	notice.Error(`${LANG.delete_avatar_confirm}`, false, [[LANG.yes, delete_avatar], LANG.no])
+}
+function delete_avatar(){
+	if (local_storage.userName && local_storage.userPassword){
+		var formData = new FormData();
+		formData.append('artist', local_storage.userName);
+		formData.append('password', local_storage.userPassword);
+		formData.append('delete', true);
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", `../api/change_profile_photo`, false)
+		xhr.send(formData)
+		if (xhr.status != 200){ notice.Error(LANG.error) }
+		else{
+			let answer = JSON.parse(xhr.response);
+			if (!answer.successfully){ notice.Error(get_decode_error(answer.reason)) }
+			else {
+				notice.clearAll()
+				notice.Success(LANG.avatar_deleted)
+				loadProfileImage()
 			}
 		}
 	}
