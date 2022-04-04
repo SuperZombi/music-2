@@ -2,9 +2,12 @@ import os
 import shutil
 import time
 from dateutil import parser as dataparse
-from flask import Flask, request, jsonify, send_from_directory, abort, redirect
+from flask import Flask, request, jsonify, send_from_directory, send_file, abort, redirect
 from flask_cors import CORS
 import json
+import filetype
+from PIL import Image
+from io import BytesIO
 # import re
 from tools.serverErrors import Errors
 from tools.BrootForceProtection import BrootForceProtection
@@ -28,6 +31,18 @@ def data(filepath):
 	p = os.path.join("data", filepath)
 	if os.path.exists(p):
 		if os.path.isfile(p):
+			if filetype.is_image(p):
+				if 'size' in request.args.keys():
+					if request.args['size'] == "small":
+						try:
+							img = Image.open(p)
+							img.thumbnail((200, 200), Image.ANTIALIAS)
+							buf = BytesIO()
+							img.save(buf, img.format)
+							buf.seek(0)
+							return send_file(buf, mimetype=filetype.guess(p).mime)
+						except:
+							None
 			return send_from_directory('data', filepath)
 		if filepath[-1] != "/":
 			return redirect("/" + filepath + "/")
