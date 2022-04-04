@@ -52,6 +52,10 @@ def data(filepath):
 		return send_from_directory('data', filepath + '.html')
 	abort(404)
 
+@app.route("/api/lang_detect")
+def lang_detect():
+	return send_from_directory('tools', 'lang_detect.html')
+
 @app.route("/api/decode_error", methods=["POST"])
 def get_error_value():
 	if 'lang' in request.json.keys():
