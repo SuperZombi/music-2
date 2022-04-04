@@ -13,6 +13,8 @@
 	--shadow_lite: rgba(255, 255, 255, 0.5);
 
 	--account_menu: #09161C;
+	--details_content: #444;
+	--details_border: rgb(125,125,125, 0.5);
 }
 ::-webkit-scrollbar
 {
