@@ -39,6 +39,9 @@ LANG = {
 	"auto": "Авто",
 	"light": "Светлая",
 	"dark": "Тёмная",
+	"delete_avatar": "Удалить фото профиля",
+	"delete_avatar_confirm": "Вы уверены, что хотите удалить фото профиля?",
+	"avatar_deleted": "Фотография профиля успешно удалена!",
 
 	//Support
 	"support_title": "Поддержка",
