@@ -661,7 +661,7 @@ div.ripple {
 .flexable > .category_body{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: flex-start;
 }
 #artist_image{
@@ -688,6 +688,9 @@ div.ripple {
 	color: var(--contrast-color);
 	display: inline-block;
 	text-align: center;
+}
+.flexable > .category_body > .about_box{
+	margin: 10px 20px;
 }
 .about_box:hover{
 	background: #C7E3FF;
@@ -924,6 +927,9 @@ details[open] > summary:before {
 		padding: 5px;
 		margin: 5px;
 		border-radius: 25px;
+	}
+	.flexable > .category_body > .about_box{
+		margin: 10px;
 	}
 	.about_box:hover{
 		border-radius: 30px;
