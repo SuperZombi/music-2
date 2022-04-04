@@ -22,22 +22,22 @@ body = `
 
 <details>
 	<summary>⚙️${LANG.settings}</summary>
-	<div class="content" style="display:none;">
+	<div class="content">
 	<h2>🎨${LANG.appearance}</h2>
 	<div class="settings_element">
 		<span>${LANG.lang}:</span>
 		<span class="radio">
-			<input label="${LANG.auto}" type="radio" name="lang" value="login" checked>
-			<input label="English" type="radio" name="lang" value="signup">
-			<input label="Русский" type="radio" name="lang" value="signup">
+			<input label="${LANG.auto}" type="radio" name="lang" value="auto" checked onclick="changeSettings(this)">
+			<input label="English" type="radio" name="lang" value="en" onclick="changeSettings(this)">
+			<input label="Русский" type="radio" name="lang" value="ru" onclick="changeSettings(this)">
 		</span>
 	</div>
 	<div class="settings_element">
 		<span>${LANG.theme}:</span>
 		<span class="radio">
-			<input label="${LANG.auto}" type="radio" name="theme" value="login" checked>
-			<input label="${LANG.light}" type="radio" name="theme" value="signup">
-			<input label="${LANG.dark}" type="radio" name="theme" value="signup">
+			<input label="${LANG.auto}" type="radio" name="theme" value="auto" checked onclick="changeSettings(this)">
+			<input label="${LANG.light}" type="radio" name="theme" value="light" onclick="changeSettings(this)">
+			<input label="${LANG.dark}" type="radio" name="theme" value="dark" onclick="changeSettings(this)">
 		</span>
 	</div>
 	<hr>
@@ -71,7 +71,7 @@ body = `
 	</div>
 
 	<div class="settings_element center-wrap">
-		<button class="button">${LANG.save}</button>
+		<button class="button" onclick="saveSattings();">${LANG.save}</button>
 	</div>
 	</div>
 </details>
