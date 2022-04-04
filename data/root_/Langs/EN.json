@@ -31,6 +31,14 @@ LANG = {
 	"nothing_here": "There's nothing here",
 	"change_photo": "Change profile photo",
 	"open_profile": "Open profile",
+	"settings": "Settings",
+	"save": "Save",
+	"appearance": "Design",
+	"lang": "Language",
+	"theme": "Theme",
+	"auto": "Auto",
+	"light": "Light",
+	"dark": "Dark",
 
 	//Support
 	"support_title": "Support",
