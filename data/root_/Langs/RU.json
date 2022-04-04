@@ -31,6 +31,14 @@ LANG = {
 	"nothing_here": "Здесь ничего нет",
 	"change_photo": "Изменить фото профиля",
 	"open_profile": "Открыть профиль",
+	"settings": "Настройки",
+	"save": "Сохранить",
+	"appearance": "Внешний вид",
+	"lang": "Язык",
+	"theme": "Тема",
+	"auto": "Авто",
+	"light": "Светлая",
+	"dark": "Тёмная",
 
 	//Support
 	"support_title": "Поддержка",
