@@ -176,11 +176,8 @@ async function addNewCategory(tracks){
 	await new Promise((resolve, reject) => {
 		var div = document.createElement('div')
 		div.className = "category flexable"
-
 		var subdiv = document.createElement('div')
 		subdiv.className = "category_body"
-		subdiv.style = "justify-content: space-evenly;"
-
 		tracks.forEach(function(e){
 			var a = document.createElement('a');
 			a.className = "about_box";
