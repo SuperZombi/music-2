@@ -56,16 +56,6 @@ function goToLogin(){
 }
 
 function main(){
-	notice = Notification('#notifications');
-	document.querySelector("#notifications").classList.add("notifications_top")
-	document.querySelector(".logout > svg").onclick = logout
-
-	document.querySelectorAll('details').forEach((el) => {
-		new Accordion(el);
-	});
-
-	document.body.onclick = event => checkHideMenu(event)
-
 	local_storage = { ...localStorage };
 	if (local_storage.userName && local_storage.userPassword){
 		let a = document.createElement('a')
@@ -78,6 +68,16 @@ function main(){
 	else{
 		goToLogin()
 	}
+
+	notice = Notification('#notifications');
+	document.querySelector("#notifications").classList.add("notifications_top")
+	document.querySelector(".logout > svg").onclick = logout
+
+	document.querySelectorAll('details').forEach((el) => {
+		new Accordion(el);
+	});
+
+	document.body.onclick = event => checkHideMenu(event)
 
 	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
 		try_dark(document.getElementById('artist_image'))
