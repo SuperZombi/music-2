@@ -351,6 +351,7 @@ function delete_(){
 	}
 }
 
+var global_profile_data = {};
 function loadSettings() {
 	if (local_storage.lang){
 		let inputs = document.querySelectorAll(".settings_element input[name=lang]")
@@ -362,6 +363,46 @@ function loadSettings() {
 		let input = Array.from(inputs).filter(e=>e.value==local_storage.theme)[0]
 		try{input.checked = true;}catch{}
 	}
+
+	function loadProfileValues(data){
+		global_profile_data = data;
+		if (data.email){
+			let input = document.querySelector(".settings_element input[name=email]")
+			input.value = data.email
+		}
+		if (data.phone){
+			let input = document.querySelector(".settings_element input[name=phone]")
+			input.value = data.phone
+		}
+		if (data.gender){
+			let input = document.querySelector(".settings_element select[name=gender]")
+			input.value = data.gender
+			input.dataset.chosen = data.gender
+		}
+	}
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", `../api/get_user_profile`)
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.onload = function() {
+		if (xhr.status == 200){
+			let answer = JSON.parse(xhr.response);
+			if (answer.successfully){
+				document.getElementById("profile-settings").style.display = "block";
+				loadProfileValues(answer.data)
+			}
+			else{
+				console.error("/api/get_user_profile \n", get_decode_error(answer.reason))
+			}
+		}
+		else{
+			console.error("/api/get_user_profile")
+		}
+	}
+	xhr.send(JSON.stringify({
+		'name': local_storage.userName,
+		'password': local_storage.userPassword
+	}))
 }
 function changeSettings(e){
 	if (e.value == "auto"){
@@ -371,6 +412,51 @@ function changeSettings(e){
 		localStorage.setItem(e.name, e.value);
 	}
 }
-function saveSattings(){
-	window.location.reload();
+function saveSettings(){
+	let inputs = document.querySelectorAll("#profile-settings > .settings_element input, select");
+	var final = {}
+	var final_all = {}
+	inputs.forEach(function(e){
+		final_all[e.name] = e.value;
+		if (e.value){
+			final[e.name] = e.value;
+		}
+	})
+	if (!isEqual(global_profile_data, final)){
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", `../api/edit_user_profile`, false)
+		xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+		xhr.send(JSON.stringify({
+			'name': local_storage.userName,
+			'password': local_storage.userPassword,
+			...final_all
+		}))
+		if (xhr.status != 200){ notice.Error(LANG.error) }
+		else{
+			let answer = JSON.parse(xhr.response);
+			if (!answer.successfully){ notice.Error(get_decode_error(answer.reason)) }
+			else {
+				notice.Success("OK")
+				setTimeout(()=>window.location.reload(), 500)
+			}
+		}
+	}
+	else{
+		window.location.reload();
+	}
+}
+
+function isEqual(object1, object2) {
+  const props1 = Object.getOwnPropertyNames(object1);
+  const props2 = Object.getOwnPropertyNames(object2);
+  if (props1.length !== props2.length) { return false; }
+  for (let i = 0; i < props1.length; i += 1) {
+    const prop = props1[i];
+    const bothAreObjects = typeof(object1[prop]) === 'object' && typeof(object2[prop]) === 'object';
+    if ((!bothAreObjects && (object1[prop] !== object2[prop]))
+    || (bothAreObjects && !isEqual(object1[prop], object2[prop]))) {
+      return false;
+    }
+  }
+  return true;
 }
