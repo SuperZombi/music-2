@@ -787,56 +787,6 @@ div.ripple {
 	cursor: pointer;
 }
 
-summary {
-	border: 2px solid transparent;
-	outline: none;
-	padding: 0.8rem;
-	display: block;
-	background: var(--header-color);
-	color: var(--contrast-color);
-	position: relative;
-	cursor: pointer;
-	text-align: center;
-	transition: border-color 0.3s;
-	font-size: 14pt;
-}
-summary:focus {
-	border-color: var(--details_border);
-}
-details {
-	max-width: 50%;
-	box-sizing: border-box;
-	margin: 6px auto;
-	background: var(--details_content);
-	font-family: "Open Sans", sans-serif;
-}
-details summary::-webkit-details-marker {
-	display: none;
-}
-summary:before {
-	content: "";
-	border-width: 0.4rem;
-	border-style: solid;
-	border-color: transparent transparent transparent var(--contrast-color);
-	position: absolute;
-	top: 1.3rem;
-	left: 1rem;
-	transform: rotate(0);
-	transform-origin: 0.2rem 50%;
-	transition: 0.25s transform ease;
-}
-details[open] {
-	margin-bottom: 25px;
-}
-details[open] > summary:before {
-	transform: rotate(90deg);
-}
-.content {
-	padding: 10px;
-	border: 2px solid var(--details_border);
-	border-top: none;
-	text-align: center;
-}
 
 @media all and (max-height: 500px) {
 	#share_menu{
@@ -946,9 +896,6 @@ details[open] > summary:before {
 	}
 	#artist_image{
 		height: 150px;
-	}
-	details {
-		max-width: 98%;
 	}
 }
 
