@@ -160,7 +160,7 @@ async function addNewCategory(tracks){
 			a.className = "about_box";
 			a.onclick = ()=>show(e.track, a)
 			a.innerHTML = `
-					<img src="../${e.href}/${e.image}">
+					<img src="../${e.href}/${e.image}?size=small">
 					<div class="track_name"><span>${e.track}</span></div>
 			`
 			subdiv.appendChild(a)
