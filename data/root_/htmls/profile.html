@@ -43,35 +43,37 @@ body = `
 	<hr>
 	<h2>👤${LANG.profile_title}</h2>
 
-	<div class="settings_element center-wrap">
-		<div class="group">
-			<input type="email" name="email" placeholder=" "/>
-			<span class="bar"></span>
-			<label>${LANG.email}</label>
+	<div id="profile-settings" style="display:none;">
+		<div class="settings_element center-wrap">
+			<div class="group">
+				<input type="email" name="email" placeholder=" "/>
+				<span class="bar"></span>
+				<label>${LANG.email}</label>
+			</div>
+		</div>
+
+		<div class="settings_element center-wrap">
+			<div class="group">
+				<input type="tel" name="phone" placeholder=" "/>
+				<span class="bar"></span>
+				<label>${LANG.phone}</label>
+			</div>
+		</div>
+
+		<div class="settings_element center-wrap">
+			<div class="group">
+				<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
+					<option value="" selected></option>
+					<option value="man">${LANG.man}</option>
+					<option value="woman">${LANG.woman}</option>
+				</select>
+				<label>${LANG.gender}</label>
+			</div>
 		</div>
 	</div>
 
 	<div class="settings_element center-wrap">
-		<div class="group">
-			<input type="tel" name="phone" placeholder=" "/>
-			<span class="bar"></span>
-			<label>${LANG.phone}</label>
-		</div>
-	</div>
-
-	<div class="settings_element center-wrap">
-		<div class="group">
-			<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
-				<option value="" selected></option>
-				<option value="man">${LANG.man}</option>
-				<option value="woman">${LANG.woman}</option>
-			</select>
-			<label>${LANG.gender}</label>
-		</div>
-	</div>
-
-	<div class="settings_element center-wrap">
-		<button class="button" onclick="saveSattings();">${LANG.save}</button>
+		<button class="button" onclick="saveSettings();">${LANG.save}</button>
 	</div>
 	</div>
 </details>
