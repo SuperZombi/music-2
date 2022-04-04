@@ -137,3 +137,177 @@
 .logout svg:hover{
 	fill: red;
 }
+
+.settings_element{
+
+}
+.content h2:first-child{
+	margin-top: 5px;
+}
+.settings_element{
+	font-size: 16px;
+}
+
+/* INPUTS */
+.group *{
+	box-sizing: border-box;
+}
+.group {
+	position: relative;
+	margin: 15px 0;
+	font-family: sans-serif;
+}
+.center-wrap{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.group input, select {
+	background: none;
+	color: var(--contrast-color);
+	font-size: 18px;
+	padding: 10px 10px 10px 5px;
+	display: block;
+	width: 320px;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid var(--contrast-color);
+	outline: none;
+}
+.group input:-webkit-autofill {
+  -webkit-text-fill-color: var(--contrast-color);
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0 30px var(--details_content) inset !important;
+}
+.group select option {
+	background: var(--notifications-back);
+	color: var(--contrast-color);
+}
+.group input:focus {
+	outline: none;
+}
+.group input:focus ~ label, .group input:not(:placeholder-shown) ~ label,
+.group select:not([data-chosen='']) ~ label {
+	top: -14px;
+	font-size: 12px;
+	color: #2196f3;
+}
+.group input:focus ~ .bar:before {
+	transform: scale(1);
+}
+.group input[type=password] {
+	letter-spacing: 0.3em;
+}
+.group input[required] ~ label:before {
+	content: "* ";
+	color: red;
+}
+.group label {
+	color: var(--contrast-mini);
+	font-size: 16px;
+	font-weight: normal;
+	position: absolute;
+	pointer-events: none;
+	left: 5px;
+	top: 10px;
+	transition: 300ms ease all;
+}
+.toggle{
+	color: var(--contrast-mini);
+	float: right;
+	margin-top: -25px;
+	cursor: pointer;
+}
+.bar {
+	position: relative;
+	display: block;
+	width: 320px;
+}
+.bar:before {
+	content: "";
+	height: 2px;
+	width: 100%;
+	bottom: 0;
+	position: absolute;
+	background: #2196f3;
+	transition: 300ms ease all;
+	left: 0%;
+	transform: scale(0);
+	transform-origin: center bottom;
+}
+
+/* Radio  */
+.radio {
+	background: inherit;
+	padding: 6px;
+	border-radius: 5px;
+	display: inline-block;
+}
+.radio input {
+	display: inline-block;
+	width: auto;
+	height: 100%;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 4px 12px;
+	background: inherit;
+	color: var(--contrast-color);
+	font-size: inherit;
+	font-family: sans-serif;
+	transition: all 100ms linear;
+	background-image: linear-gradient(180deg, #696969, #505050);
+}
+.radio input:checked {
+	background-image: linear-gradient(180deg, #95d891, #74bbad);
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+.radio input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+/* Button */
+.button {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	border: 5em;
+	cursor: pointer;
+	outline: none;
+	font-size: 18px;
+	font-family: sans-serif;
+	transform: translate(0);
+	background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+	padding: 0.7em 2em;
+	border-radius: 65px;
+	user-select: none;
+	box-shadow: 1px 1px 10px var(--shadow_lite);
+	transition: box-shadow 0.25s, font-size 0.3s ease-out;
+	color: var(--contrast-color);
+}
+.button:after {
+	content: "";
+	border-radius: 65px;
+	position: absolute;
+	margin: 4px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: -1;
+	transition: 0.1s;
+	background: var(--body-color);
+}
+.button:hover {
+	background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+	box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1) !important;
+}
+.button:active:after {
+	margin: 0px;
+}
