@@ -60,6 +60,10 @@ function main(){
 	document.querySelector("#notifications").classList.add("notifications_top")
 	document.querySelector(".logout > svg").onclick = logout
 
+	document.querySelectorAll('details').forEach((el) => {
+		new Accordion(el);
+	});
+
 	document.body.onclick = event => checkHideMenu(event)
 
 	local_storage = { ...localStorage };
