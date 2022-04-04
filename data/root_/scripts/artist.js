@@ -57,7 +57,7 @@ async function addNewCategory(tracks){
 		tracks.forEach(function(e){
 			html += `
 				<a href="../${e.href}" class="about_box">
-					<img src="../${e.href}/${e.image}">
+					<img src="../${e.href}/${e.image}?size=small">
 					<div class="track_name"><span>${e.track}</span></div>
 				</a>
 			`
