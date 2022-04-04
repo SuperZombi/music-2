@@ -25,6 +25,8 @@
 	--account_menu: aliceblue;
 	--details_content: #fbfcff;
 	--details_border: rgb(200,200,200, 0.5);
+	--button-gradient: linear-gradient(180deg, #f0f0f0, #dcdcdc);
+	--button-gradient-green: linear-gradient(180deg, #a1ff9c, #7ee6b8);
 }
 ::-webkit-scrollbar
 {
@@ -799,12 +801,11 @@ summary:focus {
 	border-color: var(--details_border);
 }
 details {
-	max-width: 60%;
+	max-width: 50%;
 	box-sizing: border-box;
-	margin-top: 5px;
+	margin: 6px auto;
 	background: var(--details_content);
 	font-family: "Open Sans", sans-serif;
-	margin: auto;
 }
 details summary::-webkit-details-marker {
 	display: none;
@@ -822,13 +823,12 @@ summary:before {
 	transition: 0.25s transform ease;
 }
 details[open] {
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
 details[open] > summary:before {
 	transform: rotate(90deg);
 }
 .content {
-	border-top: none;
 	padding: 10px;
 	border: 2px solid var(--details_border);
 	border-top: none;
