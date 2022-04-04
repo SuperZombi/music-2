@@ -10,7 +10,7 @@ window.onload = function() {
 		main()
 	}
 	else{
-		setTimeout(function(){load_page()}, 500)
+		setTimeout(function(){load_page()}, 100)
 	}
 	})()
 }
