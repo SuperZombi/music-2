@@ -62,6 +62,12 @@ body = `
 				<span class="bar"></span>
 				<label>${LANG.email}</label>
 			</div>
+			<div class="switcher">
+				<input id="toggle_email-off" class="toggle toggle-left" name="toggle_email" value="false" type="radio" checked>
+				<label for="toggle_email-off" class="btn" title="${LANG.private}">🔒</label>
+				<input id="toggle_email-on" class="toggle toggle-right" name="toggle_email" value="true" type="radio">
+				<label for="toggle_email-on" class="btn"><img src="../root_/images/eye.svg" title="${LANG.public}"></label>
+			</div>
 		</div>
 
 		<div class="settings_element center-wrap">
@@ -69,6 +75,12 @@ body = `
 				<input type="tel" name="phone" placeholder=" "/>
 				<span class="bar"></span>
 				<label>${LANG.phone}</label>
+			</div>
+			<div class="switcher">
+				<input id="toggle_phone-off" class="toggle toggle-left" name="toggle_phone" value="false" type="radio" checked>
+				<label for="toggle_phone-off" class="btn" title="${LANG.private}">🔒</label>
+				<input id="toggle_phone-on" class="toggle toggle-right" name="toggle_phone" value="true" type="radio">
+				<label for="toggle_phone-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
 			</div>
 		</div>
 
@@ -80,6 +92,12 @@ body = `
 					<option value="woman">${LANG.woman}</option>
 				</select>
 				<label>${LANG.gender}</label>
+			</div>
+			<div class="switcher">
+				<input id="toggle_gender-off" class="toggle toggle-left" name="toggle_gender" value="false" type="radio" checked>
+				<label for="toggle_gender-off" class="btn" title="${LANG.private}">🔒</label>
+				<input id="toggle_gender-on" class="toggle toggle-right" name="toggle_gender" value="true" type="radio">
+				<label for="toggle_gender-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
 			</div>
 		</div>
 	</div>
