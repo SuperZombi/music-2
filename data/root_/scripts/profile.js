@@ -401,62 +401,39 @@ function delete_avatar(){
 
 var global_profile_data = {};
 function loadSettings() {
-	if (local_storage.lang){
-		let inputs = document.querySelectorAll(".settings_element input[name=lang]")
-		let input = Array.from(inputs).filter(e=>e.value==local_storage.lang)[0]
-		try{input.checked = true;}catch{}
-	}
-	if (local_storage.theme){
-		let inputs = document.querySelectorAll(".settings_element input[name=theme]")
-		let input = Array.from(inputs).filter(e=>e.value==local_storage.theme)[0]
-		try{input.checked = true;}catch{}
-	}
-	if (local_storage["hard-anim"]){
-		let inputs = document.querySelectorAll(".settings_element input[name=hard-anim]")
-		let input = Array.from(inputs).filter(e=>e.value==local_storage["hard-anim"])[0]
-		try{input.checked = true;}catch{}
-	}
+	let available_settings = ["lang", "theme", "hard-anim"]
+	Object.keys(local_storage).forEach(function(e){
+		if (available_settings.includes(e)){
+			let inputs = document.querySelectorAll(`.settings_element input[name=${e}]`)
+			let input = Array.from(inputs).filter(i=>i.value==local_storage[e])[0]
+			try{input.checked = true;}catch{}
+		}
+	})
 
 	function loadProfileValues(data){
 		global_profile_data = data;
-		if (data.email){
-			let input = document.querySelector(".settings_element input[name=email]")
-			input.value = data.email;
-			if ("public_fields" in data){
-				if (data.public_fields.includes("email")){
-					let input = Array.from(
-								document.querySelectorAll(".settings_element input[name=toggle_email]")
-								).filter(e=>e.value=="true")[0]
-					input.checked = true;
-				}
-			}
-		}
-		if (data.phone){
-			let input = document.querySelector(".settings_element input[name=phone]")
-			input.value = data.phone
-			if ("public_fields" in data){
-				if (data.public_fields.includes("phone")){
-					let input = Array.from(
-								document.querySelectorAll(".settings_element input[name=toggle_phone]")
-								).filter(e=>e.value=="true")[0]
-					input.checked = true;
-				}
-			}
-		}
-		if (data.gender){
-			let input = document.querySelector(".settings_element select[name=gender]")
-			input.value = data.gender
-			input.dataset.chosen = data.gender
 
-			if ("public_fields" in data){
-				if (data.public_fields.includes("gender")){
-					let input = Array.from(
-								document.querySelectorAll(".settings_element input[name=toggle_gender]")
-								).filter(e=>e.value=="true")[0]
-					input.checked = true;
+		Object.keys(data).forEach(function(i){
+			if (i != "public_fields"){
+				if (i == "gender"){
+					let select = document.querySelector(`.settings_element select[name=${i}]`)
+					select.value = data[i]
+					select.dataset.chosen = data[i]
+				}
+				else{
+					let input = document.querySelector(`.settings_element input[name=${i}]`)
+					input.value = data[i];
+				}
+				if ("public_fields" in data){
+					if (data.public_fields.includes(i)){
+						let toggle_input = Array.from(
+												document.querySelectorAll(`.settings_element input[name=toggle_${i}]`)
+												).filter(e=>e.value=="true")[0]
+						toggle_input.checked = true;
+					}
 				}
 			}
-		}
+		})
 	}
 
 	let xhr = new XMLHttpRequest();
