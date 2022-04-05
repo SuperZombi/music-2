@@ -21,8 +21,11 @@ window.onscroll = function(){showScrollTop()}
 
 async function main(){
 	document.title = ARTIST.name
-	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
-		try_dark(document.getElementById('artist_image'))
+	let img = document.getElementById('artist_image');
+	img.className = "loader";
+	img.onload = ()=>img.classList.remove("loader");
+	if (img.src.split('.').pop() == "svg"){
+		try_dark(img)
 	}
 	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
 	overflowed()
@@ -55,9 +58,13 @@ async function addNewCategory(tracks){
 	await new Promise((resolve, reject) => {
 		var html = ""
 		tracks.forEach(function(e){
+			let img = document.createElement('img');
+			img.className = "loader"
+			img.src = `../${e.href}/${e.image}?size=small`
+			img.onload = ()=>img.classList.remove("loader");
 			html += `
 				<a href="../${e.href}" class="about_box">
-					<img src="../${e.href}/${e.image}?size=small">
+					${img.outerHTML}
 					<div class="track_name"><span>${e.track}</span></div>
 				</a>
 			`
