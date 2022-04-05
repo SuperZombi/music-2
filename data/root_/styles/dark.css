@@ -109,18 +109,13 @@ div.ripple {
 
 /* ---------------- */
 #moon{
-	background: #eef !important;
-	border: none !important;
-	filter: none !important;
+	box-shadow: -25px 25px 0 0px #eef;
+	transform: translate(25px, -25px);
+	filter: drop-shadow(0 0 4px white);
 }
-#moonspot1{
-	background:#ccd !important;
-}
-#moonspot2{
-	background:#ccd !important;
-}
-#cover{
-	transform:translate(14.5px,-62.5px) !important;
+#moonspot1, #moonspot2{
+	opacity: 1;
+	transition:all 2s;
 }
 
 /*  */
