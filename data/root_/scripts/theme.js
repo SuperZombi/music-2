@@ -1,78 +1,81 @@
-/* Leaves */
-// (function leaves_(){
-//   if (typeof leaves_area !== 'undefined'){
-// 	var lea = document.createElement("link")
-// 	lea.rel = "stylesheet"
-// 	lea.setAttribute("href", "../../root_/styles/leaves.css");
-// 	document.head.appendChild(lea)
-// 	var scr = document.createElement("script")
-// 	scr.setAttribute("src", "../../root_/scripts/leaves.js");
-// 	document.head.appendChild(scr)   
-//   }
-//   else{
-//     setTimeout(function(){leaves_()}, 500)
-//   }
-// })()
-/**/
+if (JSON.parse(localStorage.getItem('hard-anim')) == false){}
+else{
+	/* Leaves */
+	// (function leaves_(){
+	//   if (typeof leaves_area !== 'undefined'){
+	// 	var lea = document.createElement("link")
+	// 	lea.rel = "stylesheet"
+	// 	lea.setAttribute("href", "../../root_/styles/leaves.css");
+	// 	document.head.appendChild(lea)
+	// 	var scr = document.createElement("script")
+	// 	scr.setAttribute("src", "../../root_/scripts/leaves.js");
+	// 	document.head.appendChild(scr)   
+	//   }
+	//   else{
+	//     setTimeout(function(){leaves_()}, 500)
+	//   }
+	// })()
+	/**/
 
-/* Snowflakes */
-(function snowflakes(){
-	if (typeof leaves_area !== 'undefined'){
-		var lea = document.createElement("link")
-		lea.rel = "stylesheet"
-		lea.setAttribute("href", "../../root_/styles/snowfall.css");
-		document.head.appendChild(lea)
-		document.getElementById("leaves_area").innerHTML = `
-			<snowfall style="height:inherit;position:absolute;color:#43c7fa;">
-				${'<snowflake><span>❄</span></snowflake>'.repeat(20)}
-				${'<snowflake><span>•</span></snowflake>'.repeat(20)}
-				${'<snowflake><span>.</span></snowflake>'.repeat(10)}
-			</snowfall>
-		`
-		// lights()
-	}
-	else{
-		setTimeout(function(){snowflakes()}, 500)
-	}
-})()
-/**/
+	/* Snowflakes */
+	(function snowflakes(){
+		if (typeof leaves_area !== 'undefined'){
+			var lea = document.createElement("link")
+			lea.rel = "stylesheet"
+			lea.setAttribute("href", "../../root_/styles/snowfall.css");
+			document.head.appendChild(lea)
+			document.getElementById("leaves_area").innerHTML = `
+				<snowfall style="height:inherit;position:absolute;color:#43c7fa;">
+					${'<snowflake><span>❄</span></snowflake>'.repeat(20)}
+					${'<snowflake><span>•</span></snowflake>'.repeat(20)}
+					${'<snowflake><span>.</span></snowflake>'.repeat(10)}
+				</snowfall>
+			`
+			// lights()
+		}
+		else{
+			setTimeout(function(){snowflakes()}, 500)
+		}
+	})()
+	/**/
 
-/* Lights */
-// function lights(){
-// 		var lea = document.createElement("link")
-// 		lea.rel = "stylesheet"
-// 		lea.setAttribute("href", "../../root_/styles/lights.css");
-// 		document.head.appendChild(lea)
-// 		document.getElementById("leaves_area").innerHTML += `
-//         <ul class="line">
-//             <li class="red"></li>
-//             <li class="yellow"></li>
-//             <li class="blue"></li>
-//             <li class="pink"></li>
-//             <li class="red"></li>
-//             <li class="green"></li>
-//             <li class="blue"></li>
-//             <li class="yellow"></li>
-//             <li class="red"></li>
-//             <li class="pink"></li>
-//             <li class="blue"></li>
-//             <li class="yellow"></li>
-//             <li class="red"></li>
-//             <li class="green"></li>
-//             <li class="blue"></li>
-//             <li class="yellow"></li>
-//             <li class="red"></li>
-//             <li class="pink"></li>
-//             <li class="green"></li>
-//             <li class="blue"></li>
-//             <li class="pink"></li>
-//             <li class="red"></li>
-//             <li class="green"></li>
-//             <li class="blue"></li>
-//         </ul>
-// 		`
-// }
-/**/
+	/* Lights */
+	// function lights(){
+	// 		var lea = document.createElement("link")
+	// 		lea.rel = "stylesheet"
+	// 		lea.setAttribute("href", "../../root_/styles/lights.css");
+	// 		document.head.appendChild(lea)
+	// 		document.getElementById("leaves_area").innerHTML += `
+	//         <ul class="line">
+	//             <li class="red"></li>
+	//             <li class="yellow"></li>
+	//             <li class="blue"></li>
+	//             <li class="pink"></li>
+	//             <li class="red"></li>
+	//             <li class="green"></li>
+	//             <li class="blue"></li>
+	//             <li class="yellow"></li>
+	//             <li class="red"></li>
+	//             <li class="pink"></li>
+	//             <li class="blue"></li>
+	//             <li class="yellow"></li>
+	//             <li class="red"></li>
+	//             <li class="green"></li>
+	//             <li class="blue"></li>
+	//             <li class="yellow"></li>
+	//             <li class="red"></li>
+	//             <li class="pink"></li>
+	//             <li class="green"></li>
+	//             <li class="blue"></li>
+	//             <li class="pink"></li>
+	//             <li class="red"></li>
+	//             <li class="green"></li>
+	//             <li class="blue"></li>
+	//         </ul>
+	// 		`
+	// }
+	/**/
+}
 
 function change_switcher_title(){
 	try{document.getElementById("swicher").title = LANG.light}
