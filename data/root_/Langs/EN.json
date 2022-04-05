@@ -42,6 +42,10 @@ LANG = {
 	"delete_avatar": "Delete profile photo",
 	"delete_avatar_confirm": "Are you sure you want to delete your profile photo?",
 	"avatar_deleted": "Profile photo deleted successfully!",
+	"hard_anim": "Background Animations",
+	"enable": "Enable",
+	"disable": "Disable",
+	"hard_anim_prompt": "Disable if you experience performance issues",
 
 	//Support
 	"support_title": "Support",
