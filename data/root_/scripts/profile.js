@@ -421,16 +421,41 @@ function loadSettings() {
 		global_profile_data = data;
 		if (data.email){
 			let input = document.querySelector(".settings_element input[name=email]")
-			input.value = data.email
+			input.value = data.email;
+			if ("public_fields" in data){
+				if (data.public_fields.includes("email")){
+					let input = Array.from(
+								document.querySelectorAll(".settings_element input[name=toggle_email]")
+								).filter(e=>e.value=="true")[0]
+					input.checked = true;
+				}
+			}
 		}
 		if (data.phone){
 			let input = document.querySelector(".settings_element input[name=phone]")
 			input.value = data.phone
+			if ("public_fields" in data){
+				if (data.public_fields.includes("phone")){
+					let input = Array.from(
+								document.querySelectorAll(".settings_element input[name=toggle_phone]")
+								).filter(e=>e.value=="true")[0]
+					input.checked = true;
+				}
+			}
 		}
 		if (data.gender){
 			let input = document.querySelector(".settings_element select[name=gender]")
 			input.value = data.gender
 			input.dataset.chosen = data.gender
+
+			if ("public_fields" in data){
+				if (data.public_fields.includes("gender")){
+					let input = Array.from(
+								document.querySelectorAll(".settings_element input[name=toggle_gender]")
+								).filter(e=>e.value=="true")[0]
+					input.checked = true;
+				}
+			}
 		}
 	}
 
@@ -470,6 +495,21 @@ function saveSettings(){
 	var final = {}
 	var final_all = {}
 	inputs.forEach(function(e){
+		if (e.type == "radio"){
+			if (e.checked){
+				if (!("public_fields" in final)){
+					final["public_fields"] = []
+				}
+				if (!("public_fields" in final_all)){
+					final_all["public_fields"] = []
+				}
+				if (e.value == "true"){
+					final_all.public_fields.push(e.name.replace("toggle_", ""));
+					final.public_fields.push(e.name.replace("toggle_", ""));
+				}
+			}
+			return;
+		}
 		final_all[e.name] = e.value;
 		if (e.value){
 			final[e.name] = e.value;
