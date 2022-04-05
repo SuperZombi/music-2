@@ -127,37 +127,22 @@ def register_user(data):
 def edit_user(user, data):
 	global users
 	temp = dict(users[user])
-	if 'email' in data.keys():
-		if data['email'].strip() == "" and 'email' in temp.keys():
-			del users[user]['email']
-		elif data['email'].strip() == "":
+
+	for i in data.keys():
+		if i == "name" or i == "password" or i == "public_fields":
 			pass
 		else:
-			users[user]['email'] = data['email']
-	if 'gender' in data.keys():
-		if data['gender'].strip() == "" and 'gender' in temp.keys():
-			del users[user]['gender']
-		elif data['gender'].strip() == "":
-			pass
-		else:
-			users[user]['gender'] = data['gender']
-	if 'phone' in data.keys():
-		if data['phone'].strip() == "" and 'phone' in temp.keys():
-			del users[user]['phone']
-		elif data['phone'].strip() == "":
-			pass
-		else:
-			users[user]['phone'] = data['phone']
+			if data[i].strip() == "":
+				if i in temp.keys():
+					del users[user][i]
+			else:
+				users[user][i] = data[i]
 
 	publicFields = []
 	if "public_fields" in data.keys():
-		if "email" in data["public_fields"] and 'email' in users[user]:
-			publicFields.append("email")
-		if "gender" in data["public_fields"] and 'gender' in users[user]:
-			publicFields.append("gender")
-		if "phone" in data["public_fields"] and 'phone' in users[user]:
-			publicFields.append("phone")
-
+		for i in data["public_fields"]:
+			if i in data["public_fields"] and i in users[user]:
+				publicFields.append(i)
 	if len(publicFields) == 0:
 		if "public_fields" in users[user].keys():
 			del users[user]["public_fields"]
