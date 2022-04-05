@@ -81,9 +81,13 @@ async function addNewCategory(category_title, tracks, href){
 	await new Promise((resolve, reject) => {
 		var html = ""
 		tracks.forEach(function(e){
+			let img = document.createElement('img');
+			img.className = "loader"
+			img.src = `${e.href}/${e.image}?size=small`
+			img.onload = ()=>img.classList.remove("loader");
 			html += `
 				<a href="${e.href}" class="about_box">
-					<img src="${e.href}/${e.image}?size=small">
+					${img.outerHTML}
 					<div class="track_name"><span>${e.track}</span></div>
 					<div class="artist">${e.author}</div>
 				</a>
