@@ -158,7 +158,11 @@ def edit_user(user, data):
 		if "phone" in data["public_fields"] and 'phone' in users[user]:
 			publicFields.append("phone")
 
-	users[user]["public_fields"] = publicFields
+	if len(publicFields) == 0:
+		if "public_fields" in users[user].keys():
+			del users[user]["public_fields"]
+	else:
+		users[user]["public_fields"] = publicFields
 
 tracks = {}
 def load_tracks():
