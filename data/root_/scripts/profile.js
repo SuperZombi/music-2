@@ -401,6 +401,11 @@ function loadSettings() {
 		let input = Array.from(inputs).filter(e=>e.value==local_storage.theme)[0]
 		try{input.checked = true;}catch{}
 	}
+	if (local_storage["hard-anim"]){
+		let inputs = document.querySelectorAll(".settings_element input[name=hard-anim]")
+		let input = Array.from(inputs).filter(e=>e.value==local_storage["hard-anim"])[0]
+		try{input.checked = true;}catch{}
+	}
 
 	function loadProfileValues(data){
 		global_profile_data = data;
