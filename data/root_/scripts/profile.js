@@ -63,15 +63,17 @@ function main(){
 		a.title = LANG.open_profile;
 		a.innerHTML = local_storage.userName;
 		document.getElementById("user-name").appendChild(a);
+
+		notice = Notification('#notifications');
+		document.querySelector("#notifications").classList.add("notifications_top")
+		document.querySelector(".logout > svg").style.display = "block"
+		document.querySelector(".logout > svg").onclick = logout
+
 		submain()
 	}
 	else{
 		goToLogin()
 	}
-
-	notice = Notification('#notifications');
-	document.querySelector("#notifications").classList.add("notifications_top")
-	document.querySelector(".logout > svg").onclick = logout
 
 	document.querySelectorAll('details').forEach((el) => {
 		new Accordion(el);
