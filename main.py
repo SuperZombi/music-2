@@ -123,24 +123,42 @@ def register_user(data):
 
 	global users
 	users.update(temp)
+
 def edit_user(user, data):
 	global users
 	temp = dict(users[user])
 	if 'email' in data.keys():
-		if data['email'] == "" and 'email' in temp.keys():
+		if data['email'].strip() == "" and 'email' in temp.keys():
 			del users[user]['email']
+		elif data['email'].strip() == "":
+			pass
 		else:
 			users[user]['email'] = data['email']
 	if 'gender' in data.keys():
-		if data['gender'] == "" and 'gender' in temp.keys():
+		if data['gender'].strip() == "" and 'gender' in temp.keys():
 			del users[user]['gender']
+		elif data['gender'].strip() == "":
+			pass
 		else:
 			users[user]['gender'] = data['gender']
 	if 'phone' in data.keys():
-		if data['phone'] == "" and 'phone' in temp.keys():
+		if data['phone'].strip() == "" and 'phone' in temp.keys():
 			del users[user]['phone']
+		elif data['phone'].strip() == "":
+			pass
 		else:
 			users[user]['phone'] = data['phone']
+
+	publicFields = []
+	if "public_fields" in data.keys():
+		if "email" in data["public_fields"] and 'email' in users[user]:
+			publicFields.append("email")
+		if "gender" in data["public_fields"] and 'gender' in users[user]:
+			publicFields.append("gender")
+		if "phone" in data["public_fields"] and 'phone' in users[user]:
+			publicFields.append("phone")
+
+	users[user]["public_fields"] = publicFields
 
 tracks = {}
 def load_tracks():
