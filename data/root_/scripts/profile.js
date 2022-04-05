@@ -101,10 +101,14 @@ function loadProfileImage(){
 		if (xhr.status == 200){ 
 			let answer = JSON.parse(xhr.response);
 			if (answer.successfully){
+				let img = document.getElementById("artist_image");
+				img.src = "";
+				img.className = "loader";
 				var image_href = new URL("/" + answer.image, window.location.href).href
-				document.getElementById("artist_image").src = image_href
+				img.src = image_href;
+				img.onload = ()=>img.classList.remove("loader");
 				if (image_href.split('.').pop() == "svg"){
-					try_dark(document.getElementById('artist_image'))
+					try_dark(img)
 				}
 			}
 		}
@@ -183,9 +187,15 @@ async function addNewCategory(tracks){
 		tracks.forEach(function(e){
 			var a = document.createElement('a');
 			a.className = "about_box";
-			a.onclick = ()=>show(e.track, a)
+			a.onclick = ()=>show(e.track, a);
+
+			let img = document.createElement('img');
+			img.className = "loader"
+			img.src = `../${e.href}/${e.image}?size=small`
+			img.onload = ()=>img.classList.remove("loader");
+
 			a.innerHTML = `
-					<img src="../${e.href}/${e.image}?size=small">
+					${img.outerHTML}
 					<div class="track_name"><span>${e.track}</span></div>
 			`
 			subdiv.appendChild(a)
