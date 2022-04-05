@@ -46,6 +46,8 @@ LANG = {
 	"enable": "Enable",
 	"disable": "Disable",
 	"hard_anim_prompt": "Disable if you experience performance issues",
+	"private": "Private",
+	"public": "Public",
 
 	//Support
 	"support_title": "Support",
