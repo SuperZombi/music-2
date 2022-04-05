@@ -313,7 +313,11 @@ function main(){
 
 	build_links()
 
-	document.getElementById("main_img").onclick = function(){
+	let img = document.getElementById("main_img");
+	img.className = "loader";
+	img.onload = ()=>img.classList.remove("loader");
+
+	img.onclick = function(){
 		easter_egg()
 	}
 
