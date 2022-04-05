@@ -739,45 +739,46 @@ div.ripple {
 /* ---------------- */
 #swicher{
 	position: absolute;
-	top: 8px;
-	right: 14px;
-	transform: scale(0.95);
+	top: 10px;
+	right: 15px;
 	cursor: pointer;
-	width:50px;
-	height:50px;
+	width:100px;
+	height:100px;
+	border-radius: 50%;
+	transform: scale(0.5);
+	transform-origin: right top;
 }
 #moon{
-	width:50px;
-	height:50px;
-	background:#F6D602;
-	border-radius:50%;
-	transition: 1s;
-	border: 2px solid #f5eb71;
+	box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	will-change: transform;
+	transition: all 1s ease-in-out;
+	background: transparent;
+	box-shadow: -100px 100px 0 0px #F6D602;
+	transform: translate(100px, -100px);
+	transform-origin: right top;
 	filter: drop-shadow(0 0 5px yellow);
 }
-#moonspot1{
-	width:8px;
-	height:8px;
-	background:#F6D602;
+#moonspot1, #moonspot2{
+	background:#ccd;
 	border-radius:50%;
-	transform:translate(4px,20px);
-	transition:all 1s;
+	transition:all 0.5s;
+	opacity: 0;
+}
+#moonspot1{
+	width:16px;
+	height:16px;
+	transform:translate(8px,40px);
 }
 #moonspot2{
-	width:5px;
-	height:5px;
-	background:#F6D602;
-	border-radius:50%;
-	transform:translate(10px,22px);
-	transition:all 1s;
-}
-#cover{
-	width:50px;
-	height:50px;
-	background: var(--header-color);
-	border-radius:50%;
-	transform:translate(42px,-92px);
-	transition:all 1s;
+	width:10px;
+	height:10px;
+	transform:translate(20px,44px);
 }
 
 #toTop{
