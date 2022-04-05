@@ -156,11 +156,13 @@
 	position: relative;
 	margin: 15px 0;
 	font-family: sans-serif;
+	min-width: 50%;
 }
 .center-wrap{
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 }
 .group input, select {
 	background: none;
@@ -168,7 +170,7 @@
 	font-size: 18px;
 	padding: 10px 10px 10px 5px;
 	display: block;
-	width: 320px;
+	width: 100%;
 	border: none;
 	border-radius: 0;
 	border-bottom: 1px solid var(--contrast-color);
@@ -221,7 +223,7 @@
 .bar {
 	position: relative;
 	display: block;
-	width: 320px;
+	width: 100%;
 }
 .bar:before {
 	content: "";
@@ -411,4 +413,63 @@ details[open] > summary:before {
 	details {
 		max-width: 98%;
 	}
+	.group{
+		min-width: 65%;
+	}
+}
+
+
+/* Switcher */
+.switcher{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 5%;
+}
+.switcher .btn {
+	border: 3px solid #1a1a1a;
+	padding: 4px 8px;
+	text-align: center;
+	transition: background 500ms ease, color 500ms ease;
+	background: #1a1a1a;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+.switcher input[type=radio].toggle {
+	display: none;
+}
+.switcher input[type=radio].toggle + label {
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+	user-select: none;
+}
+.switcher input[type=radio].toggle.toggle-left + label:hover {
+	color: red;
+}
+.switcher input[type=radio].toggle.toggle-right + label:hover {
+	color: green;
+}
+.switcher input[type=radio].toggle:checked + label:hover {
+	background: none;
+	color: #1a1a1a;
+}
+.switcher input[type=radio].toggle.toggle-right + label {
+	border-radius: 0 25px 25px 0;
+}
+.switcher input[type=radio].toggle.toggle-left + label {
+	border-right: 0;
+	border-radius: 25px 0 0 25px;
+}
+.switcher input[type=radio].toggle:checked + label {
+	color: #fff;
+	background: #1a1a1a;
+}
+.switcher input[type=radio].toggle.toggle-left:checked + label {
+	background: red;
+}
+.switcher input[type=radio].toggle.toggle-right:checked + label {
+	background: green;
 }
