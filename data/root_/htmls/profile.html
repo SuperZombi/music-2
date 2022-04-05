@@ -41,6 +41,13 @@ body = `
 			<input label="${LANG.dark}" type="radio" name="theme" value="dark" onclick="changeSettings(this)">
 		</span>
 	</div>
+	<div class="settings_element">
+		<span>${LANG.hard_anim}:</span><span style="cursor: help;" title="${LANG.hard_anim_prompt}">❓</span>
+		<span class="radio">
+			<input label="${LANG.disable}" type="radio" name="hard-anim" value="false" onclick="changeSettings(this)">
+			<input label="${LANG.enable}" type="radio" name="hard-anim" value="true" checked onclick="changeSettings(this)">
+		</span>
+	</div>
 	<hr>
 	<h2>👤${LANG.profile_title}</h2>
 
