@@ -23,7 +23,18 @@ async function main(){
 	document.title = ARTIST.name
 	let img = document.getElementById('artist_image');
 	img.className = "loader";
-	img.onload = ()=>img.classList.remove("loader");
+
+	img.onload = ()=>{
+		if (img.width < img.height){
+			img.style.maxWidth = "100%";
+			img.style.maxHeight = "unset";
+		}
+		else{
+			img.style.maxHeight = "100%";
+			img.style.maxWidth = "unset";
+		}
+		img.classList.remove("loader")
+	};
 	if (img.src.split('.').pop() == "svg"){
 		try_dark(img)
 	}
