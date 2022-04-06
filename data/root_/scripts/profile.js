@@ -563,3 +563,17 @@ function isEqual(object1, object2) {
 	}
 	return true;
 }
+
+function reset_password(){
+	let url = window.location.pathname;
+	let filename = url.substring(url.lastIndexOf('/')+1);
+	if (filename == ""){
+		filename = "../" + url.split("/").filter(x => x).at(-1)
+	}
+
+	let login = new URL("login", window.location.href);
+	login.searchParams.append('redirect', filename);
+	login.hash = "reset";
+
+	window.location.href = decodeURIComponent(login.href)
+}
