@@ -23,84 +23,98 @@ body = `
 <details id="settings">
 	<summary>⚙️${LANG.settings}</summary>
 	<div class="content">
-	<h2>🎨${LANG.appearance}</h2>
-	<div class="settings_element">
-		<span>${LANG.lang}:</span>
-		<span class="radio">
-			<input label="${LANG.auto}" type="radio" name="lang" value="auto" checked onclick="changeSettings(this)">
-			<input label="English" type="radio" name="lang" value="en" onclick="changeSettings(this)">
-			<input label="Русский" type="radio" name="lang" value="ru" onclick="changeSettings(this)">
-			<input label="Українська" type="radio" name="lang" value="uk" onclick="changeSettings(this)">
-		</span>
-	</div>
-	<div class="settings_element">
-		<span>${LANG.theme}:</span>
-		<span class="radio">
-			<input label="${LANG.auto}" type="radio" name="theme" value="auto" checked onclick="changeSettings(this)">
-			<input label="${LANG.light}" type="radio" name="theme" value="light" onclick="changeSettings(this)">
-			<input label="${LANG.dark}" type="radio" name="theme" value="dark" onclick="changeSettings(this)">
-		</span>
-	</div>
-	<div class="settings_element">
-		<span>${LANG.hard_anim}:</span><span style="cursor: help;" title="${LANG.hard_anim_prompt}">❓</span>
-		<span class="radio">
-			<input label="${LANG.disable}" type="radio" name="hard-anim" value="false" onclick="changeSettings(this)">
-			<input label="${LANG.enable}" type="radio" name="hard-anim" value="true" checked onclick="changeSettings(this)">
-		</span>
-	</div>
+
+		<details>
+			<summary>🎨${LANG.appearance}</summary>
+			<div class="content">
+
+			<div class="settings_element">
+				<span>${LANG.lang}:</span>
+				<span class="radio">
+					<input label="${LANG.auto}" type="radio" name="lang" value="auto" checked onclick="changeSettings(this)">
+					<input label="English" type="radio" name="lang" value="en" onclick="changeSettings(this)">
+					<input label="Русский" type="radio" name="lang" value="ru" onclick="changeSettings(this)">
+					<input label="Українська" type="radio" name="lang" value="uk" onclick="changeSettings(this)">
+				</span>
+			</div>
+			<div class="settings_element">
+				<span>${LANG.theme}:</span>
+				<span class="radio">
+					<input label="${LANG.auto}" type="radio" name="theme" value="auto" checked onclick="changeSettings(this)">
+					<input label="${LANG.light}" type="radio" name="theme" value="light" onclick="changeSettings(this)">
+					<input label="${LANG.dark}" type="radio" name="theme" value="dark" onclick="changeSettings(this)">
+				</span>
+			</div>
+			<div class="settings_element">
+				<span>${LANG.hard_anim}:</span><span style="cursor: help;" title="${LANG.hard_anim_prompt}">❓</span>
+				<span class="radio">
+					<input label="${LANG.disable}" type="radio" name="hard-anim" value="false" onclick="changeSettings(this)">
+					<input label="${LANG.enable}" type="radio" name="hard-anim" value="true" checked onclick="changeSettings(this)">
+				</span>
+			</div>
+
+			</div>
+		</details>
 	<hr>
-	<h2>👤${LANG.profile_title}</h2>
 
-	<div class="settings_element center-wrap">
-		<button class="button-15" onclick="confrim_delete_avatar()">${LANG.delete_avatar}</button>
-	</div>
+	<details>
+		<summary>👤${LANG.profile_title}</summary>
+		<div class="content">
 
-	<div id="profile-settings" style="display:none;">
-		<div class="settings_element center-wrap">
-			<div class="group">
-				<input type="email" name="email" placeholder=" "/>
-				<span class="bar"></span>
-				<label>${LANG.email}</label>
+		<div class="settings_element center-wrap" style="margin-bottom: 10px;margin-top: 5px;">
+			<button class="button-15" onclick="confrim_delete_avatar()">${LANG.delete_avatar}</button>
+		</div>
+
+		<div id="profile-settings" style="display:none;">
+			<div class="settings_element center-wrap">
+				<div class="group">
+					<input type="email" name="email" placeholder=" "/>
+					<span class="bar"></span>
+					<label>${LANG.email}</label>
+				</div>
+				<div class="switcher">
+					<input id="toggle_email-off" class="toggle toggle-left" name="toggle_email" value="false" type="radio" checked>
+					<label for="toggle_email-off" class="btn" title="${LANG.private}">🔒</label>
+					<input id="toggle_email-on" class="toggle toggle-right" name="toggle_email" value="true" type="radio">
+					<label for="toggle_email-on" class="btn"><img src="../root_/images/eye.svg" title="${LANG.public}"></label>
+				</div>
 			</div>
-			<div class="switcher">
-				<input id="toggle_email-off" class="toggle toggle-left" name="toggle_email" value="false" type="radio" checked>
-				<label for="toggle_email-off" class="btn" title="${LANG.private}">🔒</label>
-				<input id="toggle_email-on" class="toggle toggle-right" name="toggle_email" value="true" type="radio">
-				<label for="toggle_email-on" class="btn"><img src="../root_/images/eye.svg" title="${LANG.public}"></label>
+
+			<div class="settings_element center-wrap">
+				<div class="group">
+					<input type="tel" name="phone" placeholder=" "/>
+					<span class="bar"></span>
+					<label>${LANG.phone}</label>
+				</div>
+				<div class="switcher">
+					<input id="toggle_phone-off" class="toggle toggle-left" name="toggle_phone" value="false" type="radio" checked>
+					<label for="toggle_phone-off" class="btn" title="${LANG.private}">🔒</label>
+					<input id="toggle_phone-on" class="toggle toggle-right" name="toggle_phone" value="true" type="radio">
+					<label for="toggle_phone-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
+				</div>
+			</div>
+
+			<div class="settings_element center-wrap">
+				<div class="group">
+					<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
+						<option value="" selected></option>
+						<option value="man">${LANG.man}</option>
+						<option value="woman">${LANG.woman}</option>
+					</select>
+					<label>${LANG.gender}</label>
+				</div>
+				<div class="switcher">
+					<input id="toggle_gender-off" class="toggle toggle-left" name="toggle_gender" value="false" type="radio" checked>
+					<label for="toggle_gender-off" class="btn" title="${LANG.private}">🔒</label>
+					<input id="toggle_gender-on" class="toggle toggle-right" name="toggle_gender" value="true" type="radio">
+					<label for="toggle_gender-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
+				</div>
 			</div>
 		</div>
 
-		<div class="settings_element center-wrap">
-			<div class="group">
-				<input type="tel" name="phone" placeholder=" "/>
-				<span class="bar"></span>
-				<label>${LANG.phone}</label>
-			</div>
-			<div class="switcher">
-				<input id="toggle_phone-off" class="toggle toggle-left" name="toggle_phone" value="false" type="radio" checked>
-				<label for="toggle_phone-off" class="btn" title="${LANG.private}">🔒</label>
-				<input id="toggle_phone-on" class="toggle toggle-right" name="toggle_phone" value="true" type="radio">
-				<label for="toggle_phone-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
-			</div>
 		</div>
-
-		<div class="settings_element center-wrap">
-			<div class="group">
-				<select onchange="this.dataset.chosen = this.value;" data-chosen="" name="gender">
-					<option value="" selected></option>
-					<option value="man">${LANG.man}</option>
-					<option value="woman">${LANG.woman}</option>
-				</select>
-				<label>${LANG.gender}</label>
-			</div>
-			<div class="switcher">
-				<input id="toggle_gender-off" class="toggle toggle-left" name="toggle_gender" value="false" type="radio" checked>
-				<label for="toggle_gender-off" class="btn" title="${LANG.private}">🔒</label>
-				<input id="toggle_gender-on" class="toggle toggle-right" name="toggle_gender" value="true" type="radio">
-				<label for="toggle_gender-on" class="btn" title="${LANG.public}"><img src="../root_/images/eye.svg"></label>
-			</div>
-		</div>
-	</div>
+		</details>
+	<hr>
 
 	<div class="settings_element center-wrap">
 		<button class="button" onclick="saveSettings();">${LANG.save}</button>
