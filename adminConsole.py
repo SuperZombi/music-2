@@ -41,10 +41,11 @@ def delete_user(user):
 		string = string.split('=', 1)[1]
 		tracks = json.loads(string)
 
-	del tracks[user]
+	if user in tracks.keys():
+		del tracks[user]
 
-	with open(os.path.join('data', 'root_', 'bd.json'), 'w', encoding='utf8') as file:
-		file.write('bd = ' + json.dumps(tracks, indent=4, ensure_ascii=False))
+		with open(os.path.join('data', 'root_', 'bd.json'), 'w', encoding='utf8') as file:
+			file.write('bd = ' + json.dumps(tracks, indent=4, ensure_ascii=False))
 
 	with open('users.bd', 'r', encoding='utf8') as file:
 		users = json.loads(file.read())
