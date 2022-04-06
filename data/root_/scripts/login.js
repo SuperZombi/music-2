@@ -76,6 +76,63 @@ function action_(){
 		parseForm(type, form)
 	}
 }
+function reset_(){
+	var form = document.querySelector("form[name=reset]");
+	if (
+		confirmPassword(
+			form.querySelector('input[name="new_password"]'),
+			form.querySelector('input[name="confirm_new_password"]')
+		)
+	)
+	{
+		var elements = Array.from(form.elements).filter(e => e.tagName.toLowerCase() != "button");
+		elements = elements.filter(e => e.value);
+		var final = {}
+		elements.map(e => {
+			if (e.name != "user" && e.name != "confirm_new_password"){
+				final[e.name] = e.value;
+			}
+		})
+		if (searchParams.user){
+			final["user"] = searchParams.user;
+		}
+		else{
+			if (local_storage.userName){
+				final["user"] = local_storage.userName;
+			}
+			else{
+				return;
+			}
+		}
+
+		if (!searchParams.old){
+			final.old_password = CryptoJS.MD5(final.old_password).toString();
+		}
+		final.new_password = CryptoJS.MD5(final.new_password).toString();
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", '../api/reset', false)
+		xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+		xhr.send(JSON.stringify(final))
+		if (xhr.status == 200){
+			answer = JSON.parse(xhr.response)
+			if (!answer.successfully){
+				if (answer.wait){
+					notice.Warning(LANG.too_many_tries.replace("%", answer.sleep))
+				}
+				else{
+					notice.Error(get_decode_error(answer.reason))
+				}
+			}
+			else{
+				notice.Success("OK")
+				window.localStorage.setItem("userName", final.user)
+				window.localStorage.setItem("userPassword", final.new_password)
+				afterLogin()
+			}
+		}
+	}
+}
 
 function parseForm(type, form){
 	var elements = Array.from(form.elements).filter(e => e.tagName.toLowerCase() != "button");
@@ -198,5 +255,36 @@ function main(){
 		document.querySelector(".flip-card-front").style.display = "none"
 		document.querySelector(".flip-card-back").style.display = "block"
 		document.querySelectorAll('input[name="form_action"]')[1].checked = true
+	}
+	else if (window.location.hash.split('#')[1] == "reset"){
+		Array.from(document.getElementsByTagName("form")).forEach(function(e){
+			if(e.name != "reset"){
+				e.style.display = "none"
+			}
+			else{
+				e.style.display = "block"
+			}
+		})
+		if (searchParams.old){
+			let input = document.querySelector("form[name=reset] input[name=old_password]")
+			input.value = searchParams.old;
+			input.setAttribute("readonly", true);
+			input.style.pointerEvents = 'none';
+			input.parentNode.querySelector("i").onclick = null;
+			input.parentNode.querySelector("i").style.display = "none";
+		}
+		if (searchParams.user){
+			document.querySelector("form[name=reset] input[name=user]").value = searchParams.user
+		}
+		else{
+			if (local_storage.userName){
+				document.querySelector("form[name=reset] input[name=user]").value = local_storage.userName;
+			}
+			else{
+				document.querySelector("form[name=reset] input[name=user]").value = LANG.user_name_not_defined;
+				document.querySelector("form[name=reset] input[name=user]").style.color = "red";
+				document.querySelector("form[name=reset] button").style.display = "none";
+			}
+		}
 	}
 }
