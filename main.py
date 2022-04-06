@@ -627,6 +627,8 @@ def get_user_profile_public():
 			for i in temp["public_fields"]:
 				try: public_fields[i] = temp[i]
 				except: pass
+		if "official" in temp.keys():
+			public_fields["official"] = temp["official"]
 		return jsonify({'successfully': True, "public_fields": public_fields})
 	else:
 		return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
