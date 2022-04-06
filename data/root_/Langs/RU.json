@@ -94,6 +94,9 @@ LANG = {
 	"error": "Ошибка!",
 	"go_to": "Перейти",
 
+	"file_too_big": "Файл слишком большой!",
+	"wrong_file_format": "Неправильный формат файла!",
+
 	// login
 	"login_title": "Вход",
 	"login_radio": "Вход",
