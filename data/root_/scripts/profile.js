@@ -235,9 +235,28 @@ function sortByDate(what){
 	return what.sort((a, b) => b.date - a.date)
 }
 
-function isFileImage(file) {
-	return file && file['type'].split('/')[0] === 'image';
+function validateImage(file){
+	if (file && file['type'].split('/')[0] === 'image'){
+		if (file.size <= 2097152) {
+			var _URL = window.URL || window.webkitURL;
+			var img = new Image();
+			var objectUrl = _URL.createObjectURL(file);
+			return new Promise((resolve, reject) => {
+				img.onload = function () {
+						if (img.width <= 1280 || img.height <= 1280){
+							_URL.revokeObjectURL(objectUrl);
+							resolve([true]);
+						}
+						_URL.revokeObjectURL(objectUrl);
+				};
+				img.src = objectUrl;
+			})
+		}
+		return [false, LANG.file_too_big];
+	}
+	return [false, LANG.wrong_file_format];
 }
+
 function sendFile(file){
 	var formData = new FormData();
 	formData.append('artist', local_storage.userName);
@@ -265,10 +284,14 @@ function selectFile(){
 	var input = document.createElement('input');
 	input.type = 'file';
 	input.accept = "image/png, image/jpeg";
-	input.onchange = e => { 
+	input.onchange = async e => { 
 		var file = e.target.files[0];
-		if (isFileImage(file)){
+		let valide = await validateImage(file);
+		if (valide[0]){
 			sendFile(file)
+		}
+		else{
+			notice.Error(valide[1])
 		}
 	}
 	input.click();
@@ -527,16 +550,16 @@ function saveSettings(){
 }
 
 function isEqual(object1, object2) {
-  const props1 = Object.getOwnPropertyNames(object1);
-  const props2 = Object.getOwnPropertyNames(object2);
-  if (props1.length !== props2.length) { return false; }
-  for (let i = 0; i < props1.length; i += 1) {
-    const prop = props1[i];
-    const bothAreObjects = typeof(object1[prop]) === 'object' && typeof(object2[prop]) === 'object';
-    if ((!bothAreObjects && (object1[prop] !== object2[prop]))
-    || (bothAreObjects && !isEqual(object1[prop], object2[prop]))) {
-      return false;
-    }
-  }
-  return true;
+	const props1 = Object.getOwnPropertyNames(object1);
+	const props2 = Object.getOwnPropertyNames(object2);
+	if (props1.length !== props2.length) { return false; }
+	for (let i = 0; i < props1.length; i += 1) {
+		const prop = props1[i];
+		const bothAreObjects = typeof(object1[prop]) === 'object' && typeof(object2[prop]) === 'object';
+		if ((!bothAreObjects && (object1[prop] !== object2[prop]))
+		|| (bothAreObjects && !isEqual(object1[prop], object2[prop]))) {
+			return false;
+		}
+	}
+	return true;
 }
