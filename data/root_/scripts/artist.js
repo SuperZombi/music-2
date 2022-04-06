@@ -40,6 +40,8 @@ async function main(){
 	}
 	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
 	overflowed()
+
+	loadArtistProfileData()
 }
 
 
@@ -111,4 +113,30 @@ function sortByDate(what){
 		e.date = x
 	})
 	return what.sort((a, b) => b.date - a.date)
+}
+
+function loadArtistProfileData(){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", `../api/get_user_profile_public`)
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.onload = function() {
+		if (xhr.status == 200){
+			let answer = JSON.parse(xhr.response);
+			if (answer.successfully){
+				if (answer.public_fields.official){
+					document.getElementById("official_checkmark").style.display = "inline-block";
+				}
+				
+			}
+		}
+	}
+	xhr.send(JSON.stringify({
+		'user': ARTIST.name
+	}))
+}
+function checkmark_hovered(e){
+	e.classList.remove("checkmark__animation")
+	setTimeout(function(){
+		e.classList.add("checkmark__animation")
+	}, 100)
 }
