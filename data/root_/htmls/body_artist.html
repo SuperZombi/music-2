@@ -2,7 +2,9 @@
 if (typeof LANG !== 'undefined' && typeof ARTIST !== 'undefined'){
 body = `
 
-<img id="artist_image" src="${ARTIST.image}">
+<div class="artist_image_wrapper">
+	<img id="artist_image" src="${ARTIST.image}">
+</div>
 <h1 class="category_title" align="center">${ARTIST.name}</h1>
 
 
