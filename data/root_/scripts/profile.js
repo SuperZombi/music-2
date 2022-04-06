@@ -106,7 +106,17 @@ function loadProfileImage(){
 				img.className = "loader";
 				var image_href = new URL("/" + answer.image, window.location.href).href
 				img.src = image_href;
-				img.onload = ()=>img.classList.remove("loader");
+				img.onload = ()=>{
+					if (img.width < img.height){
+						img.style.maxWidth = "100%";
+						img.style.maxHeight = "unset";
+					}
+					else{
+						img.style.maxHeight = "100%";
+						img.style.maxWidth = "unset";
+					}
+					img.classList.remove("loader")
+				};
 				if (image_href.split('.').pop() == "svg"){
 					try_dark(img)
 				}
