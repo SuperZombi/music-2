@@ -61,8 +61,12 @@ body = `
 		<summary>👤${LANG.profile_title}</summary>
 		<div class="content">
 
-		<div class="settings_element center-wrap" style="margin-bottom: 10px;margin-top: 5px;">
+		<div class="settings_element center-wrap">
 			<button class="button-15" onclick="confrim_delete_avatar()">${LANG.delete_avatar}</button>
+		</div>
+
+		<div class="settings_element center-wrap">
+			<button class="button-15 red" onclick="reset_password()" style="margin-bottom: 10px;">${LANG.change_pwd}</button>
 		</div>
 
 		<div id="profile-settings" style="display:none;">
