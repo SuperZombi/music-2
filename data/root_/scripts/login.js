@@ -225,9 +225,6 @@ function main(){
 	searchParams = Object.fromEntries(urlSearchParams.entries());
 
 	local_storage = { ...localStorage };
-	if (local_storage.userName && local_storage.userPassword){
-        afterLogin(0)
-    }
 
 	var rad = document.querySelectorAll('input[name="form_action"]');
 	for (var i = 0; i < rad.length; i++) {
@@ -285,6 +282,11 @@ function main(){
 				document.querySelector("form[name=reset] input[name=user]").style.color = "red";
 				document.querySelector("form[name=reset] button").style.display = "none";
 			}
+		}
+	}
+	else{
+		if (local_storage.userName && local_storage.userPassword){
+			afterLogin(0)
 		}
 	}
 }
