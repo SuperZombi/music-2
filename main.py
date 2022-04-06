@@ -249,6 +249,18 @@ def login():
 
 	return jsonify(x)
 
+@app.route("/api/reset", methods=["POST"])
+def login():
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	x = BrootForceProtection(request.json['user'], request.json['old_password'], ip, fast_login)()
+	if x['successfully']:
+		users[request.json['user']]["password"] = request.json['new_password']
+		save_users()
+		return jsonify({'successfully': True})
+	else:
+		x['reason'] = Errors.incorrect_name_or_password.name
+	return jsonify(x)
+
 @app.route("/api/register", methods=["POST"])
 def register():
 	if "/" in request.json['name'] or "\\" in request.json['name']:
