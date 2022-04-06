@@ -265,8 +265,11 @@ def reset():
 def register():
 	if "/" in request.json['name'] or "\\" in request.json['name']:
 		return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
-	if len(request.json['name'].strip()) == 0:
-		return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
+
+	for i in request.json.values():
+		if len(i.strip()) == 0:
+			return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
+	
 	if request.json['name'].lower() == "admin":
 		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
 
