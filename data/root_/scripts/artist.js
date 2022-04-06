@@ -38,10 +38,11 @@ async function main(){
 	if (img.src.split('.').pop() == "svg"){
 		try_dark(img)
 	}
-	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
-	overflowed()
 
 	loadArtistProfileData()
+
+	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
+	overflowed()	
 }
 
 
