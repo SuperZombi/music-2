@@ -58,11 +58,7 @@
 }
 
 
-.artist_image_wrapper{
-	position: relative;
-	display: inline-block;
-	border-radius: 50%;
-}
+
 #artist_image{
 	transition: 0.3s;
 }
