@@ -21,7 +21,7 @@ function get_decode_error(code){
 	else{
 		let answer = JSON.parse(xhr.response)
 		if (!answer.successfully){ return code }
-		else{ return answer.value }			
+		else{ return answer.value }
 	}
 }
 
@@ -45,10 +45,16 @@ function validName(input){
 
 function confirmPassword(main, child){
 	if(main.value != child.value) {
-		child.setCustomValidity("Passwords Don't Match");
+		child.setCustomValidity(LANG.pwds_dont_match);
 		child.reportValidity();
 		main.onchange = _=> child.setCustomValidity('');
 		child.onkeydown = _=> child.setCustomValidity('');
+		return false;
+	}
+	else if (main.value.trim().length < 4){
+		main.setCustomValidity(LANG.pwd_short);
+		main.reportValidity();
+		main.onkeydown = _=> main.setCustomValidity('');
 		return false;
 	}
 	else {
@@ -140,7 +146,9 @@ function parseForm(type, form){
 	var final = {}
 	elements.map(e => {
 		if (e.name != "confirm_password"){
-			final[e.name] = e.value;
+			if (e.value.trim().length != 0){
+				final[e.name] = e.value.trim();
+			}
 		}
 	})
 
