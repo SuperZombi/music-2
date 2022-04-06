@@ -17,12 +17,26 @@ function checkPhoto(target) {
         document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>2Mb</i>! <br>`;
         target.value = '';
     }
+
+    if (target.files[0] && target.files[0]['type'].split('/')[0] != 'image'){
+        document.getElementById("photoLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
+        target.value = '';
+    }
 }
 
 function checkAudio(target) {
     document.getElementById("audioLabel").innerHTML = "";
     if(target.files[0].size > 10485760) {
         document.getElementById("audioLabel").innerHTML += `${LANG.max_audio_s} <i style='color:red'>10Mb</i>! <br>`;
+        target.value = '';
+    }
+
+    if (target.files[0] && target.files[0]['type'].split('/')[0] != 'audio'){
+        document.getElementById("audioLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
+        target.value = '';
+    }
+    if (target.files[0] && target.files[0].name.split('.').at(-1) != 'mp3'){
+        document.getElementById("audioLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
         target.value = '';
     }
 }
