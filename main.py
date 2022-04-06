@@ -253,6 +253,8 @@ def login():
 def register():
 	if "/" in request.json['name'] or "\\" in request.json['name']:
 		return jsonify({'successfully': False, 'reason': Errors.forbidden_character.name})
+	if request.json['name'].lower() == "admin":
+		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
 
 	if request.json['name'] in users.keys():
 		return jsonify({'successfully': False, 'reason': Errors.name_already_taken.name})
