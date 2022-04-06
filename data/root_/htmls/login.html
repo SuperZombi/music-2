@@ -83,6 +83,40 @@ body = `
 		
 	</div>
 </div>
+
+
+<form name="reset" onsubmit="reset_();return false" style="display:none;">
+	<h1 id="reset-title">${LANG.change_pwd}</h1>
+	<div class="center-wrap">
+		<div class="group">
+			<input type="text" name="user" placeholder=" " required readonly style="pointer-events:none;"/>
+			<span class="bar"></span>
+			<label>${LANG.name}</label>
+		</div>
+
+		<div class="group">
+			<input type="password" minlength="4" name="old_password" placeholder=" " required>
+			<i class="fa fa-eye toggle" title="Show" onclick="passwordToggle(this)"></i>
+			<span class="bar"></span>
+			<label>${LANG.old_pwd}</label>
+		</div>
+	
+		<div class="group">
+			<input type="password" minlength="4" name="new_password" placeholder=" " required/>
+			<i class="fa fa-eye toggle" title="${LANG.show}" onclick="passwordToggle(this)"></i>
+			<span class="bar"></span>
+			<label>${LANG.new_pwd}</label>
+		</div>
+
+		<div class="group">
+			<input type="password" minlength="4" name="confirm_new_password" placeholder=" " required/>
+			<i class="fa fa-eye toggle" title="${LANG.show}" onclick="passwordToggle(this)"></i>
+			<span class="bar"></span>
+			<label>${LANG.repeat_new_pwd}</label>
+		</div>
+	</div>
+	<button type="submit" class="button">${LANG.change_pwd}</button>
+</form>
 `
 }
 else{
