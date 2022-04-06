@@ -8,6 +8,9 @@ import json
 import filetype
 from PIL import Image
 from io import BytesIO
+import audio_metadata
+import warnings
+warnings.filterwarnings('ignore')
 # import re
 from tools.serverErrors import Errors
 from tools.BrootForceProtection import BrootForceProtection
@@ -338,7 +341,46 @@ def upload_file():
 
 					for i in request.files:
 						f = request.files[i]
-						f.save(os.path.join(track_folder, f.filename))
+
+						if f.mimetype.split('/')[0] == 'image':
+							image_bytes = BytesIO(f.stream.read())
+							blob = image_bytes.read()
+							filesize = len(blob)
+							if filesize <= 2097152:
+								img = Image.open(image_bytes)
+								w, h = img.size
+								if w <= 1280 and h <= 1280:
+									with open(os.path.join(track_folder, f.filename),'wb') as file:
+										file.write(blob)
+								else:
+									shutil.rmtree(track_folder)
+									return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+							else:
+								shutil.rmtree(track_folder)
+								return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+
+						elif f.mimetype.split('/')[0] == 'audio':
+							_, extension = os.path.splitext(f.filename)
+							if extension == ".mp3":
+								audio_bytes = BytesIO(f.stream.read())
+								blob = audio_bytes.read()
+								filesize = len(blob)
+								if filesize <= 10485760:
+									metadata = audio_metadata.loads(blob)
+									bitrate = metadata.streaminfo.bitrate / 1000
+									if bitrate <= 192:
+										with open(os.path.join(track_folder, f.filename),'wb') as file:
+											file.write(blob)
+									else:
+										shutil.rmtree(track_folder)
+										return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+								else:
+									shutil.rmtree(track_folder)
+									return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+							else:
+								shutil.rmtree(track_folder)
+								return jsonify({'successfully': False, 'reason': Errors.wrong_file_format.name})
+
 
 					try:
 						config = make_config(request.form.to_dict(), request.files.to_dict())
@@ -430,15 +472,32 @@ def change_profile_photo():
 					artist_settings = json.loads(string)
 
 				image_path = os.path.normpath(os.path.join(os.path.abspath(user_folder), artist_settings['image']))
-				if os.path.isfile(image_path):
-					os.remove(image_path)
 
 				if 'delete' in request.form.keys():
 					artist_settings_image = "../root_/images/people.svg" # default
+					if os.path.isfile(image_path):
+						os.remove(image_path)
 				else:
 					f = request.files['image']
-					f.save(os.path.join(user_folder, f.filename))
-					artist_settings_image = f.filename
+					if f.mimetype.split('/')[0] == 'image':
+						image_bytes = BytesIO(f.stream.read())
+						blob = image_bytes.read()
+						filesize = len(blob)
+						if filesize <= 2097152:
+							img = Image.open(image_bytes)
+							w, h = img.size
+							if w <= 1280 and h <= 1280:
+								if os.path.isfile(image_path):
+									os.remove(image_path)
+								with open(os.path.join(user_folder, f.filename),'wb') as file:
+									file.write(blob)
+								artist_settings_image = f.filename
+							else:
+								return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+						else:
+							return jsonify({'successfully': False, 'reason': Errors.file_is_too_big.name})
+					else:
+						return jsonify({'successfully': False, 'reason': Errors.wrong_file_format.name})
 
 				with open(os.path.join(user_folder, 'artist.json'), 'w', encoding='utf8') as file:
 					file.write(htmlTemplates.atrist_config(
