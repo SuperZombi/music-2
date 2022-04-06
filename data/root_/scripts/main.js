@@ -305,6 +305,17 @@ function loadRipple(){
 	document.head.appendChild(s);
 })()
 
+function set_metadata(){
+	navigator.mediaSession.metadata = new MediaMetadata({
+		title: config.track_name,
+		artist: config.artist,
+		album: 'Zombi Music',
+		artwork: [
+			 { src: config.main_img}
+		]
+	});
+}
+
 function main(){
 	document.title = `${config.artist} - ${config.track_name}`
 	set_background()
@@ -441,6 +452,7 @@ function tracking(){
 
 	wavesurfer.on('play', function() {
 		play_pause_animation()
+		set_metadata()
 	});
 	wavesurfer.on('pause', function() {
 		play_pause_animation()
@@ -563,28 +575,30 @@ function play(e){
 				if (config.preview_z && !region_play){
 					region_play = true;
 					wavesurfer.regions.list["preview"].play()
-					wavesurfer.on('pause', function() {
-						if (config.preview_z){
-							if (Math.round(wavesurfer.getCurrentTime()*100)/100 == config.preview_zone[1]){
-								region_play = false;
-								e.target.className = "far fa-play-circle"
-								e.target.title = LANG.player_play
-								wavesurfer.pause()
-								if (config.animate_time){
-									hide_anim_t()
+					setTimeout(function(){
+						wavesurfer.on('pause', function() {
+							if (config.preview_z){
+								if (Math.round(wavesurfer.getCurrentTime()*100)/100 == config.preview_zone[1]){
+									region_play = false;
+									e.target.className = "far fa-play-circle"
+									e.target.title = LANG.player_play
+									wavesurfer.pause()
+									if (config.animate_time){
+										hide_anim_t()
+									}
 								}
 							}
-						}
-					});
-					wavesurfer.on('region-out', function() {
-						region_play = false;
-						e.target.className = "far fa-play-circle"
-						e.target.title = LANG.player_play
-						wavesurfer.pause()
-						if (config.animate_time){
-							hide_anim_t()
-						}
-					});
+						});
+						wavesurfer.on('region-out', function() {
+							region_play = false;
+							e.target.className = "far fa-play-circle"
+							e.target.title = LANG.player_play
+							wavesurfer.pause()
+							if (config.animate_time){
+								hide_anim_t()
+							}
+						});
+					}, 10)
 				}
 				else{
 					wavesurfer.play()
@@ -600,6 +614,6 @@ function play(e){
 				})
 			}
 		}
-		setTimeout(function(){play_clicked=false}, 100)
+		setTimeout(function(){play_clicked=false}, 10)
 	}
 }
