@@ -454,8 +454,10 @@ function loadSettings() {
 					select.dataset.chosen = data[i]
 				}
 				else{
-					let input = document.querySelector(`.settings_element input[name=${i}]`)
-					input.value = data[i];
+					try{
+						let input = document.querySelector(`.settings_element input[name=${i}]`)
+						input.value = data[i];
+					}catch{}
 				}
 				if ("public_fields" in data){
 					if (data.public_fields.includes(i)){
@@ -476,6 +478,7 @@ function loadSettings() {
 		if (xhr.status == 200){
 			let answer = JSON.parse(xhr.response);
 			if (answer.successfully){
+				console.log(answer.data)
 				document.getElementById("profile-settings").style.display = "block";
 				loadProfileValues(answer.data)
 			}
