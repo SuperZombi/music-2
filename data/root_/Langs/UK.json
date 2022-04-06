@@ -21,6 +21,8 @@ LANG = {
 	"copy": "Копіювати",
 	"copied": "Скопійовано!",
 
+	"official": "Офіційний",
+
 	// Profile
 	"profile_title": "Аккаунт",
 	"edit": "Редагувати",
