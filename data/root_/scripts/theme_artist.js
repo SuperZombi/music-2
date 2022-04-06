@@ -1,4 +1,4 @@
-if (JSON.parse(localStorage.getItem('hard-anim')) == false){}
+if (JSON.parse(localStorage.getItem('hard-anim')) == true){}
 else{
 	/* Leaves */
 	// (function leaves_(){
