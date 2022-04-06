@@ -250,7 +250,7 @@ def login():
 	return jsonify(x)
 
 @app.route("/api/reset", methods=["POST"])
-def login():
+def reset():
 	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
 	x = BrootForceProtection(request.json['user'], request.json['old_password'], ip, fast_login)()
 	if x['successfully']:
