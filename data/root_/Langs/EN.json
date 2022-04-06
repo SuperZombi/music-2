@@ -107,6 +107,10 @@ LANG = {
 	"name": "Name",
 	"password": "Password",
 	"repeat_pwd": "Repeat Password",
+	"old_pwd": "Old Password",
+	"new_pwd": "New Password",
+	"repeat_new_pwd": "Repeat New Password",
+	"change_pwd": "Change Password",
 	"show": "Show",
 	"hide": "Hide",
 	"email": "Email",
@@ -114,6 +118,7 @@ LANG = {
 	"gender": "Gender",
 	"man": "Male",
 	"woman": "Female",
+	"user_name_not_defined": "UserName not defined!",
 
 	"too_many_tries": "Too many tries! Please wait % sec."
 }
