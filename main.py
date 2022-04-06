@@ -599,6 +599,19 @@ def get_user_profile():
 	else:
 		return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
+@app.route('/api/get_user_profile_public', methods=['POST'])
+def get_user_profile_public():
+	if request.json['user'] in users.keys():
+		temp = dict(users[request.json['user']])
+		public_fields = {}
+		if "public_fields" in temp.keys():
+			for i in temp["public_fields"]:
+				try: public_fields[i] = temp[i]
+				except: pass
+		return jsonify({'successfully': True, "public_fields": public_fields})
+	else:
+		return jsonify({'successfully': False, 'reason': Errors.user_dont_exist.name})
+
 @app.route('/api/edit_user_profile', methods=['POST'])
 def edit_user_profile():
 	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
