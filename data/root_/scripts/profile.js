@@ -432,6 +432,15 @@ function delete_avatar(){
 	}
 }
 
+function validatePhoneNumber(input_str) {
+	var re = /^[+]\d[\d\(\)\ -]{6,14}\d$/;
+	return re.test(input_str);
+}
+function validateEmail(input_str) {
+  var re = /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i;
+  return re.test(input_str);
+}
+
 var global_profile_data = {};
 function loadSettings() {
 	let available_settings = ["lang", "theme", "hard-anim"]
@@ -444,6 +453,12 @@ function loadSettings() {
 	})
 
 	function loadProfileValues(data){
+		var phone_input = document.querySelector(".settings_element input[type=tel]");
+		phoneMask = IMask(
+		phone_input, {
+			mask: '+(000) 00-00-00-00000'
+		});
+
 		global_profile_data = data;
 		Object.keys(data).forEach(function(i){
 			if (i != "public_fields"){
@@ -454,6 +469,9 @@ function loadSettings() {
 				}
 				else if (i == "official"){
 					delete global_profile_data["official"]
+				}
+				else if (i == "phone"){
+					phoneMask.unmaskedValue = data[i];
 				}
 				else{
 					try{
@@ -508,6 +526,7 @@ function saveSettings(){
 	let inputs = document.querySelectorAll("#profile-settings > .settings_element input, select");
 	var final = {}
 	var final_all = {}
+	var canSaveSettings = true;
 	inputs.forEach(function(e){
 		if (e.type == "radio"){
 			if (e.checked){
@@ -524,11 +543,44 @@ function saveSettings(){
 			}
 			return;
 		}
+		else if (e.type == "email"){
+			if (e.value.trim() != ""){
+				if (!validateEmail(e.value.trim())){
+					e.setCustomValidity(LANG.invalid_email);
+					e.reportValidity();
+					e.onkeydown = _=> e.setCustomValidity('');
+					canSaveSettings = false;
+				}
+				else{
+					final_all[e.name] = e.value.trim();
+					final[e.name] = e.value.trim();
+					return
+				}
+			}
+		}
+		else if (e.type == "tel"){
+			if (phoneMask.unmaskedValue != "" || e.value){
+				if (!validatePhoneNumber("+" + phoneMask.unmaskedValue)){
+					e.setCustomValidity(LANG.invalid_phone);
+					e.reportValidity();
+					e.onkeydown = _=> e.setCustomValidity('');
+					canSaveSettings = false;
+				}
+				else{
+					final_all[e.name] = "+" + phoneMask.unmaskedValue;
+					final[e.name] = "+" + phoneMask.unmaskedValue;
+					return
+				}
+			}	
+		}
 		final_all[e.name] = e.value;
 		if (e.value){
 			final[e.name] = e.value;
 		}
 	})
+	
+	if (!canSaveSettings){return}
+
 	if (!isEqual(global_profile_data, final)){
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", `../api/edit_user_profile`, false)
