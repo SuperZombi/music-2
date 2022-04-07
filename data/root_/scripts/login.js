@@ -249,7 +249,7 @@ function main(){
 		mask: '+(000) 00-00-00-00000'
 	});
 	phone_input.addEventListener('input', () => {
-		if (phoneMask.unmaskedValue != ""){
+		if (phoneMask.unmaskedValue != "" || phone_input.value){
 			if (!validatePhoneNumber("+" + phoneMask.unmaskedValue)){
 				phone_input.setCustomValidity(LANG.invalid_phone);
 			}
