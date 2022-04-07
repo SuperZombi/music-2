@@ -445,13 +445,15 @@ function loadSettings() {
 
 	function loadProfileValues(data){
 		global_profile_data = data;
-
 		Object.keys(data).forEach(function(i){
 			if (i != "public_fields"){
 				if (i == "gender"){
 					let select = document.querySelector(`.settings_element select[name=${i}]`)
 					select.value = data[i]
 					select.dataset.chosen = data[i]
+				}
+				else if (i == "official"){
+					delete global_profile_data["official"]
 				}
 				else{
 					try{
@@ -478,7 +480,6 @@ function loadSettings() {
 		if (xhr.status == 200){
 			let answer = JSON.parse(xhr.response);
 			if (answer.successfully){
-				console.log(answer.data)
 				document.getElementById("profile-settings").style.display = "block";
 				loadProfileValues(answer.data)
 			}
