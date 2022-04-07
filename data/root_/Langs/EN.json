@@ -124,6 +124,7 @@ LANG = {
 	"pwds_dont_match": "Passwords Don't Match!",
 	"pwd_short": "Password too Short",
 	"invalid_phone": "Invalid phone number!",
+	"invalid_email": "Invalid email!",
 
 	"too_many_tries": "Too many tries! Please wait % sec."
 }
