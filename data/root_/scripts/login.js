@@ -150,6 +150,12 @@ function parseForm(type, form){
 				final[e.name] = e.value.trim();
 			}
 		}
+		if (e.name == "phone"){
+			let number = phoneMask.unmaskedValue
+			if (number.length != 0){
+				final[e.name] = "+" + number;
+			}
+		}
 	})
 
 	if (type == "signup"){
@@ -201,6 +207,11 @@ function parseForm(type, form){
 	}	
 }
 
+function validatePhoneNumber(input_str) {
+	var re = /^[+]\d[\d\(\)\ -]{6,14}\d$/;
+	return re.test(input_str);
+}
+
 function afterLogin(delay=1000){
 	setTimeout(function(){
 		if (searchParams.redirect){
@@ -231,6 +242,25 @@ function main(){
 
 	const urlSearchParams = new URLSearchParams(window.location.search);
 	searchParams = Object.fromEntries(urlSearchParams.entries());
+
+	var phone_input = document.querySelector("input[type=tel]");
+	var phoneMask = IMask(
+	phone_input, {
+		mask: '+(000) 00-00-00-00000'
+	});
+	phone_input.addEventListener('input', () => {
+		if (phoneMask.unmaskedValue != ""){
+			if (!validatePhoneNumber("+" + phoneMask.unmaskedValue)){
+				phone_input.setCustomValidity(LANG.invalid_phone);
+			}
+			else{
+				phone_input.setCustomValidity('');
+			}
+		}
+		else{
+			phone_input.setCustomValidity('');
+		}
+	});
 
 	local_storage = { ...localStorage };
 
