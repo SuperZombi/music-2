@@ -123,6 +123,7 @@ LANG = {
 	"user_name_not_defined": "UserName not defined!",
 	"pwds_dont_match": "Passwords Don't Match!",
 	"pwd_short": "Password too Short",
+	"invalid_phone": "Invalid phone number!",
 
 	"too_many_tries": "Too many tries! Please wait % sec."
 }
