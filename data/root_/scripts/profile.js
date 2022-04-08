@@ -18,6 +18,12 @@ window.onresize = function(){ overflowed() }
 window.orientationchange = function(){ overflowed() }
 window.onscroll = function(){showScrollTop()}
 
+function darking_images(){
+	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
+		try_dark(document.getElementById('artist_image'))
+	}
+}
+
 function get_decode_error(code){
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", '../api/decode_error', false)
