@@ -1,8 +1,8 @@
 function checkPhoto(target) {
     document.getElementById("photoLabel").innerHTML = "";
     var _URL = window.URL || window.webkitURL;
-    file = target.files[0];
-    img = new Image();
+    var file = target.files[0];
+    var img = new Image();
     var objectUrl = _URL.createObjectURL(file);
     img.onload = function () {
         if (this.width > 1280 || this.height > 1280){
@@ -13,12 +13,12 @@ function checkPhoto(target) {
     };
     img.src = objectUrl;
 
-    if(target.files[0].size > 2097152) {
+    if(file.size > 2097152) {
         document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>2Mb</i>! <br>`;
         target.value = '';
     }
 
-    if (target.files[0] && target.files[0]['type'].split('/')[0] != 'image'){
+    if (file && file['type'].split('/')[0] != 'image'){
         document.getElementById("photoLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
         target.value = '';
     }
@@ -26,16 +26,37 @@ function checkPhoto(target) {
 
 function checkAudio(target) {
     document.getElementById("audioLabel").innerHTML = "";
-    if(target.files[0].size > 10485760) {
+    var _URL = window.URL || window.webkitURL;
+    var file = target.files[0];
+    var audio = new Audio();
+    var objectUrl = _URL.createObjectURL(file);
+    var all_bitrates = [128, 192, 320]
+    audio.addEventListener("loadedmetadata", function(){
+        var kbit=file.size/128;
+        var kbps= Math.ceil(Math.round(kbit/audio.duration)/16)*16;
+
+        var differences = all_bitrates.map(e=>Math.abs(e-kbps));
+        let min_index = differences.indexOf(Math.min(...differences));
+        var bitrate_average = all_bitrates[min_index];
+
+        if (bitrate_average > 192){
+            document.getElementById("audioLabel").innerHTML += `${LANG.max_bitrate} <i style='color:red'>192kbps</i>! <br>`;
+            target.value = '';
+        }
+        _URL.revokeObjectURL(objectUrl);
+    })
+    audio.src = objectUrl;
+
+    if(file.size > 10485760) {
         document.getElementById("audioLabel").innerHTML += `${LANG.max_audio_s} <i style='color:red'>10Mb</i>! <br>`;
         target.value = '';
     }
 
-    if (target.files[0] && target.files[0]['type'].split('/')[0] != 'audio'){
+    if (file && file['type'].split('/')[0] != 'audio'){
         document.getElementById("audioLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
         target.value = '';
     }
-    if (target.files[0] && target.files[0].name.split('.').at(-1) != 'mp3'){
+    if (file && file.name.split('.').at(-1) != 'mp3'){
         document.getElementById("audioLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
         target.value = '';
     }
