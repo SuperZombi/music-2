@@ -29,6 +29,10 @@ def status():
 def index():
 	return send_from_directory('data', 'index.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+	return send_from_directory('data', '404.html'), 404
+
 @app.route('/<path:filepath>')
 def data(filepath):
 	p = os.path.join("data", filepath)
