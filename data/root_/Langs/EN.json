@@ -91,6 +91,7 @@ LANG = {
 	"max_res": "Max Resolution is",
 	"max_img_s": "Max Image Size is",
 	"max_audio_s": "Max Audio Size is",
+	"max_bitrate": "Max Bitrate is",
 
 	"files_uploaded": "Files uploaded successfully!",
 	"error": "Error!",
