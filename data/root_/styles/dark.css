@@ -30,6 +30,9 @@
 {
 	background-color: #555 !important;
 }
+.Ocean {
+  background: linear-gradient(180deg, rgba(10,35,66,1) 0%, rgba(72,108,139,1) 100%) !important;
+}
 #header a:hover{
 	color: yellow !important;
 }
