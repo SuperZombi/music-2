@@ -4,10 +4,10 @@ if (JSON.parse(localStorage.getItem('hard-anim')) == true){
 	//   if (typeof leaves_area !== 'undefined'){
 	// 	var lea = document.createElement("link")
 	// 	lea.rel = "stylesheet"
-	// 	lea.setAttribute("href", "../../root_/styles/leaves.css");
+	// 	lea.setAttribute("href", "/root_/styles/leaves.css");
 	// 	document.head.appendChild(lea)
 	// 	var scr = document.createElement("script")
-	// 	scr.setAttribute("src", "../../root_/scripts/leaves.js");
+	// 	scr.setAttribute("src", "/root_/scripts/leaves.js");
 	// 	document.head.appendChild(scr)   
 	//   }
 	//   else{
@@ -21,7 +21,7 @@ if (JSON.parse(localStorage.getItem('hard-anim')) == true){
 		if (typeof leaves_area !== 'undefined'){
 			var lea = document.createElement("link")
 			lea.rel = "stylesheet"
-			lea.setAttribute("href", "../../root_/styles/snowfall.css");
+			lea.setAttribute("href", "/root_/styles/snowfall.css");
 			document.head.appendChild(lea)
 			document.getElementById("leaves_area").innerHTML = `
 				<snowfall style="height:inherit;position:absolute;color:#43c7fa;">
@@ -42,7 +42,7 @@ if (JSON.parse(localStorage.getItem('hard-anim')) == true){
 	// function lights(){
 	// 		var lea = document.createElement("link")
 	// 		lea.rel = "stylesheet"
-	// 		lea.setAttribute("href", "../../root_/styles/lights.css");
+	// 		lea.setAttribute("href", "/root_/styles/lights.css");
 	// 		document.head.appendChild(lea)
 	// 		document.getElementById("leaves_area").innerHTML += `
 	//         <ul class="line">
@@ -89,7 +89,7 @@ if (th){
 		darkThemeMq = true
 		var l = document.createElement("link")
 		l.rel = "stylesheet"
-		l.setAttribute("href", "../../root_/styles/dark.css");
+		l.setAttribute("href", "/root_/styles/dark.css");
 		l.setAttribute("id", "dark_file");
 		document.head.appendChild(l)
 		change_switcher_title()
@@ -107,7 +107,7 @@ else{
 			darkThemeMq = true
 			var l = document.createElement("link")
 			l.rel = "stylesheet"
-			l.setAttribute("href", "../../root_/styles/dark.css");
+			l.setAttribute("href", "/root_/styles/dark.css");
 			l.setAttribute("id", "dark_file");
 			document.head.appendChild(l)
 			change_switcher_title()
@@ -121,7 +121,7 @@ else{
 		if (darkThemeMq) {
 			var l = document.createElement("link")
 			l.rel = "stylesheet"
-			l.setAttribute("href", "../../root_/styles/dark.css");
+			l.setAttribute("href", "/root_/styles/dark.css");
 			l.setAttribute("id", "dark_file");
 			document.head.appendChild(l)
 			change_switcher_title()
@@ -146,7 +146,7 @@ function change_switcher(){
 	else{
 		var l = document.createElement("link")
 		l.rel = "stylesheet"
-		l.setAttribute("href", "../../root_/styles/dark.css");
+		l.setAttribute("href", "/root_/styles/dark.css");
 		l.setAttribute("id", "dark_file");
 		document.head.appendChild(l)
 		document.getElementById("swicher").title = LANG.light
