@@ -18,6 +18,11 @@ window.onresize = function(){ overflowed() }
 window.orientationchange = function(){ overflowed() }
 window.onscroll = function(){showScrollTop()}
 
+function darking_images(){
+	if (document.getElementById('artist_image').src.split('.').pop() == "svg"){
+		try_dark(document.getElementById('artist_image'))
+	}
+}
 
 async function main(){
 	document.title = ARTIST.name
@@ -44,7 +49,6 @@ async function main(){
 	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
 	overflowed()	
 }
-
 
 
 function showScrollTop(){
