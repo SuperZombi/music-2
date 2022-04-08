@@ -52,7 +52,7 @@ def artist_index(name, image="../root_/images/people.svg"):
 	<meta property="og:description" content="Artist">
 	<meta property="og:site_name" content="zombi.music">
 	<script src="../root_/scripts/lang.js"></script>
-	<script src="../root_/scripts/theme_artist.js"></script>
+	<script src="../root_/scripts/theme.js"></script>
 	<script src="artist.json"></script>
 	<script src="../root_/bd.json"></script>
 	<link rel="stylesheet" href="../root_/styles/main.css">
