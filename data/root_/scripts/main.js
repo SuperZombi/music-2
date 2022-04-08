@@ -213,11 +213,13 @@ function easter_egg() {
 		}
 	}, 2000);
 	if (easter_egg_counter == 0){
+		/*
 		// Snowflakes
 		document.getElementById("leaves_area").getElementsByTagName("snowfall")[0].style.height = "inherit"
 		document.getElementById("leaves_area").style.opacity = ""
 		document.getElementById("leaves_area").style.position = ""
 		document.getElementById("header").style.overflow = ""
+		*/
 
 		/*
 		// Leaves
@@ -263,12 +265,13 @@ function easter_egg() {
 				document.getElementById("easter_egg").remove()
 			}
 		}, 1500)
-
+		/*
 		// Snowflakes
 		document.getElementById("leaves_area").getElementsByTagName("snowfall")[0].style.height = "100vh"
 		document.getElementById("leaves_area").style.position = "fixed"
 		document.getElementById("leaves_area").style.opacity = 0.85
 		document.getElementById("header").style.overflow = "unset"
+		*/
 
 		/*
 		// Leaves
