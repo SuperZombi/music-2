@@ -15,12 +15,13 @@ window.onload = function() {
 	})()
 }
 
-function try_dark(e){
-	if (darkThemeMq){
-		e.src = e.src.split('.').slice(0, -1).join('.') + "_dark.svg"
-	}
-	else{
-		e.src = e.src.split('.').slice(0, -1).join('.').split("_dark")[0] + ".svg"
+function darking_images(){
+	var tmp_ = document.getElementById("support")
+	if (tmp_){
+		tmp_2 = tmp_.getElementsByTagName("img")
+		Object.keys(tmp_2).forEach(function(e){
+			try_dark(tmp_2[e])
+		})
 	}
 }
 
