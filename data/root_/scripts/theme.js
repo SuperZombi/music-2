@@ -136,6 +136,15 @@ else{
 }else{setTimeout(function(){load_lang()}, 2)}})()
 
 
+function try_dark(e){
+	if (darkThemeMq){
+		e.src = e.src.split('.').slice(0, -1).join('.') + "_dark.svg"
+	}
+	else{
+		e.src = e.src.split('.').slice(0, -1).join('.').split("_dark")[0] + ".svg"
+	}
+}
+
 function change_switcher(){
 	if (darkThemeMq){
 		document.getElementById("dark_file").remove()
@@ -154,13 +163,8 @@ function change_switcher(){
 		window.localStorage.setItem('theme', 'dark');
 	}
 	darkThemeMq = !darkThemeMq
-	setTimeout(function(){
-		arr = document.getElementById("links_area").getElementsByClassName("link")
-		Object.keys(arr).forEach(function(e){
-			var el = arr[e].getElementsByTagName("img")[0]
-			if (typeof el !== 'undefined'){
-				try_dark(el)
-			}
-		})
+	setTimeout(function(){try{
+		darking_images()
+	}catch{}	
 	}, 300)
 }
