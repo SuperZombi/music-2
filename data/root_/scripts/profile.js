@@ -37,10 +37,12 @@ function get_decode_error(code){
 	}
 }
 
-function ckeck_empty(){
-	if (document.getElementById("main_page").querySelector(".category_body").innerHTML == ""){
-		document.getElementById("empty").style.display = "block"
-	}
+function empty(){
+	return `
+		<h2 class="empty">
+			${LANG.nothing_here} <br>
+			¯\\_(ツ)_/¯
+		</h2>`
 }
 
 function logout(){
@@ -148,9 +150,13 @@ async function submain() {
 		if (answer.successfully){
 			global_tracks = answer.tracks
 			document.getElementById("user-name").getElementsByTagName('a')[0].href = "/" + global_tracks.path
-			await addNewCategory(sortByDate(getAllAuthorTracks(answer.tracks)))
-			overflowed()
-			ckeck_empty()
+			if (Object.keys(global_tracks.tracks).length == 0){
+				document.getElementById("empty").innerHTML = empty();
+			}
+			else{
+				await addNewCategory(sortByDate(getAllAuthorTracks(answer.tracks)))
+				overflowed()
+			}
 		}
 	}
 }
@@ -407,7 +413,10 @@ function delete_(){
 				notice.Success("OK")
 				current_show_obj.remove()
 				hide()
-				ckeck_empty()
+				delete global_tracks.tracks[current_show]
+				if (Object.keys(global_tracks.tracks).length == 0){
+					document.getElementById("empty").innerHTML = empty();
+				}
 			}
 		}
 	}
