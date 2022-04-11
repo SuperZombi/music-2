@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
@@ -886,7 +887,9 @@ div.ripple {
 	-webkit-transform: translateY(5px);
 	transform: translateY(5px);
 	padding-left: 0;
-	font-family: sans-serif;
+	font-family: Arial, Ubuntu, sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 .tabs>li{
 	transition-duration: .25s;
