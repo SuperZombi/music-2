@@ -154,13 +154,35 @@ function buildAbout(arr){
 		let tr = document.createElement("tr");
 		let td1 = document.createElement("td");
 		let td2 = document.createElement("td");
-
-		td1.innerHTML = e;
-		td2.innerHTML = arr[e];
-
 		tr.appendChild(td1);
 		tr.appendChild(td2);
 		document.getElementById("about").getElementsByTagName("table")[0].appendChild(tr);
+
+		if (e == "email"){
+			td1.innerHTML += '<i class="fa-solid fa-envelope"></i>'
+			td1.innerHTML += e;
+			td2.innerHTML += `<a href="mailto:${arr[e]}">${arr[e]}</a>`
+		}
+		else if (e == "gender"){
+			td1.innerHTML += '<i class="fa-solid fa-person"></i>'
+			td1.innerHTML += e;
+			td2.title = arr[e];
+			if (arr[e] == "man"){
+				td2.innerHTML += '<i style="color:#00c0ff" class="fa-solid fa-mars"></i>'
+			}
+			else if (arr[e] == "woman"){
+				td2.innerHTML += '<i style="color:#f766ad" class="fa-solid fa-venus"></i>'
+			}
+		}
+		else if (e == "phone"){
+			td1.innerHTML += '<i class="fa-solid fa-phone"></i>'
+			td1.innerHTML += e;
+			td2.innerHTML += `<a href="tel:${arr[e]}">${arr[e]}</a>`
+		}
+		else{
+			td1.innerHTML += e;
+			td2.innerHTML += arr[e];
+		}
 	})
 }
 
