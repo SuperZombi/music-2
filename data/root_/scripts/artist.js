@@ -47,7 +47,9 @@ async function main(){
 	loadArtistProfileData()
 
 	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
-	overflowed()	
+	overflowed()
+
+	initTabs()
 }
 
 
@@ -131,7 +133,8 @@ function loadArtistProfileData(){
 				if (answer.public_fields.official){
 					document.getElementById("official_checkmark").style.display = "inline-block";
 				}
-				
+				delete answer['public_fields']['official'];
+				buildAbout(answer.public_fields)
 			}
 		}
 	}
@@ -144,4 +147,79 @@ function checkmark_hovered(e){
 	setTimeout(function(){
 		e.classList.add("checkmark__animation")
 	}, 100)
+}
+
+function buildAbout(arr){
+	Object.keys(arr).forEach(function(e){
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		let td2 = document.createElement("td");
+
+		td1.innerHTML = e;
+		td2.innerHTML = arr[e];
+
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		document.getElementById("about").getElementsByTagName("table")[0].appendChild(tr);
+	})
+}
+
+function changeTab(element, no_animete=false){
+	let old_elem = document.querySelector(".tabs > li.active")
+	if (old_elem == element){return}
+
+	if (no_animete){
+		old_elem.classList.add("no-animation")
+		element.classList.add("no-animation")
+		old_elem.classList.remove("active");
+		element.classList.add("active");
+		animate(old_elem, element, 0);
+		setTimeout(function(){
+			old_elem.classList.remove("no-animation")
+			element.classList.remove("no-animation")
+		},0)
+		return;
+	}
+
+	old_elem.classList.remove("active")
+	element.classList.add("active")
+
+	function animate(from, to, time=350){
+		let to_change = {"main": "#main_page", "all-tracks": "#main_page", "about": "#about"}
+		let old = document.querySelector(to_change[from.getAttribute("data")])
+		let new_ = document.querySelector(to_change[to.getAttribute("data")])
+		if (old != new_){
+			old.style.opacity = 0;
+			new_.style.display = "block";
+			setTimeout(function(){
+				old.style.display = "none";
+				new_.style.opacity = 1;
+			},time)
+		}
+	}
+	animate(old_elem, element)
+
+	let data = element.getAttribute("data")
+
+	let temp_url = new URL(window.location.href);
+	if (data == "main"){ temp_url.search = "" }
+	else{ temp_url.search = data }
+
+	window.history.pushState({path:temp_url.href},'',temp_url.href);
+
+	if (data=="main"){
+		document.getElementById("main_page").querySelector(".category").classList.remove("flexable")
+	}
+	if (data=="all-tracks"){
+		document.getElementById("main_page").querySelector(".category").classList.add("flexable")
+	}
+}
+function initTabs(){
+	Array.from(document.querySelectorAll(".tabs > li")).forEach(el=>{
+		el.onclick = ()=>changeTab(el);
+	})
+	let loc_seach = window.location.search.replace("?", "");
+	if (loc_seach){
+		changeTab(document.querySelector(`.tabs > li[data=${loc_seach}]`), true)
+	}
 }
