@@ -59,6 +59,6 @@ def artist_index(name, image="../root_/images/people.svg"):
 	<link rel="stylesheet" href="../root_/styles/main.css">
 	<script src="../root_/htmls/header.html"></script>
 	<script src="../root_/htmls/body_artist.html"></script>
-	<script src="../root_/htmls/footer_artist.html"></script>
+	<script src="../root_/htmls/footer.html"></script>
 	<script src="../root_/scripts/artist.js"></script>
 	</head><body></body></html>'''
