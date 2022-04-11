@@ -10,10 +10,19 @@ body = `
 	<title>${LANG.official}</title><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
 </h1>
 
+<ul class="tabs">
+	<li class="active" data="main">Overview</li>
+	<li data="all-tracks">All Tracks</li>
+	<li data="about">About</li>
+</ul>
 
 <div id="wraper">
-<div id="main_page">
+<div id="main_page" style="transition:0.35s">
 
+</div>
+
+<div id="about" style="transition:0.35s;display:none;opacity:0">
+	<table></table>
 </div>
 
 <img id="toTop" title="${LANG.up}" onclick="window.scrollTo(0,0)" src="../root_/images/return-to-the-top.svg">
