@@ -57,7 +57,7 @@ def artist_index(name, image="../root_/images/people.svg"):
 	<script src="../root_/bd.json"></script>
 	<link rel="stylesheet" href="../root_/styles/fontawesome/css/all.min.css">
 	<link rel="stylesheet" href="../root_/styles/main.css">
-	<script src="../root_/htmls/header_artist.html"></script>
+	<script src="../root_/htmls/header.html"></script>
 	<script src="../root_/htmls/body_artist.html"></script>
 	<script src="../root_/htmls/footer_artist.html"></script>
 	<script src="../root_/scripts/artist.js"></script>
