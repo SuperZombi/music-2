@@ -942,11 +942,23 @@ div.ripple {
 #about table td{
 	border-bottom: 2px solid var(--contrast-color);
 	border-right: 2px solid var(--contrast-color);
-	padding: 10px 20px;
+	padding: 10px 40px;
 	transition: 0.35s;
 }
+#about table tr td:first-child { text-transform: capitalize; }
 #about table tr:last-child td { border-bottom: none; }
 #about table td:last-child { border-right: none; }
+
+#about table td i { margin-right: 5px; }
+#about table td a {
+	text-decoration: none;
+	transition: 0.35s;
+	color: blue;
+}
+#about table td a:hover {
+	color: orange;
+	text-decoration: underline;
+}
 
 
 @media all and (max-height: 500px) {
@@ -1067,6 +1079,9 @@ div.ripple {
 	.checkmark {
 		width: 30px;
 		height: 30px;
+	}
+	#about table td{
+		padding: 8px 15px;
 	}
 }
 
