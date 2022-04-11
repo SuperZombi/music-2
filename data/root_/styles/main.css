@@ -765,6 +765,12 @@ div.ripple {
 	transition: 0.5s;
 }
 
+.empty{
+	font-family: 'Balsamiq Sans', sans-serif;
+	color: var(--contrast-color);
+	text-align: center;
+}
+
 /* checkmark */
 .checkmark {
 	width: 40px;
