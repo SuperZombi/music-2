@@ -79,13 +79,6 @@
 	transition: 0.25s ease-out;
 	opacity: 0;
 }
-
-#empty{
-	font-family: 'Balsamiq Sans';
-	color: var(--contrast-color);
-	text-align: center;
-	display: none;
-}
 #extra_space{
 	transition: 0.75s ease;
 }
