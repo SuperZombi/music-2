@@ -51,6 +51,11 @@ LANG = {
 	"private": "Приватный",
 	"public": "Публичный",
 
+	// Artist
+	"overview_tab": "Обзор",
+	"all_tab": "Все Треки",
+	"about_tab": "Об Авторе",
+
 	//Support
 	"support_title": "Поддержка",
 	"report": "Сообщить о нарушении",
