@@ -46,9 +46,15 @@ async function main(){
 
 	loadArtistProfileData()
 
-	await addNewCategory(sortByDate(getAllAuthorTracks(ARTIST.name)))
-	overflowed()
-
+	let tracks = getAllAuthorTracks(ARTIST.name)
+	if (tracks.length == 0){
+		document.getElementById("main_page").innerHTML = empty();
+	}
+	else{
+		await addNewCategory(sortByDate(tracks))
+		overflowed()
+	}
+	
 	initTabs()
 }
 
@@ -149,7 +155,19 @@ function checkmark_hovered(e){
 	}, 100)
 }
 
+function empty(){
+	return `
+		<h2 class="empty">
+			${LANG.nothing_here} <br>
+			¯\\_(ツ)_/¯
+		</h2>`
+}
+
 function buildAbout(arr){
+	if (Object.keys(arr).length == 0){
+		document.getElementById("about").getElementsByTagName("table")[0].style.display = "none";
+		document.getElementById("about").innerHTML = empty();
+	}
 	Object.keys(arr).forEach(function(e){
 		let tr = document.createElement("tr");
 		let td1 = document.createElement("td");
