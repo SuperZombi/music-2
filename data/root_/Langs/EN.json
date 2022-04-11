@@ -51,6 +51,11 @@ LANG = {
 	"private": "Private",
 	"public": "Public",
 
+	// Artist
+	"overview_tab": "Overview",
+	"all_tab": "All Tracks",
+	"about_tab": "About",
+
 	//Support
 	"support_title": "Support",
 	"report": "Report abuse",
