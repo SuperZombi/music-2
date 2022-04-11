@@ -104,6 +104,14 @@ div.ripple {
 }
 
 
+#about table td a {
+	color: #57D6FF;
+}
+#about table td a:hover {
+	color: yellow;
+}
+
+
 
 /* ---------------- */
 .about_box{
