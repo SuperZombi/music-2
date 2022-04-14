@@ -48,7 +48,7 @@ async function main(){
 
 	initTabs()
 
-	try{ let tracks = getAllAuthorTracks(ARTIST.name);}
+	try{ var tracks = getAllAuthorTracks(ARTIST.name);}
 	catch{ document.getElementById("main_page").innerHTML = empty();}
 	
 	if (tracks.length == 0){
