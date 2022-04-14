@@ -237,6 +237,7 @@ window.onload = function(){
 	})()
 }
 
+var phoneMask;
 function main(){
 	notice = Notification('#notifications');
 
@@ -244,7 +245,7 @@ function main(){
 	searchParams = Object.fromEntries(urlSearchParams.entries());
 
 	var phone_input = document.querySelector("input[type=tel]");
-	var phoneMask = IMask(
+	phoneMask = IMask(
 	phone_input, {
 		mask: '+(000) 00-00-00-00000'
 	});
