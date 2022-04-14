@@ -48,15 +48,22 @@ async function main(){
 
 	initTabs()
 
-	try{ var tracks = getAllAuthorTracks(ARTIST.name);}
-	catch{ document.getElementById("main_page").innerHTML = empty();}
-	
-	if (tracks.length == 0){
-		document.getElementById("main_page").innerHTML = empty();
+	let loc_seach = window.location.search.replace("?", "");
+	if (loc_seach && loc_seach != "all-tracks"){
+		changeTab(document.querySelector(`.tabs > li[data=${loc_seach}]`), true)
 	}
-	else{
-		await addNewCategory(sortByDate(tracks))
-		overflowed()
+
+	try{
+		var tracks = getAllAuthorTracks(ARTIST.name);
+		if (tracks.length != 0){
+			await addNewCategory(sortByDate(tracks))
+			overflowed()
+		}
+		else{document.getElementById("main_page").innerHTML = empty();}
+	}catch{ document.getElementById("main_page").innerHTML = empty();}
+
+	if (loc_seach && loc_seach == "all-tracks"){
+		changeTab(document.querySelector(`.tabs > li[data=${loc_seach}]`), true)
 	}
 }
 
@@ -216,6 +223,9 @@ function changeTab(element, no_animete=false){
 			old_elem.classList.remove("no-animation")
 			element.classList.remove("no-animation")
 		},0)
+		if (element.getAttribute("data")=="all-tracks"){
+			document.getElementById("main_page").querySelector(".category").classList.add("flexable")
+		}
 		return;
 	}
 
@@ -256,8 +266,4 @@ function initTabs(){
 	Array.from(document.querySelectorAll(".tabs > li")).forEach(el=>{
 		el.onclick = ()=>changeTab(el);
 	})
-	let loc_seach = window.location.search.replace("?", "");
-	if (loc_seach){
-		changeTab(document.querySelector(`.tabs > li[data=${loc_seach}]`), true)
-	}
 }
