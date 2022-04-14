@@ -46,7 +46,11 @@ async function main(){
 
 	loadArtistProfileData()
 
-	let tracks = getAllAuthorTracks(ARTIST.name)
+	initTabs()
+
+	try{ let tracks = getAllAuthorTracks(ARTIST.name);}
+	catch{ document.getElementById("main_page").innerHTML = empty();}
+	
 	if (tracks.length == 0){
 		document.getElementById("main_page").innerHTML = empty();
 	}
@@ -54,8 +58,6 @@ async function main(){
 		await addNewCategory(sortByDate(tracks))
 		overflowed()
 	}
-	
-	initTabs()
 }
 
 
