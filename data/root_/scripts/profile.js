@@ -80,6 +80,7 @@ function main(){
 		submain()
 	}
 	else{
+		document.getElementById("dont-redirected").style.display = "block"
 		goToLogin()
 	}
 
