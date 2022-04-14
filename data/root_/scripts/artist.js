@@ -45,7 +45,6 @@ async function main(){
 	}
 
 	loadArtistProfileData()
-
 	initTabs()
 
 	let loc_seach = window.location.search.replace("?", "");
