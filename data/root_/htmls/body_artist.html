@@ -6,8 +6,10 @@ body = `
 	<img id="artist_image" src="${ARTIST.image}">
 </div>
 <h1 class="category_title" align="center">${ARTIST.name}
-	<svg id="official_checkmark" style="display:none;" onmouseenter="checkmark_hovered(this)" class="checkmark checkmark__animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-	<title>${LANG.official}</title><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+	<span title="${LANG.official}">
+		<svg id="official_checkmark" style="display:none;" onmouseenter="checkmark_hovered(this)" class="checkmark checkmark__animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+		<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+	</span>
 </h1>
 
 <ul class="tabs">
