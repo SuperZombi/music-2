@@ -1172,6 +1172,10 @@ div.ripple {
 		right: initial;
 		transform: unset;
 	}
+	.artist_image_wrapper::after{
+		top: unset !important;
+		bottom: 0 !important;
+	}
 	#header [title]::after{
 		top: initial;
 	}
