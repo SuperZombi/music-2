@@ -636,7 +636,7 @@ div.ripple {
 	position: relative;
 	padding: 0.2em 0;
 }
-.category_title > a::after {
+.category_title > a::before {
 	content: '';
 	position: absolute;
 	bottom: 0;
@@ -650,7 +650,7 @@ div.ripple {
 	transform: scale(0);
 	transform-origin: center center;
 }
-.category_title > a:hover::after{
+.category_title > a:hover::before{
 	transform: scale(1);
 	opacity: 1;
 }
@@ -878,10 +878,15 @@ div.ripple {
 	position: fixed;
 	bottom: -50%;
 	right: 5px;
-	transition: bottom 0.75s ease-in-out, filter 0.3s ease-in-out;
+	transition: bottom 0.75s ease-in-out;
 	cursor: pointer;
 }
-#toTop:hover{
+#toTop img{
+	height: 100%;
+	width: 100%;
+	transition: filter 0.3s ease-in-out;
+}
+#toTop:hover img{
 	filter: drop-shadow(0 0 5px #3b69f4);
 }
 
@@ -1135,4 +1140,57 @@ div.ripple {
 	color: var(--contrast-color);
 	border-color: white;
 	background-color: #E6E6E6;
+}
+
+
+/* Title display for mobile */
+@media (pointer: coarse), (hover: none) {
+	[title] {
+		position: relative;
+	}
+
+	[title]:active::after {
+		content: attr(title);
+		position: absolute;
+		top: 90%;
+		right: 50%;
+		transform: translateX(50%);
+		color: var(--contrast-color);
+		background-color: var(--body-color);
+		border: 1px solid;
+		width: fit-content;
+		padding: 3px 5px;
+		z-index: 1000;
+		font-size: 12pt;
+		font-family: sans-serif;
+		transition-delay: 1s;
+	}
+
+	/**/
+	#card_previewer [title]::after{
+		top: initial;
+		right: initial;
+		transform: unset;
+	}
+	#header [title]::after{
+		top: initial;
+	}
+	#toTop::after{
+		top: unset;
+		bottom: 0;
+	}
+	#swicher::after{
+		content: none;
+	}
+	#play_pause_button::after{
+		top: 50%;
+		right: initial;
+		transform: unset;
+	}
+	#waveform [title]::after{
+		content: none;
+	}
+	#share_menu [title]::after{
+		content: none;
+	}
 }
