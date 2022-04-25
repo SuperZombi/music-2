@@ -12,7 +12,7 @@
 	bottom: 0;
 	transition: 0.4s;
 }
-#card_previewer > * {
+#card_previewer > span > * {
 	height: 50px;
 	display: inline-block;
 	margin: 15px;
@@ -21,14 +21,14 @@
 	transition: 0.3s;
 	user-select: none;
 }
-#card_previewer > *:hover {
+#card_previewer > span > *:hover {
 	filter: drop-shadow(0 0 3px var(--contrast-mini));
 }
-#card_previewer > .close{
+#card_previewer > span > .close{
 	height: 40px;
 	fill: red;
 }
-#card_previewer> .close:hover{
+#card_previewer > span > .close:hover{
 	filter: drop-shadow(0 0 10px red);
 }
 
@@ -127,9 +127,6 @@
 	fill: red;
 }
 
-.settings_element{
-
-}
 .content h2:first-child{
 	margin-top: 5px;
 }
