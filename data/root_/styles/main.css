@@ -1151,7 +1151,7 @@ div.ripple {
 		position: relative;
 	}
 
-	[title]:active::after {
+	[title]:hover::after {
 		content: attr(title);
 		position: absolute;
 		top: 90%;
