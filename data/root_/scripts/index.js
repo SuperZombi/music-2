@@ -84,6 +84,7 @@ async function addNewCategory(category_title, tracks, href){
 			let img = document.createElement('img');
 			img.className = "loader"
 			img.src = `${e.href}/${e.image}?size=small`
+			img.alt = "";
 			img.onload = ()=>img.classList.remove("loader");
 			html += `
 				<a href="${e.href}" class="about_box">
