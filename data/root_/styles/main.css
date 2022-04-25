@@ -1197,4 +1197,8 @@ div.ripple {
 	#share_menu [title]::after{
 		content: none;
 	}
+	.toggle::after{
+		right: 0 !important;
+		transform: unset !important;
+	}
 }
