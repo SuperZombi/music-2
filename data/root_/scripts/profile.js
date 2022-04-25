@@ -214,6 +214,7 @@ async function addNewCategory(tracks){
 
 			let img = document.createElement('img');
 			img.className = "loader"
+			img.alt = ""
 			img.src = `../${e.href}/${e.image}?size=small`
 			img.onload = ()=>img.classList.remove("loader");
 
