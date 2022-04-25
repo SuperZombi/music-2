@@ -354,7 +354,9 @@ hr{
 }
 #share_menu{
 	display: none;
-	height: 65%;
+	/*height: 65%;*/
+	padding-bottom: 25px;
+	min-height: 40%;
 	width: 50%;
 	background-color: var(--body-color);
 	position: fixed;
@@ -979,7 +981,6 @@ div.ripple {
 
 @media all and (max-height: 500px) {
 	#share_menu{
-		height: 80%;
 		width: 98%;
 	}
 }
@@ -1039,8 +1040,9 @@ div.ripple {
 		min-width: 75%;
 	}
 	#share_menu{
-		height: 80%;
+		/*height: 80%;*/
 		width: 98%;
+		padding-bottom: 10px;
 	}
 	.share-element{
 		width: 93%;
