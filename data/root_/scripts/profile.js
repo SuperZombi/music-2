@@ -74,8 +74,8 @@ function main(){
 
 		notice = Notification('#notifications');
 		document.querySelector("#notifications").classList.add("notifications_top")
-		document.querySelector(".logout > svg").style.display = "block"
-		document.querySelector(".logout > svg").onclick = logout
+		document.querySelector(".logout > #logout-icon").style.display = "block"
+		document.querySelector(".logout > #logout-icon").onclick = logout
 
 		submain()
 	}
