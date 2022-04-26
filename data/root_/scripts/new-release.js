@@ -6,8 +6,21 @@ function checkPhoto(target) {
     var objectUrl = _URL.createObjectURL(file);
     img.onload = function () {
         if (this.width > 1280 || this.height > 1280){
-            document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1280x1280</i>! <br>`;
-            target.value = '';
+            var onSuccessResize = (image)=>{
+                let container = new DataTransfer(); 
+                container.items.add(image);
+                target.files = container.files;
+                notice.Success(LANG.file_resized)
+                checkPhoto(target)
+            }
+            if (JSON.parse(local_storage["resize-images"])){
+                document.getElementById("photoLabel").innerHTML = LANG.start_resize
+                ResizeRequest(file, onSuccessResize, ...resizeWithRatio(this.width, this.height, 1280, 1280)); return
+            }
+            else{
+                document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1280x1280</i>! <br>`;
+                target.value = '';
+            }
         }
         _URL.revokeObjectURL(objectUrl);
     };
@@ -61,6 +74,71 @@ function checkAudio(target) {
         target.value = '';
     }
 }
+
+
+function ResizeRequest(file, callback, desired_W=1280, desired_H=1280){
+    if (file.type.split('/')[0] != 'image'){
+        console.error('File to resize is not image.')
+    }
+    var new_name = file.name.split('.').slice(0, -1).join() + ".jpg"
+    var onSuccess = function (newImage){
+        fetch(newImage)
+        .then(res => res.blob())
+        .then(resizedImage => {
+            var file = new File([resizedImage], new_name, {type: 'image/jpeg'});
+            callback(file)
+        })
+    };
+    var onError = (e)=>{ console.error(e) }
+
+    var reader = new FileReader();
+    reader.onload = function (readerEvent) {
+        let image_src = readerEvent.target.result;
+        resizeImage(image_src, desired_W, desired_H, 0.9, onSuccess, onError)
+    }
+    reader.readAsDataURL(file);
+}
+
+function resizeImage(imageUrl, newWidth, newHeight, quality, onReady, onError) {
+    var image = document.createElement('img');
+    image.onload = function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, newWidth, newHeight);
+        try {
+            // quality (from 0 to 1.0)
+            var dataUrl = canvas.toDataURL('image/jpeg', quality);
+            onReady(dataUrl);
+        } catch (e) {
+            if (onError) {
+                onError('Image saving error.');
+            }
+        }
+    };
+    image.onerror = function() {
+        if (onError) {
+            onError('Image loading error.');
+        }
+    };
+    image.src = imageUrl;
+};
+function resizeWithRatio(width, height, max_W, max_H){
+    if (width > height) {
+        if (width > max_W) {
+            height *= max_W / width;
+            width = max_W;
+        }
+    } else {
+        if (height > max_H) {
+            width *= max_H / height;
+            height = max_H;
+        }
+    }
+    return [parseInt(width), parseInt(height)];
+}
+
 
 function openLink(target){
     var link = target.parentElement.querySelector("input").value;
