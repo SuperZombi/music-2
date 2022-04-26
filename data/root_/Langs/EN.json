@@ -50,6 +50,11 @@ LANG = {
 	"hard_anim_prompt": "Disable if you experience performance issues",
 	"private": "Private",
 	"public": "Public",
+	"other": "Other",
+	"resize_images": "Resize Images",
+	"resize_images_prompt": "If the image size is larger than allowed, it will be automatically resized before uploading to the server.",
+	"file_resized": "Image resized!",
+	"start_resize": "Starting to resize",
 
 	// Artist
 	"overview_tab": "Overview",
