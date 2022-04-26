@@ -250,26 +250,84 @@ function sortByDate(what){
 }
 
 function validateImage(file){
-	if (file && file['type'].split('/')[0] === 'image'){
-		if (file.size <= 2097152) {
+	return new Promise((resolve, reject) => {
+		if (file && file['type'].split('/')[0] === 'image'){
 			var _URL = window.URL || window.webkitURL;
 			var img = new Image();
 			var objectUrl = _URL.createObjectURL(file);
-			return new Promise((resolve, reject) => {
-				img.onload = function () {
-						if (img.width <= 1280 || img.height <= 1280){
-							_URL.revokeObjectURL(objectUrl);
-							resolve([true]);
+			img.onload = function () {
+				if (img.width <= 1280 || img.height <= 1280){
+					_URL.revokeObjectURL(objectUrl);
+					if (file.size > 2097152) { resolve([false, LANG.file_too_big]) }
+					else{ resolve([true]) }
+				}
+				else{
+					_URL.revokeObjectURL(objectUrl);
+					if (JSON.parse(local_storage["resize-images"])){
+						notice.Warning(LANG.start_resize)
+						var onSuccessResize = (image)=>{
+							notice.Success(LANG.file_resized)
+							resolve([false, image])
 						}
-						_URL.revokeObjectURL(objectUrl);
-				};
-				img.src = objectUrl;
-			})
+						ResizeRequest(file, onSuccessResize, ...resizeWithRatio(this.width, this.height, 1280, 1280));
+					}
+					else{ resolve([false, LANG.file_too_big]) }
+				}
+			};
+			img.src = objectUrl;
 		}
-		return [false, LANG.file_too_big];
-	}
-	return [false, LANG.wrong_file_format];
+		else{ resolve([false, LANG.wrong_file_format]) }
+	})
 }
+
+function ResizeRequest(file, callback, desired_W=1280, desired_H=1280){
+    if (file.type.split('/')[0] == 'image'){
+	    var new_name = file.name.split('.').slice(0, -1).join() + ".jpg"
+	    var onSuccess = function (newImage){
+	        fetch(newImage).then(res => res.blob()).then(resizedImage => {
+	            var file = new File([resizedImage], new_name, {type: 'image/jpeg'});
+	            callback(file)
+	        })
+	    };
+
+	    var reader = new FileReader();
+	    reader.onload = function (readerEvent) {
+	        let image_src = readerEvent.target.result;
+	        resizeImage(image_src, desired_W, desired_H, 0.9, onSuccess)
+	    }
+	    reader.readAsDataURL(file);
+    }
+}
+function resizeImage(imageUrl, newWidth, newHeight, quality, onReady) {
+    var image = document.createElement('img');
+    image.onload = function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, newWidth, newHeight);
+        try {
+            var dataUrl = canvas.toDataURL('image/jpeg', quality);
+            onReady(dataUrl);
+        } catch {}
+    };
+    image.src = imageUrl;
+};
+function resizeWithRatio(width, height, max_W, max_H){
+    if (width > height) {
+        if (width > max_W) {
+            height *= max_W / width;
+            width = max_W;
+        }
+    } else {
+        if (height > max_H) {
+            width *= max_H / height;
+            height = max_H;
+        }
+    }
+    return [parseInt(width), parseInt(height)];
+}
+
 
 function sendFile(file){
 	var formData = new FormData();
@@ -300,12 +358,19 @@ function selectFile(){
 	input.accept = "image/png, image/jpeg";
 	input.onchange = async e => { 
 		var file = e.target.files[0];
-		let valide = await validateImage(file);
+		var valide = await validateImage(file);
 		if (valide[0]){
 			sendFile(file)
 		}
 		else{
-			notice.Error(valide[1])
+			if (JSON.parse(local_storage["resize-images"])){
+				let resized_file = valide[1];
+				valide = await validateImage(resized_file);
+				if (valide[0]){
+					sendFile(resized_file)
+				}
+			}
+			else{ notice.Error(valide[1]) }
 		}
 	}
 	input.click();
@@ -454,13 +519,13 @@ function validatePhoneNumber(input_str) {
 	return re.test(input_str);
 }
 function validateEmail(input_str) {
-  var re = /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i;
-  return re.test(input_str);
+	var re = /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i;
+	return re.test(input_str);
 }
 
 var global_profile_data = {};
 function loadSettings() {
-	let available_settings = ["lang", "theme", "hard-anim"]
+	let available_settings = ["lang", "theme", "hard-anim", "resize-images"]
 	Object.keys(local_storage).forEach(function(e){
 		if (available_settings.includes(e)){
 			let inputs = document.querySelectorAll(`.settings_element input[name=${e}]`)
