@@ -128,6 +128,22 @@ body = `
 		</details>
 	<hr>
 
+	<details>
+			<summary>💡${LANG.other}</summary>
+			<div class="content">
+
+			<div class="settings_element">
+				<span>${LANG.resize_images}:</span><span style="cursor: help;" title="${LANG.resize_images_prompt}">❓</span>
+				<span class="radio">
+					<input label="${LANG.disable}" type="radio" name="resize-images" value="false" checked onclick="changeSettings(this)">
+					<input label="${LANG.enable}" type="radio" name="resize-images" value="true" onclick="changeSettings(this)">
+				</span>
+			</div>
+
+			</div>
+		</details>
+	<hr>
+
 	<div class="settings_element center-wrap">
 		<button class="button" onclick="saveSettings();">${LANG.save}</button>
 	</div>
