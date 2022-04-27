@@ -70,6 +70,7 @@ function start_search(){
 			xhr.onload = async function() {
 				if (xhr.status == 200){
 					search_current = text;
+					type_current = type;
 					type_old = type;
 					update_url();
 					let answer = JSON.parse(xhr.response);
