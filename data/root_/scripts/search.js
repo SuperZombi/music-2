@@ -57,7 +57,7 @@ function changeType(){
 
 var search_current = '';
 var type_current = '';
-async function start_search(){
+function start_search(){
 	let text = document.getElementById("search_label").value.trim();
 	let type = document.querySelector("input[name=search_type]:checked").value
 	if (text != ""){
@@ -65,7 +65,7 @@ async function start_search(){
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", 'api/search')
 			xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-			xhr.onload = function() {
+			xhr.onload = async function() {
 				if (xhr.status == 200){
 					search_current = text;
 					type_current = type;
@@ -75,7 +75,7 @@ async function start_search(){
 						document.getElementById('search_results').innerHTML = "";
 						if (type == "genre"){
 							let genres = sortByGenre(answer);
-							Object.keys(genres).forEach(function(e){
+							Object.keys(genres).forEach(async function(e){
 								await addNewCategory(genres[e], type, e)
 								overflowed()
 							})
