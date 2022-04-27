@@ -137,5 +137,12 @@ LANG = {
 	"invalid_phone": "Invalid phone number!",
 	"invalid_email": "Invalid email!",
 
-	"too_many_tries": "Too many tries! Please wait % sec."
+	"too_many_tries": "Too many tries! Please wait % sec.",
+
+	// Search
+	"search_title": "Search",
+	"nothing_found": "Nothing found",
+	"search_placeholder": "What are you looking for?",
+	"search_but": "Search",
+	"user": "User"
 }
