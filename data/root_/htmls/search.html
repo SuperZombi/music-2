@@ -10,9 +10,9 @@ body = `
 		</button>
 	</div>
 	<div class="radio">
-		<input label="${LANG.track}" type="radio" name="search_type" value="track" checked>
-		<input label="${LANG.user}" type="radio" name="search_type" value="user">
-		<input label="${LANG.genre}" type="radio" name="search_type" value="genre">
+		<input label="${LANG.track}" type="radio" name="search_type" value="track" checked onclick="changeType()">
+		<input label="${LANG.user}" type="radio" name="search_type" value="user" onclick="changeType()">
+		<input label="${LANG.genre}" type="radio" name="search_type" value="genre" onclick="changeType()">
 	</div>
 </div>
 
