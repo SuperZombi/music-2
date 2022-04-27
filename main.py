@@ -11,6 +11,7 @@ from io import BytesIO
 import audio_metadata
 import warnings
 warnings.filterwarnings('ignore')
+from fuzzywuzzy import fuzz
 # import re
 from tools.serverErrors import Errors
 from tools.BrootForceProtection import BrootForceProtection
@@ -301,6 +302,60 @@ def register():
 
 	save_users()
 	return jsonify({'successfully': True})
+
+
+@app.route("/api/search", methods=["POST"])
+def search():
+	def search_track(text):
+		final = []
+		for artist, data in tracks.items():
+			for track, value in data['tracks'].items():
+				confidence = fuzz.partial_ratio(track.lower(), text.lower())
+				if confidence > 85:
+					temp = {"artist": artist, "track": track, "path": f'{data["path"]}/{value["path"]}', "image": value['image']}
+					final.append(temp)
+		return final
+
+	def search_user(text):
+		final = []
+		for user in users.keys():
+			confidence = fuzz.partial_ratio(user.lower(), text.lower())
+			if confidence > 85:
+				user_folder_public = user.lower().replace(" ", "-")
+				user_folder = os.path.join("data", user_folder_public)
+				try:
+					with open(os.path.join(user_folder, "artist.json"), 'r', encoding='utf8') as file:
+						lines = file.readlines()
+						string = "".join(filter(lambda x: not "//" in x, lines)) # remove comments
+						string = string.split('=', 1)[1]
+						artist_settings = json.loads(string)
+						image = os.path.normpath(os.path.join(user_folder_public, artist_settings['image']))
+				except:
+					image = os.path.normpath(os.path.join(user_folder_public, "../root_/images/people.svg"))
+				
+				temp = {"user": user, "path": user.lower().replace(" ", "-"), "image": image}
+				final.append(temp)
+		return final
+
+	def search_genre(text):
+		final = []
+		for artist, data in tracks.items():
+			for track, value in data['tracks'].items():
+				confidence = fuzz.partial_ratio(value['genre'].lower(), text.lower())
+				if confidence > 85:
+					temp = {"artist": artist, "track": track, "path": f'{data["path"]}/{value["path"]}', "image": value['image']}
+					final.append(temp)
+		return final
+
+
+	if request.json['type'] == "track":
+		return search_track(request.json['text'])
+	elif request.json['type'] == "user":
+		return search_user(request.json['text'])
+	elif request.json['type'] == "genre":
+		return search_genre(request.json['text'])
+	else:
+		return 404
 
 
 def parse_boolean(value):
