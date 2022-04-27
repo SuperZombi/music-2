@@ -4,6 +4,7 @@ window.onload = function() {
 		document.title = `Zombi Music - ${LANG.search_title}`
 		document.body.innerHTML += header
 		document.body.innerHTML += body
+		main()
 
 		setTimeout(function(){document.body.style.transition = "1s"}, 500)
 	}
@@ -29,9 +30,26 @@ function check_enter(e) {
 		let text = document.getElementById("search_label").value;
 		if (text == ""){
 			search_current = '';
+			update_url()
 			document.getElementById('search_results').innerHTML = "";
 		}
 	}
+}
+
+function update_url(){
+	let temp_url = new URL(window.location.href);
+	if (search_current == ""){ temp_url.search = "" }
+	else{
+		temp_url.searchParams.set('find', search_current)
+	}
+	temp_url.searchParams.set('type', type_current)
+	window.history.pushState({path:temp_url.href},'',temp_url.href);
+}
+
+function changeType(){
+	let type = document.querySelector("input[name=search_type]:checked").value;
+	type_current = type;
+	update_url()
 }
 
 var search_current = '';
@@ -48,6 +66,7 @@ function start_search(){
 				if (xhr.status == 200){
 					search_current = text;
 					type_current = type;
+					update_url();
 					let answer = JSON.parse(xhr.response);
 					if (answer.length > 0){
 						document.getElementById('search_results').innerHTML = "";
@@ -147,4 +166,20 @@ function toTitleCase(str) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     }
   );
+}
+
+
+function main(){
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	searchParams = Object.fromEntries(urlSearchParams.entries());
+	if (searchParams.find){
+		document.getElementById("search_label").value = searchParams.find
+	}
+	if (searchParams.type){
+		let inputs = document.querySelectorAll("input[name=search_type]")
+		let input = Array.from(inputs).filter(i=>i.value==searchParams.type)[0]
+		try{input.checked = true;}catch{}
+	}
+
+	if (searchParams.find && searchParams.type){ start_search() }
 }
