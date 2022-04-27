@@ -2,20 +2,22 @@
 if (typeof LANG !== 'undefined'){
 body = `
 
-<div class="wrap">
+<div class="wrap" onkeyup="check_enter(event);">
 	<div class="search">
-		<input type="text" class="searchTerm" placeholder="What are you looking for?">
-		<button type="submit" class="searchButton" title="Search">
+		<input type="text" class="searchTerm" id="search_label" placeholder="What are you looking for?">
+		<button type="submit" class="searchButton" title="Search" onclick="start_search();">
 			<i class="fa fa-search"></i>
 		</button>
 	</div>
 	<div class="radio">
 		<input label="Track" type="radio" name="search_type" value="track" checked>
-		<input label="Artist" type="radio" name="search_type" value="artist">
+		<input label="User" type="radio" name="search_type" value="user">
 		<input label="Genre" type="radio" name="search_type" value="genre">
 	</div>
 </div>
 
+
+<div id="search_results"></div>
 
 `
 }
