@@ -15,6 +15,7 @@ window.onload = function() {
 }
 window.onresize = function(){ overflowed() }
 window.orientationchange = function(){ overflowed() }
+window.onscroll = function(){showScrollTop()}
 
 function empty(){
 	return `
@@ -106,6 +107,14 @@ function overflowed() {
 			}
 		}
 	})
+}
+function showScrollTop(){
+	if (window.scrollY > 200){
+		document.getElementById("toTop").style.bottom = "10px"
+	}
+	else{
+		document.getElementById("toTop").style.bottom = "-50%"
+	}
 }
 
 async function addNewCategory(tracks, type, category_title){
