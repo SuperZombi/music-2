@@ -57,11 +57,12 @@ function changeType(){
 
 var search_current = '';
 var type_current = '';
+var type_old = '';
 function start_search(){
 	let text = document.getElementById("search_label").value.trim();
 	let type = document.querySelector("input[name=search_type]:checked").value
 	if (text != ""){
-		if (search_current != text || type_current != type){
+		if (search_current != text || type_old != type){
 			document.getElementById('search_results').innerHTML = "";
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", 'api/search')
@@ -69,7 +70,7 @@ function start_search(){
 			xhr.onload = async function() {
 				if (xhr.status == 200){
 					search_current = text;
-					type_current = type;
+					type_old = type;
 					update_url();
 					let answer = JSON.parse(xhr.response);
 					if (answer.length > 0){
