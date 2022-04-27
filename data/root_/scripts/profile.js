@@ -249,7 +249,7 @@ function sortByDate(what){
 	return what.sort((a, b) => b.date - a.date)
 }
 
-function validateImage(file){
+function validateImage(file, compress=true){
 	return new Promise((resolve, reject) => {
 		if (file && file['type'].split('/')[0] === 'image'){
 			var _URL = window.URL || window.webkitURL;
@@ -258,7 +258,19 @@ function validateImage(file){
 			img.onload = function () {
 				if (img.width <= 1280 || img.height <= 1280){
 					_URL.revokeObjectURL(objectUrl);
-					if (file.size > 2097152) { resolve([false, LANG.file_too_big]) }
+					if (file.size > 2097152) {
+						if (JSON.parse(local_storage["resize-images"]) && compress){
+							notice.Warning(LANG.start_resize)
+							var onSuccessCompress = (image)=>{
+								notice.Success(LANG.file_resized)
+								resolve([false, image, "compress"])
+							}
+							ResizeRequest(file, onSuccessCompress, this.width, this.height);
+						}
+						else{
+							resolve([false, LANG.file_too_big])
+						}
+					}
 					else{ resolve([true]) }
 				}
 				else{
@@ -365,8 +377,14 @@ function selectFile(){
 		else{
 			if (JSON.parse(local_storage["resize-images"])){
 				let resized_file = valide[1];
-				valide = await validateImage(resized_file);
-				if (valide[0]){
+				var new_valide;
+				if (valide[2] == "compress"){
+					new_valide = await validateImage(resized_file, false);
+				}
+				else{
+					new_valide = await validateImage(resized_file);
+				}
+				if (new_valide[0]){
 					sendFile(resized_file)
 				}
 			}
