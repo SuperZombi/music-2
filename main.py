@@ -355,7 +355,7 @@ def search():
 	elif request.json['type'] == "genre":
 		return jsonify(search_genre(request.json['text']))
 	else:
-		return 404
+		return "404"
 
 
 def parse_boolean(value):
