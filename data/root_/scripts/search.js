@@ -62,6 +62,7 @@ function start_search(){
 	let type = document.querySelector("input[name=search_type]:checked").value
 	if (text != ""){
 		if (search_current != text || type_current != type){
+			document.getElementById('search_results').innerHTML = "";
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", 'api/search')
 			xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -72,7 +73,6 @@ function start_search(){
 					update_url();
 					let answer = JSON.parse(xhr.response);
 					if (answer.length > 0){
-						document.getElementById('search_results').innerHTML = "";
 						if (type == "genre"){
 							let genres = sortByGenre(answer);
 							Object.keys(genres).forEach(async function(e){
