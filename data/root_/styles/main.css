@@ -697,6 +697,9 @@ div.ripple {
 	overflow-x: auto;
 	white-space: nowrap;
 }
+.flexable {
+	padding-left: 0;
+}
 .flexable > .category_title{
 	margin-left: 0;
 	text-align: center;
