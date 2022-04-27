@@ -1,0 +1,25 @@
+(function load_lang(){
+if (typeof LANG !== 'undefined'){
+body = `
+
+<div class="wrap">
+	<div class="search">
+		<input type="text" class="searchTerm" placeholder="What are you looking for?">
+		<button type="submit" class="searchButton" title="Search">
+			<i class="fa fa-search"></i>
+		</button>
+	</div>
+	<div class="radio">
+		<input label="Track" type="radio" name="search_type" value="track" checked>
+		<input label="Artist" type="radio" name="search_type" value="artist">
+		<input label="Genre" type="radio" name="search_type" value="genre">
+	</div>
+</div>
+
+
+`
+}
+else{
+	setTimeout(function(){load_lang()}, 500)
+}
+})()
