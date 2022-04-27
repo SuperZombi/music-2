@@ -343,7 +343,7 @@ def search():
 			for track, value in data['tracks'].items():
 				confidence = fuzz.partial_ratio(value['genre'].lower(), text.lower())
 				if confidence > 85:
-					temp = {"artist": artist, "track": track, "path": f'{data["path"]}/{value["path"]}', "image": value['image']}
+					temp = {"artist": artist, "track": track, "path": f'{data["path"]}/{value["path"]}', "image": value['image'], "genre": value['genre']}
 					final.append(temp)
 		return final
 
