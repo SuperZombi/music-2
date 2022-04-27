@@ -1,40 +1,56 @@
-function checkPhoto(target) {
+function checkPhoto(target, compress=true) {
     document.getElementById("photoLabel").innerHTML = "";
+
+    if (file && file['type'].split('/')[0] != 'image'){
+        document.getElementById("photoLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
+        target.value = '';
+        return
+    }
+
     var _URL = window.URL || window.webkitURL;
     var file = target.files[0];
     var img = new Image();
     var objectUrl = _URL.createObjectURL(file);
     img.onload = function () {
         if (this.width > 1280 || this.height > 1280){
-            var onSuccessResize = (image)=>{
-                let container = new DataTransfer(); 
-                container.items.add(image);
-                target.files = container.files;
-                notice.Success(LANG.file_resized)
-                checkPhoto(target)
-            }
             if (JSON.parse(local_storage["resize-images"])){
+                var onSuccessResize = (image)=>{
+                    let container = new DataTransfer(); 
+                    container.items.add(image);
+                    target.files = container.files;
+                    notice.Success(LANG.file_resized)
+                    checkPhoto(target)
+                }
                 document.getElementById("photoLabel").innerHTML = LANG.start_resize
-                ResizeRequest(file, onSuccessResize, ...resizeWithRatio(this.width, this.height, 1280, 1280)); return
+                ResizeRequest(file, onSuccessResize, ...resizeWithRatio(this.width, this.height, 1280, 1280));
             }
             else{
                 document.getElementById("photoLabel").innerHTML += `${LANG.max_res} <i style='color:red'>1280x1280</i>! <br>`;
                 target.value = '';
             }
         }
+        else{
+            if(file.size > 2097152) {
+                if (JSON.parse(local_storage["resize-images"]) && compress){
+                    var onSuccessCompress = (image)=>{
+                        let container = new DataTransfer(); 
+                        container.items.add(image);
+                        target.files = container.files;
+                        notice.Success(LANG.file_resized)
+                        checkPhoto(target, false)
+                    }
+                    document.getElementById("photoLabel").innerHTML = LANG.start_resize
+                    ResizeRequest(file, onSuccessCompress, this.width, this.height);
+                }
+                else{
+                    document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>2Mb</i>! <br>`;
+                    target.value = '';
+                }
+            }
+        }
         _URL.revokeObjectURL(objectUrl);
     };
     img.src = objectUrl;
-
-    if(file.size > 2097152) {
-        document.getElementById("photoLabel").innerHTML += `${LANG.max_img_s} <i style='color:red'>2Mb</i>! <br>`;
-        target.value = '';
-    }
-
-    if (file && file['type'].split('/')[0] != 'image'){
-        document.getElementById("photoLabel").innerHTML += `${LANG.wrong_file_format} <br>`;
-        target.value = '';
-    }
 }
 
 function checkAudio(target) {
