@@ -13,6 +13,8 @@ window.onload = function() {
 	}
 	})()
 }
+window.onresize = function(){ overflowed() }
+window.orientationchange = function(){ overflowed() }
 
 function empty(){
 	return `
@@ -54,7 +56,7 @@ function changeType(){
 
 var search_current = '';
 var type_current = '';
-function start_search(){
+async function start_search(){
 	let text = document.getElementById("search_label").value.trim();
 	let type = document.querySelector("input[name=search_type]:checked").value
 	if (text != ""){
@@ -73,11 +75,13 @@ function start_search(){
 						if (type == "genre"){
 							let genres = sortByGenre(answer);
 							Object.keys(genres).forEach(function(e){
-								addNewCategory(genres[e], type, e)
+								await addNewCategory(genres[e], type, e)
+								overflowed()
 							})
 						}
 						else{
-							addNewCategory(answer, type)
+							await addNewCategory(answer, type)
+							overflowed()
 						}
 					}
 					else{
@@ -88,6 +92,20 @@ function start_search(){
 			xhr.send(JSON.stringify({'text': text, 'type': type}))
 		}
 	}
+}
+
+function overflowed() {
+	var arr = document.getElementsByClassName('track_name')
+	Object.keys(arr).forEach(function(e){
+		if (arr[e].scrollWidth>arr[e].offsetWidth){
+			arr[e].getElementsByTagName('span')[0].className = "marquee"
+		}
+		else{
+			if (arr[e].getElementsByTagName('span')[0].className){
+				arr[e].getElementsByTagName('span')[0].className = ""
+			}
+		}
+	})
 }
 
 async function addNewCategory(tracks, type, category_title){
