@@ -1,7 +1,7 @@
 window.onload = function() {
 	(function load_page(){
 	if (typeof header !== 'undefined' && typeof body !== 'undefined'){
-		document.title = `Zombi Music - ${LANG.support_title}`
+		document.title = `Zombi Music - ${LANG.search_title}`
 		document.body.innerHTML += header
 		document.body.innerHTML += body
 
@@ -16,7 +16,7 @@ window.onload = function() {
 function empty(){
 	return `
 		<h2 class="empty">
-			${LANG.nothing_here} <br>
+			${LANG.nothing_found} <br>
 			¯\\_(ツ)_/¯
 		</h2>`
 }
@@ -49,7 +49,6 @@ function start_search(){
 					search_current = text;
 					type_current = type;
 					let answer = JSON.parse(xhr.response);
-					console.log(answer)
 					if (answer.length > 0){
 						document.getElementById('search_results').innerHTML = "";
 						if (type == "genre"){
