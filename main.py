@@ -349,11 +349,11 @@ def search():
 
 
 	if request.json['type'] == "track":
-		return search_track(request.json['text'])
+		return jsonify(search_track(request.json['text']))
 	elif request.json['type'] == "user":
-		return search_user(request.json['text'])
+		return jsonify(search_user(request.json['text']))
 	elif request.json['type'] == "genre":
-		return search_genre(request.json['text'])
+		return jsonify(search_genre(request.json['text']))
 	else:
 		return 404
 
