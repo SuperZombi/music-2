@@ -52,7 +52,15 @@ function start_search(){
 					console.log(answer)
 					if (answer.length > 0){
 						document.getElementById('search_results').innerHTML = "";
-						addNewCategory(answer, type)
+						if (type == "genre"){
+							let genres = sortByGenre(answer);
+							Object.keys(genres).forEach(function(e){
+								addNewCategory(genres[e], type, e)
+							})
+						}
+						else{
+							addNewCategory(answer, type)
+						}
 					}
 					else{
 						document.getElementById('search_results').innerHTML = empty();
@@ -64,7 +72,7 @@ function start_search(){
 	}
 }
 
-async function addNewCategory(tracks, type){
+async function addNewCategory(tracks, type, category_title){
 	await new Promise((resolve, reject) => {
 		var html = ""
 		if (type == "track" || type == "genre"){
@@ -98,14 +106,46 @@ async function addNewCategory(tracks, type){
 				`
 			})
 		}
-		
-		document.getElementById("search_results").innerHTML += `
-			<div class="category flexable">
-				<div class="category_body">
-					${html}
+
+		if (type == "genre"){
+			document.getElementById("search_results").innerHTML += `
+				<div class="category flexable">
+					<div class="category_title">${category_title}</div>
+					<div class="category_body">
+						${html}
+					</div>
 				</div>
-			</div>
-		`;
+			`;
+		}
+		else {
+			document.getElementById("search_results").innerHTML += `
+				<div class="category flexable">
+					<div class="category_body">
+						${html}
+					</div>
+				</div>
+			`;
+		}
 		resolve()
 	});
+}
+
+function sortByGenre(tracks){
+	var genres = {};
+	Object.keys(tracks).forEach(function(e){
+		let temp_genr = toTitleCase(tracks[e].genre);
+		if (!genres.hasOwnProperty(temp_genr)){
+			genres[temp_genr] = [];
+		}
+		genres[temp_genr].push(tracks[e]);
+	})
+	return genres
+}
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
+  );
 }
