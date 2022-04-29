@@ -100,6 +100,7 @@ body{
 	z-index: -1;
 }
 
+#home_logo{margin-left: 10px;}
 #header{
 	position: relative;
 	white-space: nowrap;
@@ -115,7 +116,6 @@ body{
 	pointer-events: none;
 	vertical-align: bottom;
 	height: 70px;
-	margin-left: 10px;
 	filter: drop-shadow(0 0 1px white);
 	transition: 0.2s;
 }
@@ -132,7 +132,7 @@ body{
 #header a:hover img{
 	filter: drop-shadow(0 0 1px #0077FF);
 }
-#header svg{pointer-events: none;vertical-align: bottom;height: 70px;margin-left: 10px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
+#header svg{pointer-events: none;vertical-align: bottom;height: 70px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
 #leaves_area{
 	position: absolute;
 	width: 100%;
@@ -145,9 +145,9 @@ body{
 }
 
 #header_{position: relative;white-space: nowrap;user-select: none;height: 70px;font-size: 31pt;font-family: 'Architects Daughter', cursive;background: var(--header-color);transition: background 1s;overflow: hidden;}
-#header_ img{pointer-events: none;vertical-align: bottom;height: 70px;margin-left: 10px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
+#header_ img{pointer-events: none;vertical-align: bottom;height: 70px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
 #header_ a{position: relative;z-index: 4;text-decoration: none;color: var(--contrast-color);transition: 0.35s;}
-#header_ svg{pointer-events: none;vertical-align: bottom;height: 70px;margin-left: 10px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
+#header_ svg{pointer-events: none;vertical-align: bottom;height: 70px;filter: drop-shadow(0 0 1px white);transition: 0.2s;}
 
 #page{
 	max-width: 380px;
@@ -1036,17 +1036,16 @@ div.ripple {
 	#header{
 		font-size: 27pt;
 	}
+	#home_logo{margin-left: 5px;}
 	#header img{
 		height: 65px;
-		margin-left: 5px;
 	}
 	#header svg{
 		height: 65px;
-		margin-left: 5px;
 	}
 	#header_{font-size: 27pt;}
-	#header_ img{height: 65px;margin-left: 5px;}
-	#header_ svg{height: 65px;margin-left: 5px;}
+	#header_ img{height: 65px;}
+	#header_ svg{height: 65px;}
 	#toTop{
 		height: 80px;
 		right: 0;
