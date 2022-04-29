@@ -347,7 +347,7 @@ function sendFile(file){
 	formData.append('password', local_storage.userPassword);
 	formData.append('image', file);
 
-	let req = new XMLHttpRequest();                          
+	let req = new XMLHttpRequest();
 	req.open("POST", '../api/change_profile_photo');
 	req.onload = function() {
 		if (req.status != 200){notice.Error(LANG.error)}
