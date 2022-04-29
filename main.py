@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, send_from_directory, send_file, abort
 from flask_cors import CORS
 import json
 import filetype
-from PIL import Image
+from PIL import Image, ImageSequence
 from io import BytesIO
 import audio_metadata
 import warnings
@@ -44,9 +44,21 @@ def data(filepath):
 					if request.args['size'] == "small":
 						try:
 							img = Image.open(p)
-							img.thumbnail((200, 200), Image.ANTIALIAS)
 							buf = BytesIO()
-							img.save(buf, img.format)
+							if 'loop' in img.info:
+								frames = ImageSequence.Iterator(img)
+								def resize(frames, size):
+									for frame in frames:
+										thumbnail = frame.copy()
+										thumbnail.thumbnail(size, Image.ANTIALIAS)
+										yield thumbnail
+
+								frames = list(resize(frames, (200, 200)))
+								frames[0].save(buf, img.format, save_all=True, append_images=frames)
+							else:
+								img.thumbnail((200, 200), Image.ANTIALIAS)
+								img.save(buf, img.format)
+
 							buf.seek(0)
 							return send_file(buf, mimetype=filetype.guess(p).mime)
 						except:
