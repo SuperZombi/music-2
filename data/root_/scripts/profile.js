@@ -256,7 +256,7 @@ function validateImage(file, compress=true){
 			var img = new Image();
 			var objectUrl = _URL.createObjectURL(file);
 			img.onload = function () {
-				if (img.width <= 1280 || img.height <= 1280){
+				if (img.width <= 1280 && img.height <= 1280){
 					_URL.revokeObjectURL(objectUrl);
 					if (file.size > 2097152) {
 						if (JSON.parse(local_storage["resize-images"]) && compress){
