@@ -631,12 +631,13 @@ function play(e){
 function show_embed(){
 	document.getElementById("share_menu").classList.add("openEmbed")
 	document.getElementById("embed_menu").style.display = "block";
-	changeEmbed()
+	changeEmbed(false, 500)
 }
 function closeEmbed(){
-	document.getElementById("share_menu").classList.remove("openEmbed")
-	document.getElementById("embed_menu").style.display = "none";
+	document.getElementById("embed_frame").src = "";
 	document.getElementById("embed_frame").style.width = "";
+	document.getElementById("embed_menu").style.display = "none";
+	document.getElementById("share_menu").classList.remove("openEmbed")
 }
 function copyEmbed(){
 	const elem = document.createElement('textarea');
@@ -648,7 +649,7 @@ function copyEmbed(){
 	notice.Success(LANG.copied, 3000)
 }
 
-function changeEmbed(){
+function changeEmbed(dont_reload=false, timeout=0){
 	let settings = {}
 	Array.from(document.getElementById("embed_menu").querySelectorAll("input")).forEach(function(e){
 		if (e.checked){
@@ -660,6 +661,7 @@ function changeEmbed(){
 
 	let iframe = document.createElement("iframe")
 	iframe.style.border = "none";
+	iframe.width = "100%";
 
 	let iframe_url = new URL("embed", window.location.href)
 	Object.keys(settings).forEach(function(e){
@@ -684,7 +686,12 @@ function changeEmbed(){
 		}
 	})
 
-	document.getElementById("embed_frame").src = iframe_url.href
+	if (!dont_reload){
+		setTimeout(function(){
+			document.getElementById("embed_frame").src = iframe_url.href
+		}, timeout)
+		
+	}
 
 	iframe.src = iframe_url.href
 	document.getElementById("embed_url").innerText = iframe.outerHTML
