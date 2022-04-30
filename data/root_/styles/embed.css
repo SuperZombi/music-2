@@ -59,6 +59,7 @@ body{
 	margin: auto;
 	display: block;
 	border-radius: 20px;
+	transition: 0.4s;
 }
 #embed_img > i{
 	position: absolute;
