@@ -318,7 +318,7 @@ function main(){
         goToLogin()
     }
     
-    document.querySelector(".logout > svg").onclick = logout
+    document.querySelector(".logout > span > svg").onclick = logout
 
     if (document.getElementById('myAccount').getElementsByTagName('img')[0].src.split('.').pop() == "svg"){
         try_dark(document.getElementById('myAccount').getElementsByTagName('img')[0])
@@ -353,6 +353,11 @@ function editInit(){
                 document.getElementById("form_image").required = false;
                 document.getElementById("form_audio").parentNode.parentNode.style.display = "none"
                 document.getElementById("form_audio").required = false;
+
+                document.getElementById("form_preview_z").parentNode.parentNode.style.display = "table-row"
+                document.getElementById("form_preview_z").checked = answer.config.preview_z
+                document.getElementById("player").parentNode.parentNode.style.display = "table-row"
+                document.getElementById("hr_for_preview_zone").style.display = "table-row"
                 
                 function convertDate(date_str){
                     var tmp = date_str.split(".")
@@ -373,14 +378,167 @@ function editInit(){
                     })
                 }
 
+                var audio_path = "/" + local_storage.userName.toLowerCase().replaceAll(" ", "-") + "/" + searchParams.edit.toLowerCase().replaceAll(" ", "-") + "/" + answer.config.audio_preview;
+                var script = document.createElement("script")
+                script.src = "https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.4/wavesurfer.min.js"
+                script.onload = ()=>{
+                    var script2 = document.createElement("script")
+                    script2.src = "https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.4/plugin/wavesurfer.regions.min.js"
+                    script2.onload = ()=>{ initPlayer(audio_path, answer.config.preview_zone) }
+                    document.head.appendChild(script2);
+                }
+                document.head.appendChild(script);
+
                 document.getElementById("mainForm").onsubmit = ()=> sendEditedForm(document.getElementById("mainForm"));
             }
         }
     }
 }
 
+function initPlayer(audio_path, preview){
+    if (darkThemeMq){
+        theme_params = {
+            cursorColor: 'green',
+            waveColor: 'lightgreen',
+            progressColor: 'darkgreen'
+        }
+        region_color = 'rgb(255, 255, 255, 0.15)'
+    }
+    else{
+        theme_params = {
+            cursorColor: '#00B600',
+            waveColor: 'darkgreen',
+            progressColor: '#00D000'
+        }
+        region_color = 'rgb(0, 0, 0, 0.15)'
+    }
+    plugin = [WaveSurfer.regions.create({
+        regions: [
+            {   
+                id: "preview",
+                loop: false,
+                drag: true,
+                resize: true,
+                color: region_color
+            }
+        ]
+    })]
+
+
+
+    wavesurfer = WaveSurfer.create(Object.assign({
+        container: '#waveform',
+        height: 80,
+        barWidth: 1,
+        hideScrollbar: true,
+        plugins: plugin
+    }, theme_params));
+    wavesurfer.load(audio_path);
+
+    window.onresize = function(){setTimeout(function(){wavesurfer.drawBuffer();}, 1000) }
+    wavesurfer.on('ready', function (){
+        wavesurfer_isReady = true;
+        document.getElementById("loading_waveform").style.display = "none";
+        document.getElementById("time-current").style.display = "block"
+        document.getElementById("time-total").style.display = "block"
+
+        document.getElementById("max-time-total").value = Math.round(wavesurfer.backend.getDuration() * 10)/10
+        document.getElementById("time-total").value = Math.min(wavesurfer.backend.getDuration() - 1, 10)
+        wavesurfer.regions.list["preview"].end = Math.min(wavesurfer.backend.getDuration() - 1, 10)
+
+        if (preview){
+            wavesurfer.regions.list["preview"].start = preview[0]
+            wavesurfer.regions.list["preview"].end = preview[1]
+            document.getElementById("time-current").value = preview[0]
+            document.getElementById("time-total").value = preview[1]
+        }
+        wavesurfer.drawBuffer();
+    })
+    wavesurfer.on('region-updated', function (e){
+        if (wavesurfer.isPlaying()){
+            wavesurfer.pause()
+        }
+        var start = Math.round(e.start * 10)/10
+        var end = Math.round(e.end * 10)/10
+        document.getElementById("time-current").value = start
+        document.getElementById("time-total").value = end
+        wavesurfer.regions.list["preview"].start = start
+        wavesurfer.regions.list["preview"].end = end
+        wavesurfer.drawBuffer();
+        if (region_resizing){
+            clearTimeout(region_resizing)
+        }
+        region_resizing = setTimeout(function(){
+            wavesurfer.regions.list["preview"].start = start
+            wavesurfer.regions.list["preview"].end = end
+            wavesurfer.drawBuffer();
+        }, 10)
+    })
+}
+function change_region(){
+    if (wavesurfer.isPlaying()){
+        wavesurfer.pause()
+    }
+    if (!document.getElementById("time-current").value){
+        document.getElementById("time-current").value = 0
+    }
+    if (!document.getElementById("time-total").value){
+        document.getElementById("time-total").value = 0
+    }
+    wavesurfer.regions.list["preview"].start = parseFloat(document.getElementById("time-current").value)
+    wavesurfer.regions.list["preview"].end = parseFloat(document.getElementById("time-total").value)
+    wavesurfer.drawBuffer();
+}
+var region_resizing;
+wavesurfer_isReady = false;
+play_clicked = false;
+function play(e){
+    if (!play_clicked){
+        play_clicked = true;
+        if (wavesurfer_isReady){
+            if (wavesurfer.isPlaying()){
+                e.target.className = "far fa-play-circle"
+                e.target.title = LANG.player_play
+                wavesurfer.pause()
+            }
+            else{
+                wavesurfer.regions.list["preview"].play()
+                setTimeout(function(){
+                    wavesurfer.on('region-out', function() {
+                        e.target.className = "far fa-play-circle"
+                        e.target.title = LANG.player_play
+                        wavesurfer.pause()
+                    });
+                    wavesurfer.on('pause', function() {
+                        e.target.className = "far fa-play-circle"
+                        e.target.title = LANG.player_play
+                    });
+                }, 10)
+                e.target.className = "far fa-pause-circle"
+                e.target.title = LANG.player_stop
+                wavesurfer.on('finish', function (){
+                    e.target.className = "far fa-play-circle"
+                    e.target.title = LANG.player_play
+                })
+            }
+        }
+        setTimeout(function(){play_clicked=false}, 10)
+    }
+}
+
+function setMax(){
+    document.getElementById("time-total").value = document.getElementById("max-time-total").value
+    change_region()
+}
+function setMin(){
+    document.getElementById("time-current").value = document.getElementById("min-time-total").value
+    change_region()
+}
+
+
 function sendEditedForm(form){
     document.getElementById('loading_waveform').parentNode.style.display = "table-cell";
+    document.getElementById("player").parentNode.parentNode.style.display = "none"
 
     var arr = form.querySelectorAll("input");
     var formData = new FormData();
@@ -394,6 +552,7 @@ function sendEditedForm(form){
                     [e.id.split("form_")[1]] : e.checked
                 });
             }
+            else if (e.id == "time-current" || e.id == "time-total" || e.id == "max-time-total" || e.id == "min-time-total"){}
             else{
                 formData.append(e.id.split("form_")[1], e.value.trim())
                 Object.assign(final, {
@@ -404,6 +563,14 @@ function sendEditedForm(form){
     });
 
     formData.append('password', local_storage.userPassword)
+    if (final.preview_z){
+        Object.assign(final, {
+            preview_zone : [parseFloat(document.getElementById("time-current").value),
+                            parseFloat(document.getElementById("time-total").value)]
+        });
+        formData.set("preview_zone", [parseFloat(document.getElementById("time-current").value),
+                                      parseFloat(document.getElementById("time-total").value)])
+    }
 
     let req = new XMLHttpRequest();                          
     req.open("POST", '../api/edit_track');
