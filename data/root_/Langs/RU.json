@@ -22,6 +22,11 @@ LANG = {
 	"copied": "Скопировано!",
 
 	"official": "Официальный",
+	"embed": "Встроить",
+	"corners_rounding": "Скругление Углов",
+	"size": "Размер",
+	"small": "Малый",
+	"big": "Большой",
 
 	// Profile
 	"profile_title": "Аккаунт",
