@@ -104,8 +104,8 @@ body = `
 		<div>
 			<span>${LANG.size}:</span>
 			<span class="radio">
-				<input label="${LANG.small}" type="radio" name="size" value="small" checked onclick="changeEmbed()">
-				<input label="${LANG.big}" type="radio" name="size" value="big" onclick="changeEmbed()">
+				<input label="${LANG.small}" type="radio" name="size" value="small" checked onclick="changeEmbed(true)">
+				<input label="${LANG.big}" type="radio" name="size" value="big" onclick="changeEmbed(true)">
 			</span>
 		</div>
 
@@ -113,7 +113,7 @@ body = `
 			<span id="embed_url" style="cursor:pointer;" onclick="copyEmbed()" class="ripple_but" title="${LANG.copy}"></span>
 		</div>
 
-		<iframe id="embed_frame" src="" width="100%" height="150px" style="border: none;background: grey;resize: horizontal;"></iframe>
+		<iframe id="embed_frame" src="" width="100%" height="150px" style="border: none;background: grey;resize: horizontal;transition: 0.5s;"></iframe>
 
 		</fieldset>
 
