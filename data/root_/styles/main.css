@@ -1220,6 +1220,11 @@ div.ripple {
 		top: unset !important;
 		bottom: 0 !important;
 	}
+	#logout-icon::after{
+		left: initial;
+		transform: unset;
+		right: 0;
+	}
 	#header [title]::after{
 		top: initial;
 	}
