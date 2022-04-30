@@ -45,11 +45,8 @@ body = `
 	</div>
 
 	<div class="share-element social_network">
-		<button onclick="open_website('vk')" class="social_network ripple_but" title="VKontakte">
-			<img src="../../root_/images/share/vk.svg">
-		</button>
-		<button onclick="open_website('facebook')" class="social_network ripple_but" title="Facebook">
-			<img src="../../root_/images/share/facebook.svg">
+		<button onclick="show_embed()" class="social_network ripple_but" title="${LANG.embed}">
+			<img src="../../root_/images/share/embed.svg">
 		</button>
 		<button onclick="open_website('telegram')" class="social_network ripple_but" title="Telegram">
 			<img src="../../root_/images/share/telegram.svg">
@@ -57,12 +54,69 @@ body = `
 		<button onclick="open_website('viber')" class="social_network ripple_but" title="Viber">
 			<img src="../../root_/images/share/viber.svg">
 		</button>
+		<button onclick="open_website('vk')" class="social_network ripple_but" title="VKontakte">
+			<img src="../../root_/images/share/vk.svg">
+		</button>
+		<button onclick="open_website('facebook')" class="social_network ripple_but" title="Facebook">
+			<img src="../../root_/images/share/facebook.svg">
+		</button>
 		<button onclick="open_website('whatsapp')" class="social_network ripple_but" title="WhatsApp">
 			<img src="../../root_/images/share/whatsapp.svg">
 		</button>
 		<button onclick="open_website('twitter')" class="social_network ripple_but" title="Twitter">
 			<img src="../../root_/images/share/twitter.svg">
 		</button>
+	</div>
+
+	<div id="embed_menu">
+		<fieldset>
+			<legend>
+				<h1>${LANG.embed}</h1>
+				<img src="../../root_/images/close.svg" title="${LANG.close}" height="40px" 
+					style="margin-left:10px;cursor:pointer" onclick="closeEmbed()">
+			</legend>
+
+		<div>
+			<span>${LANG.lang}:</span>
+			<span class="radio">
+				<input label="${LANG.auto}" type="radio" name="lang" value="auto" checked onclick="changeEmbed()">
+				<input label="English" type="radio" name="lang" value="en" onclick="changeEmbed()">
+				<input label="Русский" type="radio" name="lang" value="ru" onclick="changeEmbed()">
+				<input label="Українська" type="radio" name="lang" value="uk" onclick="changeEmbed()">
+			</span>
+		</div>
+		<div>
+			<span>${LANG.theme}:</span>
+			<span class="radio">
+				<input label="${LANG.auto}" type="radio" name="theme" value="auto" checked onclick="changeEmbed()">
+				<input label="${LANG.light}" type="radio" name="theme" value="light" onclick="changeEmbed()">
+				<input label="${LANG.dark}" type="radio" name="theme" value="dark" onclick="changeEmbed()">
+			</span>
+		</div>
+		<div>
+			<span>${LANG.corners_rounding}:</span>
+			<span class="radio">
+				<input label="${LANG.yes}" type="radio" name="round" value="true" checked onclick="changeEmbed()">
+				<input label="${LANG.no}" type="radio" name="round" value="false" onclick="changeEmbed()">
+			</span>
+		</div>
+
+		<div>
+			<span>${LANG.size}:</span>
+			<span class="radio">
+				<input label="${LANG.small}" type="radio" name="size" value="small" checked onclick="changeEmbed()">
+				<input label="${LANG.big}" type="radio" name="size" value="big" onclick="changeEmbed()">
+			</span>
+		</div>
+
+		<div class="share-element" style="width:unset;justify-content:center;overflow-wrap:anywhere;">
+			<span id="embed_url" style="cursor:pointer;" onclick="copyEmbed()" class="ripple_but" title="${LANG.copy}"></span>
+		</div>
+
+		<iframe id="embed_frame" src="" width="100%" height="150px" style="border: none;background: grey;resize: horizontal;"></iframe>
+
+		</fieldset>
+
 	</div>
 </div>
 `
