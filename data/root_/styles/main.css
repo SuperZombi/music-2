@@ -354,7 +354,7 @@ hr{
 }
 #share_menu{
 	display: none;
-	/*height: 65%;*/
+	max-height: 90%;
 	padding-bottom: 25px;
 	min-height: 40%;
 	width: 50%;
@@ -439,6 +439,67 @@ hr{
 }
 div.ripple {
 	background-color: rgba(0, 0, 0, 0.3);
+}
+#embed_menu{
+	display: none;
+	padding: 10px;
+	overflow-x: auto;
+}
+#embed_menu > fieldset{
+	border-radius: 25px;
+}
+#embed_menu > fieldset > legend{
+	display: flex;
+	align-items: center;
+}
+#embed_menu > fieldset > legend > *{
+	display: inline-block;
+}
+#embed_menu > fieldset > legend > img{
+	transition: 0.2s;
+}
+#embed_menu > fieldset > legend > img:hover{
+	transform: rotate(90deg);
+}
+
+.openEmbed{
+	width: 80% !important;
+}
+
+/* Radio  */
+.radio {
+	background: inherit;
+	padding: 6px;
+	border-radius: 5px;
+	display: inline-block;
+}
+.radio input {
+	margin: 5px 3px;
+	display: inline-block;
+	width: auto;
+	height: 100%;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 4px 12px;
+	background: inherit;
+	color: var(--contrast-color);
+	font-size: inherit;
+	font-family: sans-serif;
+	transition: all 100ms linear;
+	background-image: var(--button-gradient);
+}
+.radio input:checked {
+	background-image: var(--button-gradient-green);
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+.radio input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
 }
 
 #footer{
@@ -1082,9 +1143,11 @@ div.ripple {
 		min-width: 75%;
 	}
 	#share_menu{
-		/*height: 80%;*/
 		width: 98%;
 		padding-bottom: 10px;
+	}
+	.openEmbed{
+		width: 98% !important;
 	}
 	.share-element{
 		width: 93%;
