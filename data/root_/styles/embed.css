@@ -30,7 +30,7 @@ body{
 	text-decoration: none;
 	position: relative;
 }
-#track_name::after {
+#track_name::before {
 	content: '';
 	position: absolute;
 	bottom: 0;
@@ -44,7 +44,7 @@ body{
 	transform: scale(0);
 	transform-origin: center center;
 }
-#track_name:hover::after{
+#track_name:hover::before{
 	transform: scale(1);
 	opacity: 1;
 }
@@ -103,6 +103,9 @@ body{
 	}
 	#embed_img > i{
 		transform: scale(2);
+	}
+	#embed_img > i::after{
+		transform: translateX(50%) scale(0.5);
 	}
 	#player{
 		margin-top: 10px;
