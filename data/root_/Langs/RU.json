@@ -109,6 +109,9 @@ LANG = {
 
 	"file_too_big": "Файл слишком большой!",
 	"wrong_file_format": "Неправильный формат файла!",
+	"preview_zone": "Зона Предпросмотра",
+	"min": "Мин",
+	"max": "Макс",
 
 	// login
 	"login_title": "Вход",
