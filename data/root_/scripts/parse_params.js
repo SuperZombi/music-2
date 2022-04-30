@@ -16,7 +16,17 @@ if (params.theme){
 	}
 }
 else{
-	darkThemeMq = false
+	darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)").matches
+	if (darkThemeMq) {
+		darkThemeMq = true
+		var l = document.createElement("link")
+		l.rel = "stylesheet"
+		l.setAttribute("href", "../../root_/styles/dark.css");
+		document.head.appendChild(l)
+	}
+	else{
+		darkThemeMq = false
+	}
 }
 
 
