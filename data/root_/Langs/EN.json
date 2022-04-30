@@ -22,6 +22,11 @@ LANG = {
 	"copied": "Copied!",
 
 	"official": "Official",
+	"embed": "Embed",
+	"corners_rounding": "Corners Rounding",
+	"size": "Size",
+	"small": "Small",
+	"big": "Big",
 
 	// Profile
 	"profile_title": "Account",
