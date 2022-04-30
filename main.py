@@ -401,6 +401,9 @@ def make_config(data, files):
 def edit_config(data, old_data):
 	old_data["genre"] = data["genre"]
 	old_data["allow_download"] = parse_boolean(data["allow_download"])
+	old_data["preview_z"] = parse_boolean(data["preview_z"])
+	if "preview_zone" in data.keys():
+		old_data["preview_zone"] = list(map(float, data["preview_zone"].split(",")))
 	links = {}
 	hosts = ['spotify', 'youtube_music', 'youtube', 'apple_music', 'deezer', 'soundcloud', 'newgrounds']
 	for i in hosts:
@@ -653,7 +656,7 @@ def edit_track_api():
 					config = edit_config(request.form.to_dict(), old_config)
 					with open(os.path.join(track_folder, 'config.json'), 'w', encoding='utf8') as file:
 						file.write('config = ' + json.dumps(config, indent=4, ensure_ascii=False))
-				
+					
 					edit_track(artist=request.form['artist'],
 							track_name=request.form['track_name'],
 							genre=request.form['genre'],
