@@ -43,7 +43,10 @@ function shareMenu(e) {
 		document.getElementById("wraper").style.userSelect = "auto";
 		document.getElementById("wraper").style.filter = "";
 		document.body.onclick = ""
-		shareMenuTimer = setTimeout(function(){document.getElementById("share_menu").style.display = "none"}, 500)
+		shareMenuTimer = setTimeout(function(){
+			document.getElementById("share_menu").style.display = "none"
+			closeEmbed()
+		}, 500)
 	}
 	if (document.getElementById("share_menu").style.display == "block"){
 		close()
@@ -622,4 +625,67 @@ function play(e){
 		}
 		setTimeout(function(){play_clicked=false}, 10)
 	}
+}
+
+
+function show_embed(){
+	document.getElementById("share_menu").classList.add("openEmbed")
+	document.getElementById("embed_menu").style.display = "block";
+	changeEmbed()
+}
+function closeEmbed(){
+	document.getElementById("share_menu").classList.remove("openEmbed")
+	document.getElementById("embed_menu").style.display = "none";
+	document.getElementById("embed_frame").style.width = "";
+}
+function copyEmbed(){
+	const elem = document.createElement('textarea');
+	elem.value = document.getElementById("embed_url").innerText;
+	document.body.appendChild(elem);
+	elem.select();
+	document.execCommand('copy');
+	document.body.removeChild(elem);
+	notice.Success(LANG.copied, 3000)
+}
+
+function changeEmbed(){
+	let settings = {}
+	Array.from(document.getElementById("embed_menu").querySelectorAll("input")).forEach(function(e){
+		if (e.checked){
+			if (e.value != "auto"){
+				settings[e.name] = e.value
+			}
+		}
+	})
+
+	let iframe = document.createElement("iframe")
+	iframe.style.border = "none";
+
+	let iframe_url = new URL("embed", window.location.href)
+	Object.keys(settings).forEach(function(e){
+		if (e == "lang"){
+			iframe_url.searchParams.set('lang', settings[e])
+		}
+		if (e == "theme"){
+			iframe_url.searchParams.set('theme', settings[e])
+		}
+		if (e == "round"){
+			iframe_url.searchParams.set('round', settings[e])
+		}
+		if (e == "size"){
+			if (settings[e] == "small"){
+				document.getElementById("embed_frame").height = "150px"
+				iframe.height = "150px"
+			}
+			if (settings[e] == "big"){
+				document.getElementById("embed_frame").height = "190px"
+				iframe.height = "190px"
+			}
+		}
+	})
+
+	document.getElementById("embed_frame").src = iframe_url.href
+
+	iframe.src = iframe_url.href
+	document.getElementById("embed_url").innerText = iframe.outerHTML
 }
