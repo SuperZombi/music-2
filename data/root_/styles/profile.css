@@ -227,41 +227,6 @@
 	transform-origin: center bottom;
 }
 
-/* Radio  */
-.radio {
-	background: inherit;
-	padding: 6px;
-	border-radius: 5px;
-	display: inline-block;
-}
-.radio input {
-	margin: 5px 3px;
-	display: inline-block;
-	width: auto;
-	height: 100%;
-	appearance: none;
-	outline: none;
-	cursor: pointer;
-	border-radius: 5px;
-	padding: 4px 12px;
-	background: inherit;
-	color: var(--contrast-color);
-	font-size: inherit;
-	font-family: sans-serif;
-	transition: all 100ms linear;
-	background-image: var(--button-gradient);
-}
-.radio input:checked {
-	background-image: var(--button-gradient-green);
-	box-shadow: 0 1px 1px #0000002e;
-	text-shadow: 0 1px 0px #79485f7a;
-}
-.radio input:before {
-	content: attr(label);
-	display: inline-block;
-	text-align: center;
-	width: 100%;
-}
 
 /* Button */
 .button {
