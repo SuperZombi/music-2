@@ -6,6 +6,17 @@ form{
 	padding: 15px;
 }
 
+#forgot_pwd{
+	text-decoration: none;
+	color: orange;
+	font-family: sans-serif;
+	font-style: italic;
+}
+#forgot_pwd:hover{
+	font-style: normal;
+	text-decoration: underline;
+}
+
 /* INPUTS */
 .group *{
 	box-sizing: border-box;
