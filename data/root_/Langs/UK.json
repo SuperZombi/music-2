@@ -77,6 +77,10 @@ LANG = {
 	"site_desc_title": "Про нас",
 	"site_desc": "Цей сайт дозволяє музикантам зібрати всі посилання на їх треки в одному місці.",
 
+
+	"forgot_pwd": "Забули Пароль",
+	"subject_forgot_password": "Zombi Music - Відновлення Паролю",
+
 	// Requirements
 	"requirements_title": "Вимоги",
 	"limitation": "Обмеження",
