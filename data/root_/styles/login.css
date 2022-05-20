@@ -30,8 +30,8 @@ form{
 .center-wrap{
 	display: flex;
 	flex-direction: column;
-		align-items: center;
-		margin-top: 10px;
+	align-items: center;
+	margin-top: 10px;
 }
 .center-wrap .group{
 	margin: 30px 0;
