@@ -64,7 +64,8 @@ form{
 	outline: none;
 }
 .group input:focus ~ label, .group input:not(:placeholder-shown) ~ label,
-.group select:not([data-chosen='']) ~ label {
+.group select:not([data-chosen='']) ~ label,
+.group input:-webkit-autofill ~ label {
 	top: -14px;
 	font-size: 12px;
 	color: #2196f3;
