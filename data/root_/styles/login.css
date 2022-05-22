@@ -83,6 +83,12 @@ form{
 .group input[required] ~ label:before {
 	content: "* ";
 	color: red;
+	font-weight: bold;
+}
+.group input[recommended] ~ label:before {
+	content: "* ";
+	color: orange;
+	font-weight: bold;
 }
 
 .group label {
