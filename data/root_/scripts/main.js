@@ -760,9 +760,9 @@ function update_like_icon(val, notification=true){
 	let but = document.getElementById("like_button")
 	val ? but.classList.add("liked") : but.classList.remove("liked");
 	let but_titl = document.getElementById("like_button_title")
-	val ? but_titl.title = "Unlike It" : but_titl.title = "Like It";
+	val ? but_titl.title = LANG.unlike_it : but_titl.title = LANG.like_it;
 	if (notification){
-		val ? notice.Success("Liked") : notice.Error("Unliked");
+		val ? notice.Success(LANG.liked) : notice.Error(LANG.unliked);
 	}
 }
 
@@ -789,11 +789,21 @@ function like_this(){
 				loadStatistics()
 			}
 			else{
-				notice.Error("Error")
+				notice.Error(LANG.error)
 			}
 		});
 	}
 	else{
-		notice.Error('pls login first')
+		notice.Error(LANG.pls_login, [[LANG.login_button, goToLogin]])
 	}
+}
+function goToLogin(){
+	let url = window.location.pathname;
+	let filename = url.substring(url.lastIndexOf('/')+1);
+	if (filename == ""){
+		filename = "../" + url.split("/").filter(x => x).join("/")
+	}
+	let login = new URL("/account/login", window.location.href);
+	login.searchParams.append('redirect', filename);
+	window.location.href = decodeURIComponent(login.href)
 }
