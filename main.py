@@ -764,8 +764,7 @@ def get_statistic():
 	track_dir = Path(os.path.dirname(request.json['url'])).parts
 	clear_track_dir = list(filter(lambda x: x != "\\", track_dir))
 	clear_track_dir = os.path.join(*clear_track_dir)
-	track_dir = os.path.join("data", clear_track_dir)
-	stat_file = os.path.join(track_dir, "statistic.stat")
+	stat_file = "data" + str(Path("/").joinpath(Path(clear_track_dir).joinpath('statistic.stat')))
 	statistic = {
 		"likes" : 0,
 		"views" : 0
@@ -797,7 +796,7 @@ def like():
 		clear_track_dir = list(filter(lambda x: x != "\\", track_dir))
 		clear_track_dir = os.path.join(*clear_track_dir)
 
-		stat_file = os.path.join("data", Path(clear_track_dir).joinpath('statistic.stat'))
+		stat_file = "data" + str(Path("/").joinpath(Path(clear_track_dir).joinpath('statistic.stat')))
 		statistic = {"likes" : 0, "views" : 0}
 		if os.path.exists(stat_file):
 			with open(stat_file, 'r') as file:
