@@ -343,6 +343,8 @@ function main(){
 
 	notice = Notification('#notifications');
 
+	loadStatistics()
+
 	if (darkThemeMq){
 		theme_params = {
 			cursorColor: 'green',
@@ -695,4 +697,103 @@ function changeEmbed(dont_reload=false, timeout=0){
 
 	iframe.src = iframe_url.href
 	document.getElementById("embed_url").innerText = iframe.outerHTML
+}
+
+function format_spaces(num){
+	let counter = 0;
+	let new_string = "";
+	const chars = String(num).split('').reverse();
+	chars.forEach(e=>{
+		if (counter == 3){
+			new_string += " "
+			counter = 0
+		}
+		new_string += e
+		counter++
+	})
+	new_string = [...new_string].reverse().join("")
+	return new_string;
+}
+function format_number(num){
+	let new_num = num;
+	if (num >= 1000){
+		new_num = Math.round(num/1000 * 10)/10;
+	}
+	let new_string = format_spaces(parseInt(new_num))
+	const other = String(new_num).split('.')[1]
+	if (other){
+		new_string += "." + other
+	}
+	if (num >= 1000){
+		new_string += "K"
+	}
+	return new_string;
+}
+function loadStatistics(){
+	let arr = {"url": window.location.pathname}
+	if (local_storage.userName && local_storage.userPassword){
+		arr["user"] = local_storage.userName;
+		arr["password"] = local_storage.userPassword;
+	}
+	fetch('/api/get_statistic', {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json;charset=utf-8'},
+		body: JSON.stringify(arr)
+	}).then(response => response.json())
+	.then(unswer => {
+		update_likes(unswer.statistic.likes)
+		update_views(unswer.statistic.views)
+		if (unswer.liked){
+			update_like_icon(true, false)
+		}
+	});
+}
+function update_likes(count){
+	document.getElementById("likes_count").innerHTML = format_number(count)
+	document.getElementById("likes_count").parentNode.title = format_spaces(count)
+}
+function update_views(count){
+	document.getElementById("views_count").innerHTML = format_number(count)
+	document.getElementById("views_count").parentNode.title = format_spaces(count)
+}
+function update_like_icon(val, notification=true){
+	let but = document.getElementById("like_button")
+	val ? but.classList.add("liked") : but.classList.remove("liked");
+	let but_titl = document.getElementById("like_button_title")
+	val ? but_titl.title = "Unlike It" : but_titl.title = "Like It";
+	if (notification){
+		val ? notice.Success("Liked") : notice.Error("Unliked");
+	}
+}
+
+local_storage = { ...localStorage };
+function like_this(){
+	if (local_storage.userName && local_storage.userPassword){
+		fetch('/api/like', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json;charset=utf-8'},
+			body: JSON.stringify({
+				"user": local_storage.userName,
+				"password": local_storage.userPassword,
+				"url": window.location.pathname
+			})
+		}).then(response => response.json())
+		.then(unswer => {
+			if (unswer.successfully){
+				if (unswer.event == "liked"){
+					update_like_icon(true)
+				}
+				if (unswer.event == "unliked"){
+					update_like_icon(false)
+				}
+				loadStatistics()
+			}
+			else{
+				notice.Error("Error")
+			}
+		});
+	}
+	else{
+		notice.Error('pls login first')
+	}
 }
