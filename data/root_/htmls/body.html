@@ -12,6 +12,31 @@ body = `
 	<img id="main_img" src="${config.main_img}">
 	<div id="track_name" title="${LANG.track}">${config.track_name}</div></br>
 	<a id="artist" href="../" title="${LANG.author}">${config.artist}</a>
+	<hr>
+	<div id="statistic">
+		<div class="likes statistic_el">
+			<div class="like_wrapper" id="like_button_title" title="Like It">
+				<div class="like_wrapper_pulse">
+					<div class="like" id="like_button" onclick="like_this()">
+						<svg viewBox="0 0 100 100">
+							<path d="M 90 34.613 C 90 33.142 89.849 31.675 89.549 30.235 C 87.528 20.511 78.914 13.203 68.59 13.203 C 64.16 13.203 60.045 14.549 56.63 16.853 C 53.9 18.702 50.022 24.036 50 24.019 C 50.013 24.058 46.1 18.702 43.37 16.853 C 39.838 14.468 35.672 13.196 31.41 13.203 C 21.086 13.203 12.472 20.511 10.451 30.235 C 10.151 31.675 10 33.142 10 34.613 C 10 34.941 10.022 35.264 10.037 35.588 C 10.035 35.747 10.025 35.903 10.025 36.062 C 10.025 58.179 49.905 86.797 50 86.797 C 50.095 86.797 89.975 58.179 89.975 36.063 C 89.975 35.904 89.965 35.747 89.963 35.589 C 89.978 35.264 90 34.941 90 34.613 Z"></path>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<span class="statistic_count">
+				<div id="likes_count">0</div>
+			</span>
+		</div>
+
+		<div class="views statistic_el">
+			<span title="Views"><img src="../../root_/images/eye.svg"></span>
+			<span class="statistic_count">
+				<div id="views_count">0</div>
+			</span>
+		</div>
+	</div>
+
 	<hr id="hr_">
 	<div id="links_area">
 		<div id="player">
