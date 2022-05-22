@@ -876,6 +876,85 @@ div.ripple {
 	text-align: center;
 }
 
+
+#statistic{
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+}
+
+.likes{
+	display: inline-flex;
+	align-items: center;
+	font-size: 14pt;
+}
+.like_wrapper{
+	height: 40px;
+	width: 48px;
+	margin-left: 6px;
+	display: inline-block;
+	cursor: pointer;
+}
+.like{
+	overflow: hidden;
+	transform: scale(0.4);
+	transform-origin: left top;
+	fill: grey;
+	width: 100px;
+	height: 100px;
+	transition: 0.5s;
+}
+.liked.like{
+	fill: red !important;
+}
+.like:hover {
+	fill: #ed1e79;
+}
+.like_wrapper_pulse{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	transition: 0.15s;
+}
+.like_wrapper_pulse:hover{
+	animation: 0.5s heartbeat;
+}
+.like_wrapper_pulse:active{
+	transform: scale(0.85)
+}
+@keyframes heartbeat{
+	50%{ transform: scale(1.2) }
+}
+
+.views{
+	height: 30px;
+	margin-right: 8px;
+	display: inline-flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	font-size: 14pt;
+}
+.views img{
+	height: 32px;
+	margin-left: 8px;
+	vertical-align: middle;
+}
+
+.statistic_el{
+	max-width: 45%;
+}
+
+.statistic_count{
+	max-width: 65%;
+}
+.statistic_count > div{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
 /* checkmark */
 .checkmark {
 	width: 40px;
@@ -1088,7 +1167,7 @@ div.ripple {
 /* Phone  */
 @media all and (max-width: 500px) {
 	#page{
-		max-width: 100%;
+		max-width: 100vw;
 	}
 	#ads{
 		font-size: 40pt;
