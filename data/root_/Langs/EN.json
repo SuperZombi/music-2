@@ -28,6 +28,13 @@ LANG = {
 	"small": "Small",
 	"big": "Big",
 
+	"views": "Views",
+	"like_it": "Like It",
+	"unlike_it": "UnLike It",
+	"liked": "Liked",
+	"unliked": "UnLiked",
+	"pls_login": "Please login first",
+
 	// Profile
 	"profile_title": "Account",
 	"edit": "Edit",
