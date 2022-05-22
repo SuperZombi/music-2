@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+from pathlib import Path
 from dateutil import parser as dataparse
 from flask import Flask, request, jsonify, send_from_directory, send_file, abort, redirect
 from flask_cors import CORS
@@ -63,12 +64,15 @@ def data(filepath):
 							return send_file(buf, mimetype=filetype.guess(p).mime)
 						except:
 							None
+			stat_check_html(filepath, True)
 			return send_from_directory('data', filepath)
 		if filepath[-1] != "/":
 			return redirect("/" + filepath + "/")
 		if os.path.isfile(os.path.join(p, 'index.html')):
+			stat_check_html(filepath)
 			return send_from_directory('data', os.path.join(filepath, 'index.html'))
 	if os.path.isfile(p + '.html'):
+		stat_check_html(filepath)
 		return send_from_directory('data', filepath + '.html')
 	abort(404)
 
@@ -90,6 +94,39 @@ def get_error_value():
 		return temp
 	except:
 		return {'successfully': False}
+
+
+def stat_check_html(file, sub=False):
+	def stat_check(path):
+		path = os.path.dirname(path)
+		def is_track_path(path):
+			parts = Path(path).parts
+			if len(parts) == 2 and parts[0] != "account":
+				return True
+			return False
+
+		if is_track_path(path):
+			stat_file = os.path.join("data", Path(path).joinpath('statistic.stat'))
+			statistic = {
+				"likes" : 0,
+				"views" : 0
+			}
+			if os.path.exists(stat_file):
+				with open(stat_file, 'r') as file:
+					statistic = json.loads(file.read())
+
+			statistic["views"] += 1
+			with open(stat_file, 'w', encoding='utf') as file:
+				file.write(json.dumps(statistic, indent=4, ensure_ascii=False))
+
+	if sub:
+		if os.path.splitext(file)[-1] == ".html":
+			if Path(file).parts[0] != "root_":
+				try: stat_check(file)
+				except: None
+	else:
+		try: stat_check(file)
+		except: None
 
 # Method deprecated
 # @app.route('/api/get_all_tracks')
@@ -722,6 +759,72 @@ def edit_user_profile():
 		return jsonify({'successfully': False, 'reason': Errors.incorrect_name_or_password.name})
 
 
+@app.route('/api/get_statistic', methods=["POST"])
+def get_statistic():
+	track_dir = Path(os.path.dirname(request.json['url'])).parts
+	clear_track_dir = list(filter(lambda x: x != "\\", track_dir))
+	clear_track_dir = os.path.join(*clear_track_dir)
+	track_dir = os.path.join("data", clear_track_dir)
+	stat_file = os.path.join(track_dir, "statistic.stat")
+	statistic = {
+		"likes" : 0,
+		"views" : 0
+	}
+	if os.path.exists(stat_file):
+		with open(stat_file, 'r') as file:
+			statistic = json.loads(file.read())
+
+	if ('user' in request.json.keys() and 'password' in request.json.keys()):
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.json['user'], request.json['password'], ip, fast_login)()
+		if x['successfully']:
+			user_folder = os.path.join("data", request.json['user'].lower().replace(" ", "-"))
+			stat_file = os.path.join(user_folder, "favorites.stat")
+			favorites = []
+			if os.path.exists(stat_file):
+				with open(stat_file, 'r') as file:
+					favorites = json.loads(file.read())
+			if clear_track_dir in favorites:
+				return jsonify({'statistic': statistic, 'liked': True})
+	return jsonify({'statistic': statistic})
+
+@app.route('/api/like', methods=["POST"])
+def like():
+	ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+	x = BrootForceProtection(request.json['user'], request.json['password'], ip, fast_login)()
+	if x['successfully']:
+		track_dir = Path(os.path.dirname(request.json['url'])).parts
+		clear_track_dir = list(filter(lambda x: x != "\\", track_dir))
+		clear_track_dir = os.path.join(*clear_track_dir)
+
+		stat_file = os.path.join("data", Path(clear_track_dir).joinpath('statistic.stat'))
+		statistic = {"likes" : 0, "views" : 0}
+		if os.path.exists(stat_file):
+			with open(stat_file, 'r') as file:
+				statistic = json.loads(file.read())
+
+		user_folder = os.path.join("data", request.json['user'].lower().replace(" ", "-"))
+		fav_file = os.path.join(user_folder, "favorites.stat")
+		favorites = []
+		if os.path.exists(fav_file):
+			with open(fav_file, 'r') as file:
+				favorites = json.loads(file.read())
+		if clear_track_dir in favorites:
+			favorites.remove(clear_track_dir)
+			statistic["likes"] = max(statistic["likes"] - 1, 0)
+			event = "unliked"
+		else:
+			favorites.append(clear_track_dir)
+			statistic["likes"] += 1
+			event = "liked"
+		with open(fav_file, 'w', encoding='utf') as file:
+			file.write(json.dumps(favorites, indent=4, ensure_ascii=False))
+
+		with open(stat_file, 'w', encoding='utf') as file:
+			file.write(json.dumps(statistic, indent=4, ensure_ascii=False))
+
+		return jsonify({'successfully': True, "event": event})
+	return jsonify({'successfully': False})
 
 if __name__ == '__main__':
 	# app.run(debug=True)
