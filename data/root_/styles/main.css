@@ -894,7 +894,6 @@ div.ripple {
 	width: 48px;
 	margin-left: 6px;
 	display: inline-block;
-	cursor: pointer;
 }
 .like{
 	overflow: hidden;
@@ -904,6 +903,8 @@ div.ripple {
 	width: 100px;
 	height: 100px;
 	transition: 0.5s;
+	cursor: pointer;
+	border-radius: 50%;
 }
 .liked.like{
 	fill: red !important;
@@ -1391,5 +1392,15 @@ div.ripple {
 	.toggle::after{
 		right: 0 !important;
 		transform: unset !important;
+	}
+	#like_button_title::after{
+		right: initial;
+		transform: unset;
+		left: 0;
+	}
+	#views_icon::after{
+		left: initial;
+		transform: unset;
+		right: 0;
 	}
 }
