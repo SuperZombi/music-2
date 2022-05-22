@@ -940,6 +940,7 @@ div.ripple {
 	height: 32px;
 	margin-left: 8px;
 	vertical-align: middle;
+	filter: drop-shadow(0 0 1px black);
 }
 
 .statistic_el{
@@ -953,6 +954,8 @@ div.ripple {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	color: var(--contrast-color);
+	transition: 0.5s;
 }
 
 
