@@ -167,5 +167,6 @@ LANG = {
 	// Favorites
 	"favorites_title": "Избранное",
 	"remove_from_favorites_title": "Убрать",
-	"delete_from_favorites": "Убрать % из Избранного?"
+	"delete_from_favorites": "Убрать % из Избранного?",
+	"favorites_prompt": "Разрешить всем просматривать ваше Избранное",
 }
