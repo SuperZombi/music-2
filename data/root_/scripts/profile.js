@@ -405,6 +405,7 @@ function show(what, obj){
 	if (timout_menu) {
 		clearTimeout(timout_menu);
 	}
+	notice.clearAll()
 	current_show = what
 	current_show_obj = obj
 	document.getElementById("card_previewer_name_txt").innerHTML = what;
