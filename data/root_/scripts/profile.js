@@ -454,7 +454,7 @@ function checkHideMenu(e){
 
 
 function open_(){
-	window.location.href = "/" + global_tracks.path + "/" + global_tracks.tracks[current_show].path
+	window.open("/" + global_tracks.path + "/" + global_tracks.tracks[current_show].path,'_blank');
 }
 function edit(){
 	let url = new URL("new-release", window.location.href);
