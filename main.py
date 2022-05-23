@@ -858,7 +858,7 @@ def get_favorites():
 
 			favorites_new = []
 			for i in favorites:
-				info = get_track_inf(os.path.join("data", i, 'config.json'))
+				info = get_track_inf("data" + str(Path("/").joinpath(Path(i).joinpath('config.json'))))
 				info['path'] = i
 				favorites_new.append(info)
 			return jsonify({'successfully': True, "favorites": favorites_new})
