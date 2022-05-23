@@ -45,8 +45,7 @@ async function main(){
 		else{
 			let answer = JSON.parse(xhr.response);
 			if (answer.successfully){
-				global_tracks = answer.favorites
-				if (Object.keys(global_tracks).length == 0){
+				if (Object.keys(answer.favorites).length == 0){
 					document.getElementById("empty").innerHTML = empty();
 				}
 				else{
@@ -113,6 +112,9 @@ async function addNewCategory(tracks){
 		var subdiv = document.createElement('div')
 		subdiv.className = "category_body"
 		tracks.forEach(function(e){
+			if (e.path[0] == "/" || e.path[0] == "\\"){
+				e.path = e.path.slice(1)
+			}
 			var a = document.createElement('a');
 			a.className = "about_box";
 			a.onclick = ()=>show(e.track, e.artist, e.path, a);
