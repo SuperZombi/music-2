@@ -194,11 +194,14 @@ def edit_user(user, data):
 		if i == "name" or i == "password" or i == "public_fields":
 			pass
 		else:
-			if data[i].strip() == "":
-				if i in temp.keys():
-					del users[user][i]
-			else:
+			if isinstance(data[i], bool):
 				users[user][i] = data[i]
+			else:
+				if data[i].strip() == "":
+					if i in temp.keys():
+						del users[user][i]
+				else:
+					users[user][i] = data[i]
 
 	publicFields = []
 	if "public_fields" in data.keys():
