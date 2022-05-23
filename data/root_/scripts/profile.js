@@ -571,6 +571,14 @@ function loadSettings() {
 					select.value = data[i]
 					select.dataset.chosen = data[i]
 				}
+				else if (i == "public_favorites"){
+					if (data[i]){
+						let toggle_input = Array.from(
+												document.querySelectorAll(`.settings_element input[name=toggle_favorites]`)
+												).filter(e=>e.value=="true")[0]
+						toggle_input.checked = true;
+					}
+				}
 				else if (i == "official"){
 					delete global_profile_data["official"]
 				}
@@ -640,7 +648,11 @@ function saveSettings(){
 				if (!("public_fields" in final_all)){
 					final_all["public_fields"] = []
 				}
-				if (e.value == "true"){
+				if (e.name.replace("toggle_", "") == "favorites"){
+					final_all["public_favorites"] = (e.value == "true")
+					final["public_favorites"] = (e.value == "true")
+				}
+				else if (e.value == "true"){
 					final_all.public_fields.push(e.name.replace("toggle_", ""));
 					final.public_fields.push(e.name.replace("toggle_", ""));
 				}
