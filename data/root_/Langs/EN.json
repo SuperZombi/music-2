@@ -167,5 +167,6 @@ LANG = {
 	// Favorites
 	"favorites_title": "Favorites",
 	"remove_from_favorites_title": "Remove",
-	"delete_from_favorites": "Remove % from Favorites?"
+	"delete_from_favorites": "Remove % from Favorites?",
+	"favorites_prompt": "Allow everyone to view your Favorites",
 }
