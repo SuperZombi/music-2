@@ -53,8 +53,35 @@
 	margin: 0 5px;
 }
 
+#card_previewer_user_txt{
+	font-size: 16pt;
+}
+
 #notifications > * > .Message-body > p{
 	width: 100%;
+}
+
+
+.noHover{
+	filter: grayscale(1);
+}
+.noHover:hover{
+	border-radius: 30px;
+	transform: translateY(0);
+}
+.noHover:hover img{
+	border-radius: 50px;
+}
+
+#favorites_title{
+	font-family: 'Balsamiq Sans';
+	font-size: 30pt;
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+#favorites_title hr{
+	width: 85%;
 }
 
 
@@ -392,6 +419,11 @@ details[open] > summary:before {
 	}
 	.group{
 		min-width: 65%;
+	}
+	#favorites_title{
+		font-size: 24pt;
+		margin-top: 10px;
+		margin-bottom: -10px;
 	}
 }
 
