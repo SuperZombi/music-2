@@ -109,26 +109,6 @@
 #extra_space{
 	transition: 0.75s ease;
 }
-.expanding-link{
-	text-decoration: none;
-	font-size: 1.4em;
-	display: inline-block;
-	margin: 15px;
-	color: var(--contrast-color);
-	border: 2px solid var(--contrast-color);
-	border-radius: 25px;
-	padding: 5px 20px;
-	transition: 0.3s;
-	white-space: nowrap;
-}
-.expanding-link:hover{
-	padding: 5px 40px;
-}
-.expanding-link img{
-	height: 25px;
-	vertical-align: top;
-	margin-right: 15px;
-}
 
 #user-name{
 	font-family: 'Balsamiq Sans';
@@ -424,9 +404,6 @@ details[open] > summary:before {
 		font-size: 24pt;
 		margin-top: 10px;
 		margin-bottom: -10px;
-	}
-	.expanding-link{
-		margin: 8px;
 	}
 }
 
