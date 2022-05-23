@@ -310,11 +310,7 @@ async function addNewCategoryFavs(tracks){
 			}
 			var a = document.createElement('a');
 			a.className = "about_box";
-			a.onclick = ()=>show(e.track, e.artist, e.path, a);
-			a.onmousedown = (event) => {if (event.button === 1) {
-				window.open("/" + e.path,'_blank');
-			}}
-
+			a.href = `../${e.path}`;
 			let img = document.createElement('img');
 			img.className = "loader"
 			img.alt = ""
