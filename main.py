@@ -830,6 +830,40 @@ def like():
 		return jsonify({'successfully': True, "event": event})
 	return jsonify({'successfully': False})
 
+@app.route('/api/get_favorites', methods=['POST'])
+def get_favorites():
+	def get_track_inf(path):
+		with open(path, 'r', encoding='utf8') as file:
+			lines = file.readlines()
+			string = "".join(filter(lambda x: x.strip()[:2] != "//", lines))
+			string = string.split('=', 1)[1]
+			config = json.loads(string)
+			new_config = {}
+			new_config['artist'] = config['artist']
+			new_config['track'] = config['track_name']
+			new_config['img'] = config['main_img']
+			new_config['genre'] = config['genre']
+			new_config['date'] = tracks[config['artist']]["tracks"][config['track_name']]["date"]
+			return new_config
+	if ('password' in request.json.keys()):
+		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+		x = BrootForceProtection(request.json['user'], request.json['password'], ip, fast_login)()
+		if x['successfully']:
+			user_folder = os.path.join("data", request.json['user'].lower().replace(" ", "-"))
+			fav_file = os.path.join(user_folder, "favorites.stat")
+			favorites = []
+			if os.path.exists(fav_file):
+				with open(fav_file, 'r') as file:
+					favorites = json.loads(file.read())
+
+			favorites_new = []
+			for i in favorites:
+				info = get_track_inf(os.path.join("data", i, 'config.json'))
+				info['path'] = i
+				favorites_new.append(info)
+			return jsonify({'successfully': True, "favorites": favorites_new})
+	return jsonify({'successfully': False})
+
 if __name__ == '__main__':
 	# app.run(debug=True)
 	app.run(host='0.0.0.0', port='80')
