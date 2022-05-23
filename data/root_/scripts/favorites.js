@@ -1,7 +1,7 @@
 window.onload = function() {
 	(function load_page(){
 	if (typeof header !== 'undefined' && typeof body !== 'undefined'){
-		//document.title = `${LANG.profile_title} - Zombi Music`
+		document.title = `${LANG.favorites_title} - Zombi Music`
 		document.body.innerHTML += header
 		document.body.innerHTML += body
 
@@ -222,7 +222,10 @@ function share(){
 
 function confirm_delete(){
 	notice.clearAll()
-	notice.Error(`${LANG.delete} <a style="color:red">${current_show_track}</a> from Favorites?`, false, [[LANG.yes, delete_], LANG.no])
+	let delete_text = LANG.delete_from_favorites.replace("%", 
+		`<a style="color:red">${current_show_track}</a>`
+		)
+	notice.Error(delete_text, false, [[LANG.yes, delete_], LANG.no])
 }
 function delete_(){
 	if (local_storage.userName && local_storage.userPassword){
