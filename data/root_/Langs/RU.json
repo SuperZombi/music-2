@@ -162,5 +162,10 @@ LANG = {
 	"nothing_found": "Ничего не найдено",
 	"search_placeholder": "Что вы ищете?",
 	"search_but": "Искать",
-	"user": "Пользователь"
+	"user": "Пользователь",
+
+	// Favorites
+	"favorites_title": "Избранное",
+	"remove_from_favorites_title": "Убрать",
+	"delete_from_favorites": "Убрать % из Избранного?"
 }
