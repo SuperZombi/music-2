@@ -64,6 +64,8 @@ async function main(){
 	if (loc_seach && loc_seach == "all-tracks"){
 		changeTab(document.querySelector(`.tabs > li[data=${loc_seach}]`), true)
 	}
+
+	await addFavorites()
 }
 
 
@@ -225,6 +227,7 @@ function changeTab(element, no_animete=false){
 		},0)
 		if (element.getAttribute("data")=="all-tracks"){
 			document.getElementById("main_page").querySelector(".category").classList.add("flexable")
+			try{document.getElementById("favorite-details").style.display = "none"}catch{}
 		}
 		return;
 	}
@@ -255,8 +258,11 @@ function changeTab(element, no_animete=false){
 
 	window.history.pushState({path:temp_url.href},'',temp_url.href);
 
+	try{document.getElementById("favorite-details").style.display = "none"}catch{}
+
 	if (data=="main"){
 		document.getElementById("main_page").querySelector(".category").classList.remove("flexable")
+		try{document.getElementById("favorite-details").style.display = "block"}catch{}
 	}
 	if (data=="all-tracks"){
 		document.getElementById("main_page").querySelector(".category").classList.add("flexable")
@@ -266,4 +272,75 @@ function initTabs(){
 	Array.from(document.querySelectorAll(".tabs > li")).forEach(el=>{
 		el.onclick = ()=>changeTab(el);
 	})
+}
+
+
+async function addFavorites(){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", '../api/get_favorites', false)
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({'user': ARTIST.name}))
+	if (xhr.status == 200){ 
+		let answer = JSON.parse(xhr.response);
+		if (answer.successfully){
+			if (Object.keys(answer.favorites).length == 0){}
+			else{
+				await addNewCategoryFavs(answer.favorites.reverse())
+				overflowed()
+
+				let script = document.createElement('script')
+				script.src = "../root_/scripts/details-animated.js"
+				script.onload = () => {
+					new Accordion(document.getElementById("favorite-details"));
+				}
+				document.head.appendChild(script)
+			}
+		}
+	}
+}
+async function addNewCategoryFavs(tracks){
+	await new Promise((resolve, reject) => {
+		var div = document.createElement('div')
+		div.className = "category"
+		var subdiv = document.createElement('div')
+		subdiv.className = "content category_body"
+		tracks.forEach(function(e){
+			if (e.path[0] == "/" || e.path[0] == "\\"){
+				e.path = e.path.slice(1)
+			}
+			var a = document.createElement('a');
+			a.className = "about_box";
+			a.onclick = ()=>show(e.track, e.artist, e.path, a);
+			a.onmousedown = (event) => {if (event.button === 1) {
+				window.open("/" + e.path,'_blank');
+			}}
+
+			let img = document.createElement('img');
+			img.className = "loader"
+			img.alt = ""
+			img.src = `../${e.path}/${e.img}?size=small`
+			img.onload = ()=>img.classList.remove("loader");
+
+			a.innerHTML = `
+				${img.outerHTML}
+				<div class="track_name"><span>${e.track}</span></div>
+				<div class="artist">${e.artist}</div>
+			`
+			subdiv.appendChild(a)
+		})
+		let detail = document.createElement('details')
+		detail.id = "favorite-details"
+		let sum_ = document.createElement('summary')
+		sum_.innerHTML = LANG.favorites_title
+		sum_.className = "category_title"
+		sum_.style.cursor = "pointer"
+		detail.appendChild(sum_)
+		detail.appendChild(subdiv)
+		div.appendChild(detail)
+		document.getElementById("main_page").appendChild(div)
+		if(document.getElementById("main_page").querySelector(".category").classList.contains("flexable")){
+			detail.style.display = "none"
+		}
+		resolve()
+	});
 }
