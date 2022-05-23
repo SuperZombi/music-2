@@ -848,24 +848,35 @@ def get_favorites():
 			new_config['genre'] = config['genre']
 			new_config['date'] = tracks[config['artist']]["tracks"][config['track_name']]["date"]
 			return new_config
+	def get_favs(user):
+		user_folder = os.path.join("data", user.lower().replace(" ", "-"))
+		fav_file = os.path.join(user_folder, "favorites.stat")
+		favorites = []
+		if os.path.exists(fav_file):
+			with open(fav_file, 'r') as file:
+				favorites = json.loads(file.read())
+
+		favorites_new = []
+		for i in favorites:
+			info = get_track_inf("data" + str(Path("/").joinpath(Path(i).joinpath('config.json'))))
+			info['path'] = i
+			favorites_new.append(info)
+		return favorites_new
+
 	if ('password' in request.json.keys()):
 		ip = request.headers.get('X-Forwarded-For', request.remote_addr)
 		x = BrootForceProtection(request.json['user'], request.json['password'], ip, fast_login)()
 		if x['successfully']:
-			user_folder = os.path.join("data", request.json['user'].lower().replace(" ", "-"))
-			fav_file = os.path.join(user_folder, "favorites.stat")
-			favorites = []
-			if os.path.exists(fav_file):
-				with open(fav_file, 'r') as file:
-					favorites = json.loads(file.read())
+			favs = get_favs(request.json['user'])
+			return jsonify({'successfully': True, "favorites": favs})
 
-			favorites_new = []
-			for i in favorites:
-				info = get_track_inf("data" + str(Path("/").joinpath(Path(i).joinpath('config.json'))))
-				info['path'] = i
-				favorites_new.append(info)
-			return jsonify({'successfully': True, "favorites": favorites_new})
+	if "public_favorites" in users[request.json['user']]:
+		if users[request.json['user']]["public_favorites"]:
+			favs = get_favs(request.json['user'])
+			return jsonify({'successfully': True, "favorites": favs})
+
 	return jsonify({'successfully': False})
+
 
 if __name__ == '__main__':
 	# app.run(debug=True)
