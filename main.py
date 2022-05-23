@@ -34,12 +34,17 @@ def index():
 @app.errorhandler(404)
 def page_not_found(e):
 	return send_from_directory('data', '404.html'), 404
+@app.errorhandler(403)
+def page_not_found(e):
+	return send_from_directory('data', '403.html'), 403
 
 @app.route('/<path:filepath>')
 def data(filepath):
 	p = os.path.join("data", filepath)
 	if os.path.exists(p):
 		if os.path.isfile(p):
+			if p.endswith('.stat'):
+				abort(403)
 			if filetype.is_image(p):
 				if 'size' in request.args.keys():
 					if request.args['size'] == "small":
