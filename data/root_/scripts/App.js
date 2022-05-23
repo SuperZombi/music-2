@@ -21,12 +21,15 @@ function loadApp(imports){
 	let array = imports.split('\n').map(e=>e.trim()).filter(n=>n);
 
 	function next(arr) {
-	    if (arr.length) {
-	    	let el = parseHTML(arr.shift())
-	    	el.onload = function() { next(arr) };
-	    	el.onerror = function() { document.head.appendChild(el) };
-	    	document.head.appendChild(el)
-	    }
+		if (arr.length) {
+			function load_source(element){
+				element.onload = function() { next(arr) };
+				el.onerror = function() { load_source(element) };
+				document.head.appendChild(el)
+			}
+			let el = parseHTML(arr.shift())
+			load_source(el)
+		}
 	}
 	next(array);
 }
