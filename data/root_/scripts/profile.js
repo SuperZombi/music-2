@@ -211,6 +211,9 @@ async function addNewCategory(tracks){
 			var a = document.createElement('a');
 			a.className = "about_box";
 			a.onclick = ()=>show(e.track, a);
+			a.onmousedown = (event) => {if (event.button === 1) {
+				window.open("/" + global_tracks.path + "/" + global_tracks.tracks[e.track].path,'_blank');
+			}}
 
 			let img = document.createElement('img');
 			img.className = "loader"
