@@ -1362,6 +1362,10 @@ div.ripple {
 		right: initial;
 		transform: unset;
 	}
+	#card_previewer > .title-to-left::after{
+		right: 0;
+		left: initial;
+	}
 	.artist_image_wrapper::after{
 		top: unset !important;
 		bottom: 0 !important;
