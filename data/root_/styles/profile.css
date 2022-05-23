@@ -109,7 +109,7 @@
 #extra_space{
 	transition: 0.75s ease;
 }
-#new-release{
+.expanding-link{
 	text-decoration: none;
 	font-size: 1.4em;
 	display: inline-block;
@@ -121,10 +121,10 @@
 	transition: 0.3s;
 	white-space: nowrap;
 }
-#new-release:hover{
+.expanding-link:hover{
 	padding: 5px 40px;
 }
-#new-release img{
+.expanding-link img{
 	height: 25px;
 	vertical-align: top;
 	margin-right: 15px;
@@ -424,6 +424,9 @@ details[open] > summary:before {
 		font-size: 24pt;
 		margin-top: 10px;
 		margin-bottom: -10px;
+	}
+	.expanding-link{
+		margin: 8px;
 	}
 }
 
