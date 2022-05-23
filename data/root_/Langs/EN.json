@@ -162,5 +162,10 @@ LANG = {
 	"nothing_found": "Nothing found",
 	"search_placeholder": "What are you looking for?",
 	"search_but": "Search",
-	"user": "User"
+	"user": "User",
+
+	// Favorites
+	"favorites_title": "Favorites",
+	"remove_from_favorites_title": "Remove",
+	"delete_from_favorites": "Remove % from Favorites?"
 }
