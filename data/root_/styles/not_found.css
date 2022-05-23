@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
+#home{
+	font-family: 'Balsamiq Sans', sans-serif;
+	font-size: 1.4em;
+	color: var(--contrast-color);
+	position: fixed;
+	bottom: 5px;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: 0.3s;
+}
+#home:hover{
+	color: #0077FF;
+}
 #not_found{
 	font-family: "Roboto", sans-serif;
 	text-align: center;
