@@ -286,6 +286,23 @@ def remove_track(artist, track_name):
 	# return jsonify({'exist': False})
 
 
+# Method not implemented
+# from math import sqrt
+# def wilson_score(likes, views, votes_range = [0, 1]):
+# 	if likes > views: return 1
+# 	z = 1.64485
+# 	v_min = min(votes_range)
+# 	v_width = float(max(votes_range) - v_min)
+# 	phat = (likes - views * v_min) / v_width / float(views)
+# 	rating = (phat+z*z/(2*views)-z*sqrt((phat*(1-phat)+z*z/(4*views))/views))/(1+z*z/views)
+# 	return rating * v_width + v_min
+
+# def my_rating(likes, views):
+# 	if likes == 0 or views == 0: return 0
+# 	return (likes / views * likes) * (views / likes * views)
+
+
+
 @app.route("/api/name_available", methods=["POST"])
 def name_available():
 	if "/" in request.json['name'] or "\\" in request.json['name']:
