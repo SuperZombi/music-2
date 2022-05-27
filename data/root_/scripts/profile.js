@@ -1,5 +1,4 @@
-window.onload = function() {
-	(function load_page(){
+(function load_page(){
 	if (typeof header !== 'undefined' && typeof body !== 'undefined'){
 		document.title = `${LANG.profile_title} - Zombi Music`
 		document.body.innerHTML += header
@@ -12,8 +11,8 @@ window.onload = function() {
 	else{
 		setTimeout(function(){load_page()}, 100)
 	}
-	})()
-}
+})()
+
 window.onresize = function(){ overflowed() }
 window.orientationchange = function(){ overflowed() }
 window.onscroll = function(){showScrollTop()}
