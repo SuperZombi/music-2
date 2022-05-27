@@ -5,8 +5,6 @@
 	else if (typeof body !== 'undefined' && typeof darkThemeMq !== 'undefined'){
 		document.body.innerHTML += body
 		main()
-
-		setTimeout(function(){document.body.style.transition = "1s"}, 500)
 	}
 	else{
 		setTimeout(function(){load_page()}, 100)
