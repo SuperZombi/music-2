@@ -1,3 +1,20 @@
+(function load_page(){
+	if (typeof darkThemeMq === 'undefined'){
+		setTimeout(function(){load_page()}, 100)
+	}
+	else if (typeof header !== 'undefined' && typeof body !== 'undefined' && typeof footer !== 'undefined' && darkThemeMq !== 'undefined'){
+		document.body.innerHTML += header
+		document.body.innerHTML += body
+		document.body.innerHTML += footer
+		main()
+
+		setTimeout(function(){document.body.style.transition = "1s"}, 500)
+	}
+	else{
+		setTimeout(function(){load_page()}, 100)
+	}
+})()
+
 function set_background(){
 	if (window.innerWidth < window.innerHeight){
 		comand = `background:url(${config.main_img}) center center/auto 100% no-repeat fixed !important`
@@ -183,24 +200,6 @@ function build_links(){
 }
 
 
-window.onload = function(){
-	(function load_page(){
-		if (typeof darkThemeMq === 'undefined'){
-			setTimeout(function(){load_page()}, 100)
-		}
-		else if (typeof header !== 'undefined' && typeof body !== 'undefined' && typeof footer !== 'undefined' && darkThemeMq !== 'undefined'){
-			document.body.innerHTML += header
-			document.body.innerHTML += body
-			document.body.innerHTML += footer
-			main()
-
-			setTimeout(function(){document.body.style.transition = "1s"}, 500)
-		}
-		else{
-			setTimeout(function(){load_page()}, 100)
-		}
-	})()
-}
 
 easter_egg_counter = 0
 var easter_egg_timer;
