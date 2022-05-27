@@ -6,6 +6,7 @@ if (typeof header !== 'undefined' && typeof body !== 'undefined'){
 	main()
 
 	setTimeout(function(){document.body.style.transition = "1s"}, 500)
+	document.getElementById("preloader").style.display = "none"
 }
 else{
 	setTimeout(function(){load_page()}, 500)
