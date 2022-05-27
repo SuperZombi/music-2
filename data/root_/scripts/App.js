@@ -55,7 +55,6 @@ async function load_source(element){
 		let link = element.src || element.href;
 		if (link.includes('fontawesome')){
 			document.head.appendChild(element);
-			resolve()
 		}
 		else{
 			fetch(link)
