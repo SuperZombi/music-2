@@ -12,6 +12,7 @@ def track_index(artist, track, image):
 	<script src="../../root_/scripts/App.js" defer onload='loadApp(`
 		<script src="../../root_/scripts/lang.js"></script>
 		<link rel="stylesheet" href="../../root_/styles/main.css">
+		<link rel="stylesheet" href="../../root_/styles/ripple.css">
 		<link rel="stylesheet" href="../../root_/styles/fontawesome/css/all.min.css">
 		<script src="../../root_/scripts/theme.js"></script>
 		<script src="config.json"></script>
