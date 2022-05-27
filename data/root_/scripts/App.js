@@ -24,8 +24,8 @@ function loadApp(imports){
 		if (arr.length) {
 			function load_source(element){
 				element.onload = function() { next(arr) };
-				el.onerror = function() { load_source(element) };
-				document.head.appendChild(el)
+				element.onerror = function() { load_source(element) };
+				document.head.appendChild(element)
 			}
 			let el = parseHTML(arr.shift())
 			load_source(el)
