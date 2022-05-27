@@ -53,23 +53,29 @@ function parseAtribute(string){
 async function load_source(element){
 	await new Promise((resolve, reject) => {
 		let link = element.src || element.href;
-		fetch(link)
-			.then((response) => {
-				if (response.ok) {
-					load_this(response.blob())
-				}
-				else{
-					console.log(`Reloading ${link}`)
-					load_source(element)	
-				}
-			});
-		async function load_this(data){
-			var data = await data;
-			var url = window.URL.createObjectURL(data);
-			if (element.src){ element.src = url }
-			else if (element.href){ element.href = url }
-			document.head.appendChild(element)
+		if (link.includes('fontawesome')){
+			document.head.appendChild(element);
 			resolve()
+		}
+		else{
+			fetch(link)
+				.then((response) => {
+					if (response.ok) {
+						load_this(response.blob())
+					}
+					else{
+						console.log(`Reloading ${link}`)
+						load_source(element)	
+					}
+				});
+			async function load_this(data){
+				var data = await data;
+				var url = window.URL.createObjectURL(data);
+				if (element.src){ element.src = url }
+				else if (element.href){ element.href = url }
+				document.head.appendChild(element)
+				resolve()
+			}		
 		}
 	});
 }
