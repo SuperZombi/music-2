@@ -1,19 +1,18 @@
-window.onload = function(){
-	(function load_page(){
-		if (typeof darkThemeMq === 'undefined'){
-			setTimeout(function(){load_page()}, 100)
-		}
-		else if (typeof body !== 'undefined' && typeof darkThemeMq !== 'undefined'){
-			document.body.innerHTML += body
-			main()
+(function load_page(){
+	if (typeof darkThemeMq === 'undefined'){
+		setTimeout(function(){load_page()}, 100)
+	}
+	else if (typeof body !== 'undefined' && typeof darkThemeMq !== 'undefined'){
+		document.body.innerHTML += body
+		main()
 
-			setTimeout(function(){document.body.style.transition = "1s"}, 500)
-		}
-		else{
-			setTimeout(function(){load_page()}, 100)
-		}
-	})()
-}
+		setTimeout(function(){document.body.style.transition = "1s"}, 500)
+	}
+	else{
+		setTimeout(function(){load_page()}, 100)
+	}
+})()
+
 function checkRoundPage(){
 	try{
 		if (!roundPage){
