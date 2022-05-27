@@ -5,29 +5,28 @@ else{
 	language = window.navigator.language.substr(0, 2)
 }
 
+var retry_count = 0;
 (function executeIfFileExist() {
 	var src = `/root_/Langs/${language.toUpperCase()}.json`;
 	var xhr = new XMLHttpRequest()
 	xhr.open('HEAD', src, true)
-	xhr.onreadystatechange = function() {
+	xhr.onload = function() {
 		if (this.readyState === this.DONE) {
 			if (xhr.status==200){
-				function langLoaderHelper(){
-					var l = document.createElement("script")
-					l.setAttribute("src", `/root_/Langs/${language.toUpperCase()}.json`);
-					l.onerror = function(){langLoaderHelper()}
-					document.head.appendChild(l);
-				}
-				langLoaderHelper()
+				var l = document.createElement("script")
+				l.setAttribute("src", `/root_/Langs/${language.toUpperCase()}.json`);
+				load_source(l)
 			}
 			else{
-				function langLoaderHelper(){
+				retry_count++;
+				if (retry_count > 5){
 					var l = document.createElement("script")
 					l.setAttribute("src", `/root_/Langs/EN.json`);
-					l.onerror = function(){langLoaderHelper()}
-					document.head.appendChild(l);
+					load_source(l)
 				}
-				langLoaderHelper()
+				else{
+					executeIfFileExist()
+				}
 			}
 		}
 	}
