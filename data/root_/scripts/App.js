@@ -1,3 +1,36 @@
+(function(){
+	let el = document.createElement('style');
+	el.innerHTML = `
+		#preloader{
+			position: fixed;
+			top: 50%; left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		.lds-dual-ring {
+			display: inline-block;
+			width: 80px; height: 80px;
+		}
+		.lds-dual-ring:after {
+			content: ""; display: block;
+			width: 64px; height: 64px;
+			margin: 8px;
+			border-radius: 50%;
+			border: 6px solid #00B0FF;
+			border-color: #00B0FF transparent #00B0FF transparent;
+			animation: lds-dual-ring 1.2s linear infinite;
+		}
+		@keyframes lds-dual-ring {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+		`
+	document.head.appendChild(el)
+	document.body.innerHTML += `
+		<div id="preloader">
+			<div class="lds-dual-ring"></div>
+		</div>`
+})()
+
 function parseHTML(html) {
 	let temp = html.split("<").filter(n=>n)[0].split(" ")
 	let elem = temp[0]
