@@ -1,3 +1,15 @@
+(function load_page(){
+    if (typeof header !== 'undefined' && typeof body !== 'undefined'){
+        document.title = `${LANG.new_release} - Zombi Music`
+        document.body.innerHTML += header
+        document.body.innerHTML += body
+        main()
+    }
+    else{
+        setTimeout(function(){load_page()}, 100)
+    }
+})()
+
 function checkPhoto(target, compress=true) {
     document.getElementById("photoLabel").innerHTML = "";
 
@@ -275,19 +287,6 @@ function logout(){
     goToLogin()
 }
 
-window.onload = function(){
-    (function load_page(){
-        if (typeof header !== 'undefined' && typeof body !== 'undefined'){
-            document.title = `${LANG.new_release} - Zombi Music`
-            document.body.innerHTML += header
-            document.body.innerHTML += body
-            main()
-        }
-        else{
-            setTimeout(function(){load_page()}, 100)
-        }
-    })()
-}
 
 function goToLogin(){
     let url = window.location.pathname;
