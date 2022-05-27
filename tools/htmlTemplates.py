@@ -9,7 +9,7 @@ def track_index(artist, track, image):
 	<meta property="og:description" content="Zombi Music">
 	<meta property="og:site_name" content="zombi.music">
 	<meta property='og:type' content="music.song">
-	<script src="../../root_/scripts/App.js" onload='loadApp(`
+	<script src="../../root_/scripts/App.js" defer onload='loadApp(`
 		<script src="../../root_/scripts/lang.js"></script>
 		<link rel="stylesheet" href="../../root_/styles/main.css">
 		<link rel="stylesheet" href="../../root_/styles/fontawesome/css/all.min.css">
@@ -29,7 +29,7 @@ def track_embed():
 	<title>Zombi Music</title>
 	<meta name="viewport" content="width=device-width">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script src="../../root_/scripts/App.js" onload='loadApp(`
+	<script src="../../root_/scripts/App.js" defer onload='loadApp(`
 		<link rel="stylesheet" href="../../root_/styles/main.css">
 		<script src="../../root_/scripts/parse_params.js"></script>
 		<link rel="stylesheet" href="../../root_/styles/embed.css">
@@ -55,7 +55,7 @@ def artist_index(name, image="../root_/images/people.svg"):
 	<meta property="og:title" content="{name}">
 	<meta property="og:description" content="Artist">
 	<meta property="og:site_name" content="zombi.music">
-	<script src="../root_/scripts/App.js" onload='loadApp(`
+	<script src="../root_/scripts/App.js" defer onload='loadApp(`
 		<script src="../root_/scripts/lang.js"></script>
 		<link rel="stylesheet" href="../root_/styles/fontawesome/css/all.min.css">
 		<link rel="stylesheet" href="../root_/styles/main.css">
