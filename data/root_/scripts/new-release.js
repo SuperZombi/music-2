@@ -4,6 +4,7 @@
         document.body.innerHTML += header
         document.body.innerHTML += body
         main()
+        document.getElementById("preloader").style.display = "none"
     }
     else{
         setTimeout(function(){load_page()}, 100)
