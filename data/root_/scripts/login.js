@@ -1,3 +1,15 @@
+(function load_page(){
+	if (typeof header !== 'undefined' && typeof body !== 'undefined'){
+		document.title = `${LANG.login_title} - Zombi Music`
+		document.body.innerHTML += header
+		document.body.innerHTML += body
+		main()
+	}
+	else{
+		setTimeout(function(){load_page()}, 100)
+	}
+})()
+
 function passwordToggle(what){
 	var input = what.parentNode.getElementsByTagName("input")[0]
 	if (input.type === "password") {
@@ -223,19 +235,6 @@ function afterLogin(delay=1000){
 	}, delay)
 }
 
-window.onload = function(){
-	(function load_page(){
-		if (typeof header !== 'undefined' && typeof body !== 'undefined'){
-			document.title = `${LANG.login_title} - Zombi Music`
-			document.body.innerHTML += header
-			document.body.innerHTML += body
-			main()
-		}
-		else{
-			setTimeout(function(){load_page()}, 100)
-		}
-	})()
-}
 
 var phoneMask;
 function main(){
