@@ -1,19 +1,18 @@
-window.onload = function() {
-	(function load_page(){
-	if (typeof header !== 'undefined' && typeof body !== 'undefined'){
-		document.title = `${LANG.favorites_title} - Zombi Music`
-		document.body.innerHTML += header
-		document.body.innerHTML += body
+(function load_page(){
+if (typeof header !== 'undefined' && typeof body !== 'undefined'){
+	document.title = `${LANG.favorites_title} - Zombi Music`
+	document.body.innerHTML += header
+	document.body.innerHTML += body
 
-		setTimeout(function(){document.body.style.transition = "1s"}, 500)
+	setTimeout(function(){document.body.style.transition = "1s"}, 500)
 
-		main()
-	}
-	else{
-		setTimeout(function(){load_page()}, 100)
-	}
-	})()
+	main()
 }
+else{
+	setTimeout(function(){load_page()}, 100)
+}
+})()
+
 window.onresize = function(){ overflowed() }
 window.orientationchange = function(){ overflowed() }
 window.onscroll = function(){showScrollTop()}
