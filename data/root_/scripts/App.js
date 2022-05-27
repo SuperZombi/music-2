@@ -17,18 +17,37 @@ function parseAtribute(string){
 	return a;
 }
 
+async function load_source(element){
+	await new Promise((resolve, reject) => {
+		let link = element.src || element.href;
+		fetch(link)
+			.then((response) => {
+				if (response.ok) {
+					load_this(response.blob())
+				}
+				else{
+					console.log(`Reloading ${link}`)
+					load_source(element)	
+				}
+			});
+		async function load_this(data){
+			var data = await data;
+			var url = window.URL.createObjectURL(data);
+			if (element.src){ element.src = url }
+			else if (element.href){ element.href = url }
+			document.head.appendChild(element)
+			resolve()
+		}
+	});
+}
+
 function loadApp(imports){
 	let array = imports.split('\n').map(e=>e.trim()).filter(n=>n);
-
 	function next(arr) {
 		if (arr.length) {
-			function load_source(element){
-				element.onload = function() { next(arr) };
-				element.onerror = function() { load_source(element) };
-				document.head.appendChild(element)
-			}
 			let el = parseHTML(arr.shift())
 			load_source(el)
+			next(arr)
 		}
 	}
 	next(array);
