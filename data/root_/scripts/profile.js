@@ -5,8 +5,8 @@
 		document.body.innerHTML += body
 
 		setTimeout(function(){document.body.style.transition = "1s"}, 500)
-
 		main()
+		document.getElementById("preloader").style.display = "none"
 	}
 	else{
 		setTimeout(function(){load_page()}, 100)
