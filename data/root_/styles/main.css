@@ -830,6 +830,10 @@ div.ripple {
 	background:#B0B0B0;
 	animation: anim 1.5s infinite;
 }
+.deleted{
+	border-radius: 50% !important;
+	padding: 5px;
+}
 @keyframes anim {
 	from{
 		background:#B0B0B0;
