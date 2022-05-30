@@ -854,18 +854,20 @@ def like():
 @app.route('/api/get_favorites', methods=['POST'])
 def get_favorites():
 	def get_track_inf(path):
-		with open(path, 'r', encoding='utf8') as file:
-			lines = file.readlines()
-			string = "".join(filter(lambda x: x.strip()[:2] != "//", lines))
-			string = string.split('=', 1)[1]
-			config = json.loads(string)
-			new_config = {}
-			new_config['artist'] = config['artist']
-			new_config['track'] = config['track_name']
-			new_config['img'] = config['main_img']
-			new_config['genre'] = config['genre']
-			new_config['date'] = tracks[config['artist']]["tracks"][config['track_name']]["date"]
-			return new_config
+		if os.path.exists(path):
+			with open(path, 'r', encoding='utf8') as file:
+				lines = file.readlines()
+				string = "".join(filter(lambda x: x.strip()[:2] != "//", lines))
+				string = string.split('=', 1)[1]
+				config = json.loads(string)
+				new_config = {}
+				new_config['artist'] = config['artist']
+				new_config['track'] = config['track_name']
+				new_config['img'] = config['main_img']
+				new_config['genre'] = config['genre']
+				new_config['date'] = tracks[config['artist']]["tracks"][config['track_name']]["date"]
+				return new_config
+		else: return {'track': "Deleted Track", 'status': 'deleted'}
 	def get_favs(user):
 		user_folder = os.path.join("data", user.lower().replace(" ", "-"))
 		fav_file = os.path.join(user_folder, "favorites.stat")
