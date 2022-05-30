@@ -845,8 +845,9 @@ def like():
 		with open(fav_file, 'w', encoding='utf') as file:
 			file.write(json.dumps(favorites, indent=4, ensure_ascii=False))
 
-		with open(stat_file, 'w', encoding='utf') as file:
-			file.write(json.dumps(statistic, indent=4, ensure_ascii=False))
+		if os.path.exists(stat_file):
+			with open(stat_file, 'w', encoding='utf') as file:
+				file.write(json.dumps(statistic, indent=4, ensure_ascii=False))
 
 		return jsonify({'successfully': True, "event": event})
 	return jsonify({'successfully': False})
