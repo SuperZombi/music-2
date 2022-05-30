@@ -299,6 +299,7 @@ async function addFavorites(){
 }
 async function addNewCategoryFavs(tracks){
 	await new Promise((resolve, reject) => {
+		tracks = tracks.filter(x => x.status != 'deleted')
 		var div = document.createElement('div')
 		div.className = "category"
 		var subdiv = document.createElement('div')
