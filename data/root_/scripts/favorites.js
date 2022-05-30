@@ -114,6 +114,10 @@ async function addNewCategory(tracks){
 			if (e.path[0] == "/" || e.path[0] == "\\"){
 				e.path = e.path.slice(1)
 			}
+			if (e.status == "deleted"){
+				e.artist = ""
+				e.img = "/root_/images/dead.svg"
+			}
 			var a = document.createElement('a');
 			a.className = "about_box";
 			a.onclick = ()=>show(e.track, e.artist, e.path, a);
@@ -124,8 +128,14 @@ async function addNewCategory(tracks){
 			let img = document.createElement('img');
 			img.className = "loader"
 			img.alt = ""
-			img.src = `../${e.path}/${e.img}?size=small`
-			img.onload = ()=>img.classList.remove("loader");
+			if (e.status == "deleted"){
+				img.classList.add("deleted")
+				img.src = e.img
+			}
+			else{
+				img.src = `../${e.path}/${e.img}?size=small`
+				img.onload = ()=>img.classList.remove("loader");				
+			}
 
 			a.innerHTML = `
 				${img.outerHTML}
@@ -246,16 +256,21 @@ function delete_(){
 				if (answer.event == "unliked"){
 					notice.Success("OK")
 					hide()
-					current_show_obj.setAttribute('data-href', "/" + current_show_path)
-					current_show_obj.onclick = (e)=>{
-						for (let i=0; i<e.path.length;i++){
-							if (e.path[i].classList.contains("about_box")){
-								window.open(e.path[i].getAttribute('data-href'),'_blank');
-								return
+					if (current_show_obj.getElementsByTagName("img")[0].classList.contains("deleted")){
+						current_show_obj.remove()
+					}
+					else{
+						current_show_obj.setAttribute('data-href', "/" + current_show_path)
+						current_show_obj.onclick = (e)=>{
+							for (let i=0; i<e.path.length;i++){
+								if (e.path[i].classList.contains("about_box")){
+									window.open(e.path[i].getAttribute('data-href'),'_blank');
+									return
+								}
 							}
 						}
+						current_show_obj.classList.add("noHover")					
 					}
-					current_show_obj.classList.add("noHover")
 				}
 				else{
 					notice.Error(LANG.error)
