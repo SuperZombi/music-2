@@ -883,9 +883,9 @@ div.ripple {
 
 #statistic{
 	display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 6px;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 6px;
 }
 
 .likes{
@@ -893,43 +893,59 @@ div.ripple {
 	align-items: center;
 	font-size: 14pt;
 }
-.like_wrapper{
+.like_wrapper > *{
 	height: 40px;
-	width: 48px;
-	margin-left: 6px;
-	display: inline-block;
-}
-.like{
-	overflow: hidden;
-	transform: scale(0.4);
-	transform-origin: left top;
-	fill: grey;
-	width: 100px;
-	height: 100px;
+	width: 42px;
+	margin-left: 10px;
+	margin-right: 8px;
+	position: relative;
 	transition: 0.5s;
 	cursor: pointer;
 	border-radius: 50%;
 }
-.liked.like{
-	fill: red !important;
+.like_wrapper > *  > * {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
-.like:hover {
+.like{
+	transform-origin: center center;
+	fill: grey;
+	height: 40px;
+	width: 42px;
+	transition: 0.5s;
+	border-radius: 50%;
+}
+.like > *{
+	transition: 0.5s;
+}
+.like_front > *{
+	fill: red;
+	transform: scale(0);
+}
+
+.liked > * > .like_front > *{
+	transform: scale(1);
+}
+.like_wrapper:hover > * > .like_back > *{
+	fill: darkgrey;
+}
+.like_wrapper:hover > * > .like_front > *{
 	fill: #ed1e79;
 }
-.like_wrapper_pulse{
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	transition: 0.15s;
-}
-.like_wrapper_pulse:hover{
+
+.like_wrapper_pulse.pulse{
 	animation: 0.5s heartbeat;
 }
-.like_wrapper_pulse:active{
-	transform: scale(0.85)
+.like_wrapper_pulse.unpulse{
+	animation: 0.5s unheartbeat;
 }
 @keyframes heartbeat{
-	50%{ transform: scale(1.2) }
+	50%{ transform: scale(1.3) }
+}
+@keyframes unheartbeat{
+	50%{ transform: scale(0.75) }
 }
 
 .views{
@@ -1405,7 +1421,7 @@ div.ripple {
 		right: 0 !important;
 		transform: unset !important;
 	}
-	#like_button_title::after{
+	#like_button::after{
 		right: initial;
 		transform: unset;
 		left: 0;
