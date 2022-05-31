@@ -29,10 +29,10 @@ LANG = {
 	"big": "Big",
 
 	"views": "Views",
-	"like_it": "Like It",
-	"unlike_it": "UnLike It",
-	"liked": "Liked",
-	"unliked": "UnLiked",
+	"like_it": "Like",
+	"unlike_it": "Dislike",
+	"liked": "Added to Favorites",
+	"unliked": "Removed from Favorites",
 	"pls_login": "Please login first",
 
 	// Profile
