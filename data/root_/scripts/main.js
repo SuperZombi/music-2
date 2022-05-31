@@ -758,10 +758,21 @@ function update_views(count){
 function update_like_icon(val, notification=true){
 	let but = document.getElementById("like_button")
 	val ? but.classList.add("liked") : but.classList.remove("liked");
-	let but_titl = document.getElementById("like_button_title")
-	val ? but_titl.title = LANG.unlike_it : but_titl.title = LANG.like_it;
+	val ? but.title = LANG.unlike_it : but.title = LANG.like_it;
 	if (notification){
 		val ? notice.Success(LANG.liked) : notice.Error(LANG.unliked);
+		if (val){
+			document.querySelector(".like_wrapper_pulse").classList.add("pulse")
+			setTimeout(()=>{
+				document.querySelector(".like_wrapper_pulse").classList.remove("pulse")
+			}, 500)
+		}
+		else{
+			document.querySelector(".like_wrapper_pulse").classList.add("unpulse")
+			setTimeout(()=>{
+				document.querySelector(".like_wrapper_pulse").classList.remove("unpulse")
+			}, 500)
+		}
 	}
 }
 
