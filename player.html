@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+	<link rel="stylesheet" href="https://superzombi.github.io/music/root_/styles/fontawesome/css/all.min.css">
+<style>
+body{
+	background: #202020;
+}
+#controls {
+  color: white;
+  display: table;
+  margin: 10px auto 10px;
+  text-align: center;
+  width: 75%;
+}
+#controls span {
+  display: table-cell;
+  font-size: 20px;
+  vertical-align: middle;
+}
+#controls span#play-btn {
+  font-size: 34px;
+}
+#controls span i {
+  cursor: pointer;
+}
+
+#timeline {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 92.5%;
+}
+.time-zone{
+  margin-bottom: 8px;
+}
+#timeline span {
+  color: #b3b3b3;
+  font-size: 12px;
+  font-family: sans-serif;
+  user-select: none;
+}
+#timeline span#current-time {
+  float: left;
+}
+#timeline span#total-time {
+  float: right;
+}
+#timeline .slider {
+  background-color: gray;
+  border-radius: 2px;
+  cursor: pointer;
+  height: 4px;
+  position: relative;
+  width: 100%;
+  transition: 0.2s;
+}
+#timeline .slider:hover {
+  height: 8px;
+  border-radius: 4px;
+}
+#timeline .slider:hover .progress .pin {
+  height: 12px;
+  width: 12px;
+}
+#timeline .slider:hover .progress {
+  border-radius: 4px;
+}
+#timeline .slider .progress {
+  background-color: #e74c3c;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+  border-radius: 2px;
+  transition: 0.2s;
+}
+#timeline .slider .progress .pin {
+  background-color: white;
+  border-radius: 8px;
+  height: 8px;
+  position: absolute;
+  pointer-events: all;
+  right: -5px;
+  top: -2px;
+  width: 8px;
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.32);
+  -webkit-transition: transform 0.25s ease;
+  -moz-transition: transform 0.25s ease;
+  -ms-transition: transform 0.25s ease;
+  -o-transition: transform 0.25s ease;
+  transition: transform 0.25s ease;
+  transition: 0.2s;
+}
+#timeline .slider .progress .pin:active {
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+</style>
+</head>
+<body>
+	<div id="audioPlayer">
+		<audio src="https://superzombi.github.io/music/my/sadness-rain/Super Zombi - Sadness Rain.mp3"></audio>
+		<div id="controls">
+			<span id="previous-btn"><i class="fa fa-step-backward fa-fw" aria-hidden="true"></i></span>
+			<span id="play-btn"><i class="fa fa-play fa-fw" aria-hidden="true"></i></span>
+			<span id="next-btn"><i class="fa fa-step-forward fa-fw" aria-hidden="true"></i></span>
+		</div>
+		<div id="timeline">
+      <div class="time-zone">
+  			<span id="current-time">00:00</span>
+  			<span id="total-time">--:--</span>
+      </div>
+			<div class="slider" data-direction="horizontal">
+				<div class="progress">
+					<div class="pin" id="progress-pin" data-method="rewind"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+var audioPlayer = document.querySelector('#audioPlayer');
+var playpauseBtn = audioPlayer.querySelector('#play-btn');
+var progress = audioPlayer.querySelector('.progress');
+var slider = audioPlayer.querySelector('.slider')
+var player = audioPlayer.querySelector('audio');
+var currentTime = audioPlayer.querySelector('#current-time');
+var totalTime = audioPlayer.querySelector('#total-time');
+
+var draggableClasses = ['pin'];
+var dragActive = false;
+
+playpauseBtn.addEventListener('click', togglePlay);
+player.addEventListener('timeupdate', updateProgress);
+player.addEventListener('loadedmetadata', () => {
+  totalTime.textContent = formatTime(player.duration);
+});
+player.addEventListener('ended', function(){
+  player.currentTime = 0;
+	
+	if ($(".fa-refresh").hasClass('active')) {
+		togglePlay();
+	} else {
+		if ($(".fa-random").hasClass('active')) {
+			let songs = $("#songs li").length - 1;
+			let randomSong = Math.floor(Math.random() * songs) + 1;
+			$('.jcarousel').jcarousel('scroll', '+=' + randomSong);
+		} else {
+			$('.jcarousel').jcarousel('scroll', '+=1');
+		}
+		togglePlay();
+	}
+});
+
+
+let pin = slider.querySelector('.pin');
+slider.addEventListener('mousemove', event=>{
+  rewind(event)
+});
+slider.addEventListener('mousedown', event=>{
+  dragActive=true;
+  rewind(event);
+});
+window.addEventListener('mouseup', _=>{dragActive=false});
+
+function updateProgress() {
+  var current = player.currentTime;
+  var percent = (current / player.duration) * 100;
+  progress.style.width = percent + '%';
+  
+  currentTime.textContent = formatTime(current);
+}
+
+function getCoefficient(event) {
+  let slider = audioPlayer.querySelector('.slider');
+  let clickedPoint = event.clientX - slider.offsetLeft;
+  let K = 0;
+	let width = slider.clientWidth;
+	K = clickedPoint / width;
+  return K;
+}
+
+function rewind(event) {
+  if (dragActive){
+    player.currentTime = player.duration * getCoefficient(event);
+  }
+}
+
+function formatTime(time) {
+  var min = Math.floor(time / 60);
+  var sec = Math.floor(time % 60);
+  return min + ':' + ((sec<10) ? ('0' + sec) : sec);
+}
+
+function togglePlay() {
+	player.volume = 0.5;
+	
+  if(player.paused) {
+    player.play();
+  } else {
+    player.pause();
+  }  
+}
+</script>
+</body>
+</html>
