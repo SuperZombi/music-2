@@ -204,8 +204,12 @@ function togglePlay() {
 	
   if(player.paused) {
     player.play();
+    playpauseBtn.querySelector('i').classList.remove('fa-play')
+    playpauseBtn.querySelector('i').classList.add('fa-pause')
   } else {
     player.pause();
+    playpauseBtn.querySelector('i').classList.add('fa-play')
+    playpauseBtn.querySelector('i').classList.remove('fa-pause')
   }  
 }
 </script>
